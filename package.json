@@ -18,6 +18,14 @@
   "devDependencies": {
     "@playwright/test": "^1.52.0",
     "@types/node": "^22.15.21",
-    "typescript": "^5.8.3"
+    "@types/underscore": "^1.13.0",
+    "allure-commandline": "^2.34.0",
+    "allure-playwright": "^3.2.2",
+    "dotenv": "^16.5.0",
+    "dotenv-cli": "^8.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "underscore": "^1.13.7",
+    "@google/genai": "^1.0.1"
   }
 }
