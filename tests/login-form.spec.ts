@@ -1,9 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
-import dotenv from "dotenv";
 import settings from "settings";
-
-dotenv.config();
 
 // Login form tests for https://demo.testarchitect.com/my-account/
 test.describe("Login Form", () => {
@@ -41,9 +38,7 @@ test.describe("Login Form", () => {
   test("should login with valid credentials", async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
-    const email = settings.TA_EMAIL!;
-    const password = settings.TA_PASSWORD!;
-    await loginPage.login(email, password);
+    await loginPage.login(settings.TA_EMAIL, settings.TA_PASSWORD);
     // Assert successful login: check for logout link or account page
     await expect(loginPage.logoutLink).toBeVisible();
   });
