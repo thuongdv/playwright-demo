@@ -2,7 +2,9 @@
   "name": "playwright-demo",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "tsc": "tsc --noEmit"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thuongdv/playwright-demo.git"
