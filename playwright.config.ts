@@ -26,7 +26,14 @@ const config: PlaywrightTestConfig = {
  * See https://playwright.dev/docs/test-configuration.
  */
 const defaultConfig: PlaywrightTestConfig = {
-  timeout: 15 * 1000,
+  timeout: 15_000,
+  expect: {
+    /**
+     * Maximum time expect() should wait for the condition to be met.
+     * For example in `await expect(locator).toHaveText('text')`.
+     */
+    timeout: 10_000,
+  },
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
