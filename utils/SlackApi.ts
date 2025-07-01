@@ -19,6 +19,7 @@ class Slack {
   }: {
     channelId: string;
     oldestTimestamp: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }): Promise<any> {
     const result = await this.web.conversations.history({
       channel: channelId,

@@ -1,4 +1,5 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const validatedEnv = (name: string): string => {
   const value = process.env[name];
@@ -18,8 +19,7 @@ const settings = {
   APP_ROOT_PATH: __dirname,
   REPORT_ID: process.env.REPORT_ID,
   SLACK_REPORT_CHANNEL_ID: process.env.SLACK_REPORT_CHANNEL_ID ?? "",
-  SLACK_REPORT_THREAD_TIMESTAMP:
-    process.env.SLACK_REPORT_THREAD_TIMESTAMP ?? "",
+  SLACK_REPORT_THREAD_TIMESTAMP: process.env.SLACK_REPORT_THREAD_TIMESTAMP ?? "",
 };
 
 export default settings;

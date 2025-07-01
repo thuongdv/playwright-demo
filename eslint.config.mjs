@@ -15,6 +15,9 @@ export default tseslint.config(
     },
   },
   {
+    ignores: ["eslint.config.mjs"],
+  },
+  {
     rules: {
       "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/explicit-function-return-type": "error",
