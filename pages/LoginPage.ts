@@ -1,9 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 
 export class LoginPage {
-  readonly usernameInput: Locator = this.page.getByLabel(
-    "Username or email address *"
-  );
+  readonly usernameInput: Locator = this.page.getByLabel("Username or email address *");
   readonly passwordInput: Locator = this.page.getByLabel("Password *");
   readonly rememberMeCheckbox: Locator = this.page.getByLabel("Remember me");
   readonly loginButton: Locator = this.page.getByRole("button", {
@@ -17,11 +15,11 @@ export class LoginPage {
 
   constructor(private page: Page) {}
 
-  async goto() {
-    await this.page.goto("https://demo.testarchitect.com/my-account/");
+  async goto(): Promise<void> {
+    await this.page.goto("/my-account/");
   }
 
-  async login(username: string, password: string, rememberMe = false) {
+  async login(username: string, password: string, rememberMe = false): Promise<void> {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
     if (rememberMe) {

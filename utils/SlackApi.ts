@@ -5,15 +5,7 @@ class Slack {
 
   private constructor() {}
 
-  static async postMessage({
-    channelId,
-    text,
-    ts,
-  }: {
-    channelId: string;
-    text: string;
-    ts?: string;
-  }): Promise<void> {
+  static async postMessage({ channelId, text, ts }: { channelId: string; text: string; ts?: string }): Promise<void> {
     await this.web.chat.postMessage({
       channel: channelId,
       text,

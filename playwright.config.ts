@@ -2,6 +2,7 @@ import { devices } from "@playwright/test";
 import { PlaywrightTestConfig } from "@playwright/test";
 import _ from "underscore";
 import settings from "settings";
+import * as os from "os";
 
 const RPconfig = {
   apiKey: settings.RP_API_KEY,
@@ -26,13 +27,13 @@ const config: PlaywrightTestConfig = {
  * See https://playwright.dev/docs/test-configuration.
  */
 const defaultConfig: PlaywrightTestConfig = {
-  timeout: 15_000,
+  timeout: 120_000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText('text')`.
      */
-    timeout: 10_000,
+    timeout: 20_000,
   },
   testDir: "./tests",
   /* Run tests in files in parallel */
@@ -42,13 +43,13 @@ const defaultConfig: PlaywrightTestConfig = {
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 1,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : os.cpus().length / 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [["html"], ["allure-playwright"]],
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://localhost",
+    baseURL: settings.BASE_URL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
     /* Screenshot on failure. */

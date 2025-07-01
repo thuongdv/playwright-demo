@@ -22,10 +22,7 @@ export class TokenFileError extends Error {
 }
 
 export default class AccessToken {
-  private static readonly tokenFile = path.resolve(
-    tempPath(),
-    "bill-one-access-token.json"
-  );
+  private static readonly tokenFile = path.resolve(tempPath(), "access-token.json");
   private static readonly fileAccessMutex = new Mutex();
 
   /**
@@ -38,23 +35,12 @@ export default class AccessToken {
     try {
       fileContent = await fs.readFile(this.tokenFile, "utf-8");
     } catch (error: unknown) {
-      if (
-        typeof error === "object" &&
-        error !== null &&
-        "code" in error &&
-        error.code === "ENOENT"
-      ) {
+      if (typeof error === "object" && error !== null && "code" in error && error.code === "ENOENT") {
         throw new TokenFileError("Token file not found.", error);
       } else if (error instanceof Error) {
-        throw new TokenFileError(
-          `Failed to read token file: ${error.message}`,
-          error
-        );
+        throw new TokenFileError(`Failed to read token file: ${error.message}`, error);
       } else {
-        throw new TokenFileError(
-          "An unknown error occurred while reading the token file.",
-          error
-        );
+        throw new TokenFileError("An unknown error occurred while reading the token file.", error);
       }
     }
 
@@ -75,20 +61,11 @@ export default class AccessToken {
       return tokenContent;
     } catch (error: unknown) {
       if (error instanceof SyntaxError) {
-        throw new TokenFileError(
-          "Failed to parse token file (invalid JSON).",
-          error
-        );
+        throw new TokenFileError("Failed to parse token file (invalid JSON).", error);
       } else if (error instanceof Error) {
-        throw new TokenFileError(
-          `Failed to process token file content: ${error.message}`,
-          error
-        );
+        throw new TokenFileError(`Failed to process token file content: ${error.message}`, error);
       } else {
-        throw new TokenFileError(
-          "An unknown error occurred while processing the token file.",
-          error
-        );
+        throw new TokenFileError("An unknown error occurred while processing the token file.", error);
       }
     }
   }
@@ -107,31 +84,19 @@ export default class AccessToken {
         const bufferSeconds = 5 * 60;
 
         if (typeof tokenContent.decodedToken.exp !== "number") {
-          console.warn(
-            'Token file exists but is missing or has an invalid "exp" claim. Treating as expired.'
-          );
+          console.warn('Token file exists but is missing or has an invalid "exp" claim. Treating as expired.');
           return true;
         }
 
-        return (
-          tokenContent.decodedToken.exp < currentTimeSeconds + bufferSeconds
-        );
+        return tokenContent.decodedToken.exp < currentTimeSeconds + bufferSeconds;
       } catch (error: unknown) {
-        if (
-          error instanceof TokenFileError &&
-          error.message.includes("not found")
-        ) {
+        if (error instanceof TokenFileError && error.message.includes("not found")) {
           return true;
         } else if (error instanceof TokenFileError) {
-          console.warn(
-            `Error reading token file for expiration check: ${error.message}. Treating as expired.`
-          );
+          console.warn(`Error reading token file for expiration check: ${error.message}. Treating as expired.`);
           return true;
         } else if (error instanceof Error) {
-          console.error(
-            `Unexpected error during expiration check: ${error.message}`,
-            error
-          );
+          console.error(`Unexpected error during expiration check: ${error.message}`, error);
           return true;
         } else {
           console.error("Unknown error during expiration check:", error);
@@ -151,9 +116,7 @@ export default class AccessToken {
     await this.fileAccessMutex.runExclusive(async () => {
       let decodedToken: JwtPayload & { [key: string]: unknown };
       try {
-        decodedToken = jwtDecode<JwtPayload & { [key: string]: unknown }>(
-          token
-        );
+        decodedToken = jwtDecode<JwtPayload & { [key: string]: unknown }>(token);
       } catch (error: unknown) {
         if (error instanceof Error) {
           throw new Error(`Failed to decode JWT token: ${error.message}`);
@@ -168,11 +131,7 @@ export default class AccessToken {
       };
 
       try {
-        await fs.writeFile(
-          this.tokenFile,
-          JSON.stringify(content, null, 4),
-          "utf-8"
-        );
+        await fs.writeFile(this.tokenFile, JSON.stringify(content, null, 4), "utf-8");
       } catch (error: unknown) {
         throw new TokenFileError("Failed to write token file.", error);
       }

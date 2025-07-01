@@ -33,7 +33,7 @@ This project demonstrates end-to-end and UI automation testing using [Microsoft 
 
 2. **Configure environment variables:**
 
-   - Copy `.env.example` to `.env` and fill in your credentials (e.g. `TA_EMAIL`, `TA_PASSWORD`).
+   - Copy `.env.example` to `.env` and fill in your information (e.g. `TA_EMAIL`, `TA_PASSWORD`).
 
 3. **Run all tests:**
 
@@ -41,10 +41,15 @@ This project demonstrates end-to-end and UI automation testing using [Microsoft 
    npx playwright test
    ```
 
+   Run tests with tag:
+   ```bash
+   npx playwright test --grep @SmokeTest
+   ```
+  
    Or run a specific test file:
 
    ```bash
-   npx playwright test tests/tc01.spec.ts
+   npx playwright test tests/login-form.spec.ts
    ```
 
 4. **Run with Allure or Report Portal:**
