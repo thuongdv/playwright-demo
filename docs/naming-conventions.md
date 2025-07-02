@@ -4,11 +4,10 @@ Following consistent naming conventions is crucial for writing readable, maintai
 
 ### General Principles
 
-  * **Clarity and descriptiveness**: Names should clearly describe the entity's purpose. Avoid overly short or cryptic names.
-  * **Consistency**: Stick to the same naming style throughout your project.
+- **Clarity and descriptiveness**: Names should clearly describe the entity's purpose. Avoid overly short or cryptic names.
+- **Consistency**: Stick to the same naming style throughout the project.
 
-
------
+---
 
 ### Variables and Functions
 
@@ -37,15 +36,14 @@ function sendEmail(to: string, subject: string): void {
 }
 ```
 
-
------
+---
 
 ### Constants
 
-Use **PascalCase** or **UPPER\_CASE** for constant values that are truly immutable and widely used.
+Use **PascalCase** or **UPPER_CASE** for constant values that are truly immutable and widely used.
 
-  * **PascalCase** is often used for constants within a class.
-  * **UPPER\_CASE** (or "snake\_case") is the traditional choice for top-level or exported constant values.
+- **PascalCase** is often used for constants within a class.
+- **UPPER_CASE** (or "snake_case") is the traditional choice for top-level or exported constant values.
 
 <!-- end list -->
 
@@ -58,8 +56,19 @@ class Configuration {
 }
 ```
 
+### Object Constants
 
------
+Should use camelCase. It's consistent with standard variable naming.
+
+```typescript
+// ✅ Recommended: camelCase
+export const checkoutInfo = {
+  firstName: "test",
+  lastName: "user",
+} as const;
+```
+
+---
 
 ### Classes, Enums, Interfaces, and Type Aliases
 
@@ -115,8 +124,7 @@ enum LogLevel {
 }
 ```
 
-
------
+---
 
 ### Private Members
 
@@ -136,15 +144,14 @@ class Customer {
 }
 ```
 
-
------
+---
 
 ### File Names
 
 File names should use **kebab-case** or **PascalCase**.
 
-  * **kebab-case** (`my-component.ts`) is very common, especially in Angular and other frameworks.
-  * **PascalCase** (`MyComponent.ts`) is often used when a file contains a single, primary class with the same name.
+- **kebab-case** (`my-component.ts`) is very common, especially in Angular and other frameworks.
+- **PascalCase** (`MyComponent.ts`) is often used when a file contains a single, primary class with the same name.
 
 Choose one style and use it consistently across your project.
 
@@ -157,3 +164,19 @@ api.service.ts
 UserProfile.ts
 ApiService.ts
 ```
+
+---
+
+### Page Fields
+
+Ideally, all controls which use the same APIs should be suffixed the same way.
+
+- text or textarea should be **Text**, e.g. usernameText, commentText
+- button or link should be **Button**, e.g. loginButton
+- checkbox should be **Checkbox**, e.g. rememberMeCheckbox
+- radio button should be **RadioButton**, e.g. genderRadioButton
+- select should be **Dropdown**, e.g. countryDropdown
+- label, div, span, h<n>, etc. should be **Label**, e.g. recentOrdersLabel
+- section or area should be **Area**, e.g. productArea
+
+---
