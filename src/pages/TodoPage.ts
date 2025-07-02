@@ -95,26 +95,6 @@ export class TodoPage {
     await this.page.goBack();
   }
 
-  async checkNumberOfTodosInLocalStorage(expected: number): Promise<void> {
-    await this.page.waitForFunction((e) => {
-      return JSON.parse(localStorage["react-todos"]).length === e;
-    }, expected);
-  }
-
-  async checkNumberOfCompletedTodosInLocalStorage(expected: number): Promise<void> {
-    await this.page.waitForFunction((e) => {
-      return JSON.parse(localStorage["react-todos"]).filter((todo: any) => todo.completed).length === e;
-    }, expected);
-  }
-
-  async checkTodosInLocalStorage(title: string): Promise<void> {
-    await this.page.waitForFunction((t) => {
-      return JSON.parse(localStorage["react-todos"])
-        .map((todo: any) => todo.title)
-        .includes(t);
-    }, title);
-  }
-
   async expectTodoItemsToHaveTexts(texts: readonly string[]): Promise<void> {
     await expect(this.todoTitles).toHaveText(texts);
   }
