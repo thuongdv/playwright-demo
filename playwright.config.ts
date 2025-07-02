@@ -1,8 +1,10 @@
+import * as os from "os";
+
 import { devices } from "@playwright/test";
 import { PlaywrightTestConfig } from "@playwright/test";
 import _ from "underscore";
+
 import settings from "settings";
-import * as os from "os";
 
 const RPconfig = {
   apiKey: settings.RP_API_KEY,

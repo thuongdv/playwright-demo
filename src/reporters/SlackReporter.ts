@@ -1,17 +1,10 @@
 import fs from "fs/promises";
 import Path from "path";
 
-import type {
-  FullResult,
-  FullConfig,
-  Reporter,
-  Suite,
-  TestCase,
-  TestResult,
-} from "@playwright/test/reporter";
-
 import settings from "settings";
 import Slack from "utils/SlackApi";
+
+import type { FullResult, FullConfig, Reporter, Suite, TestCase, TestResult } from "@playwright/test/reporter";
 
 type Summary = {
   totalCount: number;
@@ -32,7 +25,7 @@ class SlackReporter implements Reporter {
       "test-report",
       options.reportId ?? settings.REPORT_ID ?? "",
       "slack",
-      "summary-report.json"
+      "summary-report.json",
     );
   }
 
@@ -50,19 +43,14 @@ class SlackReporter implements Reporter {
   }
 
   async onEnd(): Promise<{ status?: FullResult["status"] } | undefined | void> {
-    const currentSummary = this.createSummary(
-      this.testResults,
-      this.totalCount
-    );
+    const currentSummary = this.createSummary(this.testResults, this.totalCount);
 
     await Slack.postMessage({
       channelId: settings.SLACK_REPORT_CHANNEL_ID,
       ts: settings.SLACK_REPORT_THREAD_TIMESTAMP,
       text: this.createSlackReportText(
         currentSummary,
-        `Test results progress \n\`${process.argv
-          .join(" ")
-          .replace(/.*playwright test /, "")}\``
+        `Test results progress \n\`${process.argv.join(" ").replace(/.*playwright test /, "")}\``,
       ),
     });
 
@@ -88,10 +76,7 @@ class SlackReporter implements Reporter {
     console.log(`Slack test report is saved: ${this.summaryFilePath}`);
   }
 
-  private createSummary(
-    testResults: Record<string, TestResult[]>,
-    totalCount: number
-  ): Summary {
+  private createSummary(testResults: Record<string, TestResult[]>, totalCount: number): Summary {
     const passed: string[] = [];
     const flaky: string[] = [];
     const failed: string[] = [];
@@ -100,15 +85,8 @@ class SlackReporter implements Reporter {
     Object.entries(testResults).forEach(([testId, results]) => {
       const statuses = results.map((result) => result.status);
       if (statuses.includes("passed")) passed.push(testId);
-      if (
-        statuses.includes("passed") &&
-        statuses.some((s) => ["failed", "timedOut"].includes(s))
-      )
-        flaky.push(testId);
-      if (
-        statuses.every((s) => ["failed", "timedOut", "interrupted"].includes(s))
-      )
-        failed.push(testId);
+      if (statuses.includes("passed") && statuses.some((s) => ["failed", "timedOut"].includes(s))) flaky.push(testId);
+      if (statuses.every((s) => ["failed", "timedOut", "interrupted"].includes(s))) failed.push(testId);
       if (statuses.includes("skipped")) skipped.push(testId);
     });
 
@@ -123,9 +101,7 @@ class SlackReporter implements Reporter {
 
   private async readPreviousSummaryFile(): Promise<Summary | undefined> {
     try {
-      const previousSummary = JSON.parse(
-        await fs.readFile(this.summaryFilePath, { encoding: "utf8" })
-      ) as Summary;
+      const previousSummary = JSON.parse(await fs.readFile(this.summaryFilePath, { encoding: "utf8" })) as Summary;
       return previousSummary;
     } catch (err) {
       if (!(err instanceof Error)) throw err;

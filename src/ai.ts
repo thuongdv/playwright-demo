@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+
 import settings from "settings";
 
 const ai = new GoogleGenAI({ apiKey: settings.GEMINI_API_KEY });
