@@ -4,7 +4,7 @@ import * as path from "path";
 import { Mutex } from "async-mutex";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 
-import { tempPath } from "assets";
+import { tempPath } from "src/assets";
 
 interface TokenData {
   token: string;

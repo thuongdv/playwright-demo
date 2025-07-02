@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
+import { LoginPage } from "pages/LoginPage";
 import settings from "settings";
 
 // Login form tests for https://demo.testarchitect.com/my-account/
@@ -35,15 +35,11 @@ test.describe("Login Form", () => {
     await expect(loginPage.rememberMeCheckbox).toBeChecked();
   });
 
-  test(
-    "should login with valid credentials",
-    { tag: ["@SmokeTest"] },
-    async ({ page }) => {
-      const loginPage = new LoginPage(page);
-      await loginPage.goto();
-      await loginPage.login(settings.TA_EMAIL, settings.TA_PASSWORD);
-      // Assert successful login: check for logout link or account page
-      await expect(loginPage.logoutLink).toBeVisible();
-    }
-  );
+  test("should login with valid credentials", { tag: ["@SmokeTest"] }, async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login(settings.TA_EMAIL, settings.TA_PASSWORD);
+    // Assert successful login: check for logout link or account page
+    await expect(loginPage.logoutLink).toBeVisible();
+  });
 });

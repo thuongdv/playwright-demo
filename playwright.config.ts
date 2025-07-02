@@ -35,7 +35,7 @@ const defaultConfig: PlaywrightTestConfig = {
      */
     timeout: 20_000,
   },
-  testDir: "./tests",
+  testDir: "./src/tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -73,6 +73,4 @@ const defaultConfig: PlaywrightTestConfig = {
   ],
 };
 
-export default process.env.REPORT === "rp"
-  ? _.extend(defaultConfig, config)
-  : defaultConfig;
+export default process.env.REPORT === "rp" ? _.extend(defaultConfig, config) : defaultConfig;

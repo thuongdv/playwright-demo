@@ -11,7 +11,7 @@ import type {
 } from "@playwright/test/reporter";
 
 import settings from "settings";
-import Slack from "utils/SlackApi";
+import Slack from "src/utils/SlackApi";
 
 type Summary = {
   totalCount: number;
