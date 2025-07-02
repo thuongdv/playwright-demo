@@ -176,7 +176,7 @@ Ideally, all controls which use the same APIs should be suffixed the same way.
 - checkbox should be **Checkbox**, e.g. rememberMeCheckbox
 - radio button should be **RadioButton**, e.g. genderRadioButton
 - select should be **Dropdown**, e.g. countryDropdown
-- label, div, span, h<n>, etc. should be **Label**, e.g. recentOrdersLabel
+- label, div, span, h\<n\>, etc. should be **Label**, e.g. recentOrdersLabel
 - section or area should be **Area**, e.g. productArea
 
 ---
