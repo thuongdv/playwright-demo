@@ -37,23 +37,25 @@ export class MyAccountPage {
     await this.loginButton.click();
   }
 
-  async verifyOrderHistoryIsDisplayed(orderHistories: OrderHistory | OrderHistory[]): Promise<void> {
+  async verifyOrderHistoriesDisplayed(orderHistories: OrderHistory | OrderHistory[]): Promise<void> {
     const histories = Array.isArray(orderHistories) ? orderHistories : [orderHistories];
 
     for (const orderHistory of histories) {
-      const row = this.oderHistoryTable.getByRole("row").filter({
-        has: this.page.locator('[data-title="Order"]', {
-          hasText: `${orderHistory.order}`,
-        }),
-      });
-
-      await expect(row).toBeVisibleWithReloadPage({ timeout: 60_000, interval: 5_000 });
-
-      await expect(row.locator('[data-title="Date"]')).toHaveText(`${orderHistory.date}`);
-      await expect(row.locator('[data-title="Status"]')).toHaveText(`${orderHistory.status}`);
-      await expect(row.locator('[data-title="Total"]')).toHaveText(
-        new RegExp(`${orderHistory.total.toLocaleString()}`),
-      );
+      await this.verifyOrderHistoryIsDisplayed(orderHistory);
     }
+  }
+
+  private async verifyOrderHistoryIsDisplayed(orderHistory: OrderHistory): Promise<void> {
+    const row = this.oderHistoryTable.getByRole("row").filter({
+      has: this.page.locator('[data-title="Order"]', {
+        hasText: `${orderHistory.order}`,
+      }),
+    });
+
+    await expect(row).toBeVisibleWithReloadPage({ timeout: 60_000, interval: 5_000 });
+
+    await expect(row.locator('[data-title="Date"]')).toHaveText(`${orderHistory.date}`);
+    await expect(row.locator('[data-title="Status"]')).toHaveText(`${orderHistory.status}`);
+    await expect(row.locator('[data-title="Total"]')).toHaveText(new RegExp(`${orderHistory.total.toLocaleString()}`));
   }
 }

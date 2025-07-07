@@ -25,5 +25,5 @@ test("Verify orders appear in order history", async ({ page }) => {
       total: 258,
     },
   ];
-  await myAccountPage.verifyOrderHistoryIsDisplayed(orderHistories);
+  await myAccountPage.verifyOrderHistoriesDisplayed(orderHistories);
 });
