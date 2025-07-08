@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 
 import { expect } from "fixtures/BaseFixture";
-import { OrderHistory } from "models/order-history";
+import { OrderHistory, OrderHistoryTableHeaders } from "models/order-history";
 
 export class MyAccountPage {
   readonly usernameInput: Locator = this.page.getByLabel("Username or email address *");
@@ -21,6 +21,8 @@ export class MyAccountPage {
     name: "Orders",
   });
   readonly oderHistoryTable: Locator = this.page.getByRole("table");
+  readonly orderHistoryTableRows: Locator = this.oderHistoryTable.getByRole("row");
+  readonly orderHistoryTableHeaders: Locator = this.oderHistoryTable.locator("tr th");
 
   constructor(private page: Page) {}
 
@@ -54,8 +56,52 @@ export class MyAccountPage {
 
     await expect(row).toBeVisibleWithReloadPage({ timeout: 60_000, interval: 5_000 });
 
-    await expect(row.locator('[data-title="Date"]')).toHaveText(`${orderHistory.date}`);
-    await expect(row.locator('[data-title="Status"]')).toHaveText(`${orderHistory.status}`);
-    await expect(row.locator('[data-title="Total"]')).toHaveText(new RegExp(`${orderHistory.total.toLocaleString()}`));
+    await expect(row.locator('[data-title="Date"]')).toHaveText(`${orderHistory.date}`, {
+      timeout: 1_000,
+      useInnerText: true,
+    });
+    await expect(row.locator('[data-title="Status"]')).toHaveText(`${orderHistory.status}`, {
+      timeout: 1_000,
+      useInnerText: true,
+    });
+    await expect(row.locator('[data-title="Total"]')).toHaveText(new RegExp(`${orderHistory.total.toLocaleString()}`), {
+      timeout: 1_000,
+      useInnerText: true,
+    });
+  }
+
+  async getOrderHistory(orderNumber: number): Promise<OrderHistory> {
+    const row = this.orderHistoryTableRows.filter({
+      hasText: `${orderNumber}`,
+    });
+
+    await expect(row).toBeVisibleWithReloadPage({ timeout: 30_000, interval: 5_000 });
+
+    const [dateHeaderIndex, statusHeaderIndex, totalHeaderIndex] = await Promise.all([
+      this.getOrderHistoryTableHeaderIndex(OrderHistoryTableHeaders.date),
+      this.getOrderHistoryTableHeaderIndex(OrderHistoryTableHeaders.status),
+      this.getOrderHistoryTableHeaderIndex(OrderHistoryTableHeaders.total),
+    ]);
+
+    const [date, status, total] = await Promise.all([
+      row.getByRole("cell").nth(dateHeaderIndex).innerText(),
+      row.getByRole("cell").nth(statusHeaderIndex).innerText(),
+      row.getByRole("cell").nth(totalHeaderIndex).innerText(),
+    ]);
+
+    const orderHistory: OrderHistory = {
+      order: orderNumber,
+      date: date ?? "",
+      status: status ?? "",
+      total: total ?? "",
+    };
+
+    return orderHistory;
+  }
+
+  private async getOrderHistoryTableHeaderIndex(headerName: string): Promise<number> {
+    await expect(this.orderHistoryTableHeaders).toContainText([headerName]);
+    const headers = await this.orderHistoryTableHeaders.allTextContents();
+    return headers.indexOf(headerName);
   }
 }
