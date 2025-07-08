@@ -4,20 +4,20 @@ import { expect } from "fixtures/BaseFixture";
 import { OrderHistory, OrderHistoryTableHeaders } from "models/order-history";
 
 export class MyAccountPage {
-  readonly usernameInput: Locator = this.page.getByLabel("Username or email address *");
-  readonly passwordInput: Locator = this.page.getByLabel("Password *");
+  readonly usernameText: Locator = this.page.getByLabel("Username or email address *");
+  readonly passwordText: Locator = this.page.getByLabel("Password *");
   readonly rememberMeCheckbox: Locator = this.page.getByLabel("Remember me");
   readonly loginButton: Locator = this.page.getByRole("button", {
     name: "Log in",
   });
   readonly errorMessage: Locator = this.page.locator(".woocommerce-error");
   readonly heading: Locator = this.page.getByRole("heading", { name: "Login" });
-  readonly logoutLink: Locator = this.page.getByRole("link", {
+  readonly logoutButton: Locator = this.page.getByRole("link", {
     name: "Logout",
   });
 
   private readonly myAccountNavigationArea: Locator = this.page.locator('div[class*="MyAccount-navigation-wrapper"]');
-  readonly orderLink: Locator = this.myAccountNavigationArea.getByRole("link", {
+  readonly orderButton: Locator = this.myAccountNavigationArea.getByRole("link", {
     name: "Orders",
   });
   readonly oderHistoryTable: Locator = this.page.getByRole("table");
@@ -31,8 +31,8 @@ export class MyAccountPage {
   }
 
   async login(username: string, password: string, rememberMe = false): Promise<void> {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
+    await this.usernameText.fill(username);
+    await this.passwordText.fill(password);
     if (rememberMe) {
       await this.rememberMeCheckbox.check();
     }

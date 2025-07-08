@@ -13,8 +13,8 @@ test.describe(
       const loginPage = new MyAccountPage(page);
       await loginPage.goto();
       await expect(loginPage.heading).toBeVisible();
-      await expect(loginPage.usernameInput).toBeVisible();
-      await expect(loginPage.passwordInput).toBeVisible();
+      await expect(loginPage.usernameText).toBeVisible();
+      await expect(loginPage.passwordText).toBeVisible();
       await expect(loginPage.loginButton).toBeVisible();
     });
 
@@ -45,7 +45,7 @@ test.describe(
       await loginPage.goto();
       await loginPage.login(settings.TA_EMAIL, settings.TA_PASSWORD);
       // Assert successful login: check for logout link or account page
-      await expect(loginPage.logoutLink).toBeVisible();
+      await expect(loginPage.logoutButton).toBeVisible();
     });
   },
 );

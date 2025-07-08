@@ -24,7 +24,7 @@ test("Verify orders appear in order history - grab order history information", a
   await myAccountPage.goto();
   await myAccountPage.login(settings.TA_EMAIL, settings.TA_PASSWORD);
 
-  await myAccountPage.orderLink.click();
+  await myAccountPage.orderButton.click();
 
   // Verify that the order history is displayed
   for (const expOrderHistory of orderHistories) {
