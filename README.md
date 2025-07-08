@@ -42,10 +42,11 @@ This project demonstrates end-to-end and UI automation testing using [Microsoft 
    ```
 
    Run tests with tag:
+
    ```bash
    npx playwright test --grep @SmokeTest
    ```
-  
+
    Or run a specific test file:
 
    ```bash
@@ -98,6 +99,14 @@ This project demonstrates end-to-end and UI automation testing using [Microsoft 
 - [Playwright Documentation](https://playwright.dev/docs/intro)
 - [Allure Reporting](https://docs.qameta.io/allure/)
 - [Report Portal](https://reportportal.io/)
+
+---
+
+## VS Code extensions
+
+- [Playwright Test for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright)
+- [Prettier code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
 
 ---
 
