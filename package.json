@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "tsc": "npx tsc --noEmit",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "test": "npx playwright test --config=playwright.config.ts",
+    "test:qat": "dotenv -e .env.qat -- npx playwright test --config=playwright.config.ts",
+    "report": "npx playwright show-report"
   },
   "repository": {
     "type": "git",
