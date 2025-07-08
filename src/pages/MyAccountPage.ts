@@ -39,37 +39,16 @@ export class MyAccountPage {
     await this.loginButton.click();
   }
 
-  async verifyOrderHistoriesDisplayed(orderHistories: OrderHistory | OrderHistory[]): Promise<void> {
-    const histories = Array.isArray(orderHistories) ? orderHistories : [orderHistories];
-
-    for (const orderHistory of histories) {
-      await this.verifyOrderHistoryIsDisplayed(orderHistory);
-    }
-  }
-
-  private async verifyOrderHistoryIsDisplayed(orderHistory: OrderHistory): Promise<void> {
-    const row = this.oderHistoryTable.getByRole("row").filter({
-      has: this.page.locator('[data-title="Order"]', {
-        hasText: `${orderHistory.order}`,
-      }),
-    });
-
-    await expect(row).toBeVisibleWithReloadPage({ timeout: 60_000, interval: 5_000 });
-
-    await expect(row.locator('[data-title="Date"]')).toHaveText(`${orderHistory.date}`, {
-      timeout: 1_000,
-      useInnerText: true,
-    });
-    await expect(row.locator('[data-title="Status"]')).toHaveText(`${orderHistory.status}`, {
-      timeout: 1_000,
-      useInnerText: true,
-    });
-    await expect(row.locator('[data-title="Total"]')).toHaveText(new RegExp(`${orderHistory.total.toLocaleString()}`), {
-      timeout: 1_000,
-      useInnerText: true,
-    });
-  }
-
+  /**
+   * Retrieves the order history details for a specific order number from the order history table.
+   *
+   * This method locates the table row corresponding to the provided order number, waits for it to become visible
+   * (reloading the page if necessary), and extracts the date, status, and total values from the row.
+   *
+   * @param orderNumber - The unique identifier of the order whose history is to be retrieved.
+   * @returns A promise that resolves to an {@link OrderHistory} object containing the order number, date, status, and total.
+   * @throws Will throw an error if the row for the given order number is not found or not visible within the timeout period.
+   */
   async getOrderHistory(orderNumber: number): Promise<OrderHistory> {
     const row = this.orderHistoryTableRows.filter({
       hasText: `${orderNumber}`,
@@ -99,6 +78,13 @@ export class MyAccountPage {
     return orderHistory;
   }
 
+  /**
+   * Retrieves the index of a specified header in the order history table.
+   *
+   * @param headerName - The name of the table header to find.
+   * @returns A promise that resolves to the index of the specified header.
+   * @throws If the specified header is not present in the table headers.
+   */
   private async getOrderHistoryTableHeaderIndex(headerName: string): Promise<number> {
     await expect(this.orderHistoryTableHeaders).toContainText([headerName]);
     const headers = await this.orderHistoryTableHeaders.allTextContents();

@@ -19,17 +19,6 @@ const orderHistories = [
   },
 ];
 
-test("Verify orders appear in order history", async ({ page }) => {
-  const myAccountPage = new MyAccountPage(page);
-  await myAccountPage.goto();
-  await myAccountPage.login(settings.TA_EMAIL, settings.TA_PASSWORD);
-
-  await myAccountPage.orderLink.click();
-
-  // Verify that the order history is displayed
-  await myAccountPage.verifyOrderHistoriesDisplayed(orderHistories);
-});
-
 test("Verify orders appear in order history - grab order history information", async ({ page }) => {
   const myAccountPage = new MyAccountPage(page);
   await myAccountPage.goto();
@@ -38,9 +27,11 @@ test("Verify orders appear in order history - grab order history information", a
   await myAccountPage.orderLink.click();
 
   // Verify that the order history is displayed
-  const orderHistory = await myAccountPage.getOrderHistory(orderHistories[0].order);
-  // Verify that the order history details are correct
-  expect(orderHistory.date).toBe(orderHistories[0].date);
-  expect(orderHistory.status).toBe(orderHistories[0].status);
-  expect(orderHistory.total).toContain(orderHistories[0].total);
+  for (const expOrderHistory of orderHistories) {
+    const orderHistory = await myAccountPage.getOrderHistory(expOrderHistory.order);
+    // Verify that the order history details are correct
+    expect(orderHistory.date).toBe(expOrderHistory.date);
+    expect(orderHistory.status).toBe(expOrderHistory.status);
+    expect(orderHistory.total).toContain(expOrderHistory.total);
+  }
 });
