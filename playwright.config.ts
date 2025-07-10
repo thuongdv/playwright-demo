@@ -1,5 +1,3 @@
-import * as os from "os";
-
 import { devices } from "@playwright/test";
 import { PlaywrightTestConfig } from "@playwright/test";
 import _ from "underscore";
@@ -29,6 +27,7 @@ const config: PlaywrightTestConfig = {
  * See https://playwright.dev/docs/test-configuration.
  */
 const defaultConfig: PlaywrightTestConfig = {
+  // Timeout for each test in milliseconds. Defaults to 30 seconds.
   timeout: 120_000,
   expect: {
     /**
@@ -45,7 +44,7 @@ const defaultConfig: PlaywrightTestConfig = {
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 1,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : os.cpus().length / 2,
+  workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [["html"], ["allure-playwright"]],
@@ -57,7 +56,7 @@ const defaultConfig: PlaywrightTestConfig = {
     /* Screenshot on failure. */
     screenshot: "only-on-failure",
     // Record video only when retrying a test for the first time.
-    video: "on-first-retry",
+    video: "off",
     // Channel to use, for example "chrome", "chrome-beta", "msedge", "msedge-beta".
     channel: "chrome",
   },
