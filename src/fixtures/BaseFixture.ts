@@ -43,9 +43,21 @@ export const expect = baseExpect.extend({
     };
   },
 
+  /**
+   * Asserts that the given locator becomes visible within a specified timeout, reloading the page and retrying as needed.
+   *
+   * This method repeatedly checks if the locator is visible, and if not, reloads the page and retries until the timeout is reached.
+   * It supports both positive and negative assertions (using `this.isNot`).
+   *
+   * @param locator - The Playwright Locator to check for visibility.
+   * @param options - Optional settings for the assertion.
+   * @param options.timeout - Maximum time in milliseconds to wait for the locator to become visible. Defaults to 5000ms.
+   * @param options.interval - Interval in milliseconds between retries. Defaults to 500ms.
+   * @returns An object containing the assertion result, message, and details about the expectation.
+   */
   async toBeVisibleWithReloadPage(locator: Locator, options?: { timeout?: number; interval?: number }) {
     const assertionName = "toBeVisibleWithReloadPage";
-    const timeout = options?.timeout ?? 5_000;
+    const timeout = options?.timeout ?? this.timeout ?? 5_000;
     const interval = options?.interval ?? 500;
 
     let pass = false;
@@ -86,6 +98,31 @@ export const expect = baseExpect.extend({
       name: assertionName,
       expected: `visible within ${timeout.toLocaleString()}ms (with reloads)`,
       actual: lastError?.matcherResult?.actual,
+    };
+  },
+
+  /**
+   * Asserts that the number of elements matched by the given locator is greater than or equal to the expected count.
+   *
+   * @param locator - The Playwright Locator instance to evaluate.
+   * @param expected - The minimum number of elements expected.
+   * @param options - Optional configuration object.
+   * @param options.timeout - Maximum time in milliseconds to wait for the condition to be met. Defaults to 5000ms.
+   * @returns An object containing a message function and a pass boolean indicating the result.
+   */
+  async toHaveCountGTE(locator: Locator, expected: number, options?: { timeout?: number }) {
+    const timeout = options?.timeout ?? this.timeout ?? 5_000;
+
+    const result = await baseExpect
+      .poll(async () => await locator.count(), {
+        message: `Checking if element count is >= ${expected}`,
+        timeout,
+      })
+      .toBeGreaterThanOrEqual(expected);
+
+    return {
+      message: () => `Expected element count to be greater than or equal to ${expected}, but got ${result}`,
+      pass: true,
     };
   },
 });

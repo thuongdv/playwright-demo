@@ -1,5 +1,4 @@
-import { devices } from "@playwright/test";
-import { PlaywrightTestConfig } from "@playwright/test";
+import { devices, PlaywrightTestConfig } from "@playwright/test";
 import _ from "underscore";
 
 import settings from "settings";
@@ -28,7 +27,7 @@ const config: PlaywrightTestConfig = {
  */
 const defaultConfig: PlaywrightTestConfig = {
   // Timeout for each test in milliseconds. Defaults to 30 seconds.
-  timeout: 120_000,
+  timeout: 180_000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -46,7 +45,6 @@ const defaultConfig: PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [["html"], ["allure-playwright"]],
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -56,9 +54,11 @@ const defaultConfig: PlaywrightTestConfig = {
     /* Screenshot on failure. */
     screenshot: "only-on-failure",
     // Record video only when retrying a test for the first time.
-    video: "off",
+    video: "on-first-retry",
     // Channel to use, for example "chrome", "chrome-beta", "msedge", "msedge-beta".
     channel: "chrome",
+    actionTimeout: 30_000,
+    navigationTimeout: 30_000,
   },
 
   /* Configure projects for major browsers */

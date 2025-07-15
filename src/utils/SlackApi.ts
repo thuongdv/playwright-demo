@@ -1,6 +1,6 @@
 import { WebClient } from "@slack/web-api";
 
-class Slack {
+export default class Slack {
   private static web = new WebClient(process.env.SLACK_TOKEN);
 
   private constructor() {}
@@ -27,5 +27,3 @@ class Slack {
     return result.messages;
   }
 }
-
-export default Slack;
