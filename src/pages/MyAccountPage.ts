@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 import { expect } from "fixtures/BaseFixture";
 import { OrderHistory, OrderHistoryTableHeaders } from "models/order-history";
@@ -17,7 +17,7 @@ export class MyAccountPage {
   });
 
   private readonly myAccountNavigationArea: Locator = this.page.locator('div[class*="MyAccount-navigation-wrapper"]');
-  readonly orderButton: Locator = this.myAccountNavigationArea.getByRole("link", {
+  private readonly orderButton: Locator = this.myAccountNavigationArea.getByRole("link", {
     name: "Orders",
   });
   readonly oderHistoryTable: Locator = this.page.getByRole("table");
@@ -37,6 +37,10 @@ export class MyAccountPage {
       await this.rememberMeCheckbox.check();
     }
     await this.loginButton.click();
+  }
+
+  async clickOrderButton(): Promise<void> {
+    await this.orderButton.click();
   }
 
   /**
