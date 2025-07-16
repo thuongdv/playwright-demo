@@ -128,18 +128,18 @@ enum LogLevel {
 
 ### Private Members
 
-A common and recommended convention is to prefix private properties and methods with an underscore (`_`). This provides a quick visual cue that the member is not intended for external use, even though TypeScript's `private` keyword enforces this at compile-time.
+The modern and recommended convention is **not** to prefix private properties and methods with an underscore (`_`). Rely on TypeScript's `private` keyword for encapsulation. This keeps names clean and consistent with the rest of your codebase.
 
 ```typescript
 class Customer {
-  private _id: number;
+  private id: number;
 
   constructor(id: number) {
-    this._id = id;
+    this.id = id;
   }
 
-  private _log(): void {
-    console.log(`Customer ID: ${this._id}`);
+  private log(): void {
+    console.log(`Customer ID: ${this.id}`);
   }
 }
 ```
