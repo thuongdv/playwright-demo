@@ -4,12 +4,12 @@ import { expect } from "fixtures/BaseFixture";
 import { billingDetail } from "models/billing-detail";
 import { OrderDetail } from "models/order-detail";
 import { OrderHistory } from "models/order-history";
-import CartPage from "pages/CartPage";
-import OrderReceivedPage from "pages/checkout/OrderReceivedPage";
-import CheckoutPage from "pages/CheckoutPage";
-import HomePage from "pages/HomePage";
-import { MyAccountPage } from "pages/MyAccountPage";
-import ProductCategoryPage from "pages/ProductCategoryPage";
+import CartPage from "pages/ta-demo/CartPage";
+import OrderReceivedPage from "pages/ta-demo/checkout/OrderReceivedPage";
+import CheckoutPage from "pages/ta-demo/CheckoutPage";
+import HomePage from "pages/ta-demo/HomePage";
+import { MyAccountPage } from "pages/ta-demo/MyAccountPage";
+import ProductCategoryPage from "pages/ta-demo/ProductCategoryPage";
 import settings from "settings";
 
 let homePage: HomePage;
