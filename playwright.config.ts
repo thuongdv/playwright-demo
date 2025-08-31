@@ -4,9 +4,9 @@ import _ from "underscore";
 import settings from "settings";
 
 const RPconfig = {
-  apiKey: settings.RP_API_KEY,
-  endpoint: settings.RP_ENDPOINT,
-  project: "playwright-demo",
+  apiKey: settings.REPORT_PORTAL_TOKEN,
+  endpoint: settings.REPORT_PORTAL_URL,
+  project: settings.REPORT_PORTAL_PROJECT,
   launch: "playwright-demo",
   description: "Playwright with Report Portal",
   includeTestSteps: true,
@@ -41,7 +41,7 @@ const defaultConfig: PlaywrightTestConfig = {
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 1,
+  retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
