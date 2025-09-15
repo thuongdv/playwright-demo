@@ -22,10 +22,6 @@ const PROJECTS = [
   { name: "03.) JDEdwards Manufacturing", standardName: "MFG", storeStatusFile: "man-automated-queue-results.txt" },
 ];
 
-// Create timestamp folder name using date-fns
-const now = new Date();
-const folderName = format(now, "dd-MM-yyyy");
-
 // NUMBER_OF_TEST_RESULTS=1 npx playwright test dws-test-result-rp.spec.ts
 for (const project of PROJECTS) {
   const numberOfTestResultsToCollect = Number(process.env.NUMBER_OF_TEST_RESULTS || 10);
@@ -39,7 +35,8 @@ for (const project of PROJECTS) {
     // Login to DWS
     await loginPage.login(settings.DWS_EMAIL, settings.DWS_PASSWORD);
 
-    await expect(page).toHaveURL(new RegExp(`${settings.DWS_URL}/.*`));
+    await expect(page).toHaveURL(new RegExp(`${settings.DWS_URL}/SwifTest/Dashboard`));
+    await page.waitForTimeout(5_000); // Wait for the page to load completely
 
     // Set cookies for DwsApi
     if (!settings.DWS_URL) throw new Error("DWS_URL is not set in settings");
@@ -76,6 +73,11 @@ for (const project of PROJECTS) {
 
       const automatedTestList = await dwsApi.getAutomatedTestListForTestQueue(automatedQueue.key as number);
 
+      // Create timestamp folder name using date-fns
+      if (!automatedQueue.executionStartTimeStamp) {
+        throw new Error("Automated queue does not have an execution start timestamp");
+      }
+      const folderName = format(automatedQueue.executionStartTimeStamp as string, "dd-MM-yyyy");
       const folderPath = path.join(settings.REPORTS_PATH, folderName);
 
       // Create folder if it doesn't exist
