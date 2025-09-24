@@ -22,7 +22,9 @@ const PROJECTS = [
   { name: "03.) JDEdwards Manufacturing", standardName: "MFG", storeStatusFile: "man-automated-queue-results.txt" },
 ];
 
-// NUMBER_OF_TEST_RESULTS=1 npx playwright test dws-test-result-rp.spec.ts
+// Set environment variables to control test execution.
+// Example: bash
+// NUMBER_OF_TEST_RESULTS=1 UPLOAD_TO_REPORT_PORTAL=false npx playwright test dws-test-result-rp.spec.ts
 for (const project of PROJECTS) {
   const numberOfTestResultsToCollect = Number(process.env.NUMBER_OF_TEST_RESULTS || 10);
   test(`${project.name} - Collect ${numberOfTestResultsToCollect} test results`, async ({ page, request }) => {
@@ -85,16 +87,6 @@ for (const project of PROJECTS) {
         await fs.promises.mkdir(folderPath, { recursive: true });
       }
 
-      // Create JUnit XML report and import to ReportPortal
-      const junitFilePath = ReportPortalUtils.createJUnitReport(project.standardName, automatedTestList, {
-        key: automatedQueue.key as string,
-        duration: automatedQueue.duration,
-        executionStartTimeStamp: automatedQueue.executionStartTimeStamp,
-        executionEndTimeStamp: automatedQueue.executionEndTimeStamp,
-      });
-      await ReportPortalUtils.importToReportPortal(junitFilePath, project.standardName);
-      await setTimeout(1_000); // To make the ReportPortal builds in expected order
-
       // Save automatedTestList to JSON file
       const filePath = path.join(folderPath, `${sanitize(project.name)}.json`);
       await fs.promises.writeFile(filePath, JSON.stringify(automatedTestList, null, 2));
@@ -105,6 +97,22 @@ for (const project of PROJECTS) {
 
       await FileUtils.appendToFirstLine(storeStatusFilePath, automatedQueue.key as string);
       console.log(`Report saved to: ${filePath}`);
+
+      if (process.env.UPLOAD_TO_REPORT_PORTAL === "true") {
+        console.log("Uploading to ReportPortal...");
+        // Create JUnit XML report and import to ReportPortal
+        const junitFilePath = ReportPortalUtils.createJUnitReport(project.standardName, automatedTestList, {
+          key: automatedQueue.key as string,
+          duration: automatedQueue.duration,
+          executionStartTimeStamp: automatedQueue.executionStartTimeStamp,
+          executionEndTimeStamp: automatedQueue.executionEndTimeStamp,
+        });
+        await ReportPortalUtils.importToReportPortal(junitFilePath, project.standardName);
+        await setTimeout(1_000); // To make the ReportPortal builds in expected order
+        console.log("Upload to ReportPortal completed");
+      } else {
+        console.log("Skipping upload to ReportPortal as UPLOAD_TO_REPORT_PORTAL is not set to true");
+      }
     }
   });
 }

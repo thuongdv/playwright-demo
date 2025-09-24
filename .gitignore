@@ -10,3 +10,6 @@ node_modules/
 
 .env*
 !.env.example
+
+dws-report/reports/
+dws-report/__pycache__/
