@@ -81,7 +81,9 @@ export default class DwsApi {
    */
   async getAutomatedTestListForTestQueue(testQueueId: string | number): Promise<TestResultsResponse> {
     const response = await this.request.get(
-      `${this.baseUrl}/Queue/GetAutomatedTestListForTestQueue?testQueueId=${testQueueId}&page=1&pageSize=100`,
+      `${this.baseUrl}/Queue/GetAutomatedTestListForTestQueue?testQueueId=${testQueueId}&page=1&pageSize=${
+        process.env.PAGE_SIZE ?? 100
+      }`,
       {
         headers: this.getHeaders(),
       },

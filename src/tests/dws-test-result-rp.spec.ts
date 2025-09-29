@@ -24,7 +24,7 @@ const PROJECTS = [
 
 // Set environment variables to control test execution.
 // Example: bash
-// NUMBER_OF_TEST_RESULTS=1 UPLOAD_TO_REPORT_PORTAL=false npx playwright test dws-test-result-rp.spec.ts
+// NUMBER_OF_TEST_RESULTS=1 UPLOAD_TO_REPORT_PORTAL=false PAGE_SIZE=200 npx playwright test dws-test-result-rp.spec.ts
 for (const project of PROJECTS) {
   const numberOfTestResultsToCollect = Number(process.env.NUMBER_OF_TEST_RESULTS || 10);
   test(`${project.name} - Collect ${numberOfTestResultsToCollect} test results`, async ({ page, request }) => {
