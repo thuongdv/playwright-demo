@@ -29,7 +29,5 @@ export default class LoginPage {
     await this.signInButton.click();
 
     await this.continueButton.click();
-
-    await this.page.waitForLoadState("networkidle");
   }
 }
