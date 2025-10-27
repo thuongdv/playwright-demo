@@ -140,7 +140,17 @@ def build_html(project_data, report_date=None):
 
     chart_overall_b64 = make_chart_overall(project_stats)
     chart_pie_b64 = make_chart_pie(total_all)
-    now = datetime.now(ZoneInfo("Asia/Bangkok")).strftime("%Y-%m-%d %H:%M:%S")
+    # Use ZoneInfo when available; on some Windows installs the tz database
+    # may be missing which raises "No time zone found with key ...".
+    # Fall back to a fixed UTC+7 timezone for Asia/Ho_Chi_Minh if ZoneInfo fails.
+    try:
+        tz = ZoneInfo("Asia/Ho_Chi_Minh")
+    except Exception:
+        # local import to avoid changing module-level imports and keep
+        # compatibility if timezone/timedelta are not needed elsewhere.
+        from datetime import timezone, timedelta
+        tz = timezone(timedelta(hours=7))
+    now = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
     # Summary
     summary_rows = []
