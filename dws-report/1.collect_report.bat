@@ -6,7 +6,7 @@ cd ../
 
 REM Set the environment variable for the test.
 REM This variable will only be set for the current command prompt session.
-set NUMBER_OF_TEST_RESULTS=1 && set UPLOAD_TO_REPORT_PORTAL=false
+set NUMBER_OF_TEST_RESULTS=1 && set UPLOAD_TO_REPORT_PORTAL=false && set PAGE_SIZE=200
 
 REM Execute the Playwright test command.
 echo "Starting Playwright test..."
