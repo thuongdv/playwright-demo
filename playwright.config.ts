@@ -49,7 +49,7 @@ const defaultConfig: PlaywrightTestConfig = {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: settings.BASE_URL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
+    trace: "retain-on-failure",
     /* Screenshot on failure. */
     screenshot: "only-on-failure",
     // Record video only when retrying a test for the first time.

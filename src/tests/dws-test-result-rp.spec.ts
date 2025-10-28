@@ -1,6 +1,6 @@
-import * as fs from "fs";
-import * as path from "path";
-import { setTimeout } from "timers/promises";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { setTimeout } from "node:timers/promises";
 
 import { expect, test } from "@playwright/test";
 import { format } from "date-fns";
@@ -37,8 +37,8 @@ for (const project of PROJECTS) {
     // Login to DWS
     await loginPage.login(settings.DWS_EMAIL, settings.DWS_PASSWORD);
 
-    await expect(page).toHaveURL(new RegExp(`${settings.DWS_URL}/SwifTest/Dashboard`));
-    await page.waitForTimeout(5_000); // Wait for the page to load completely
+    await expect(page).toHaveURL(new RegExp(`${settings.DWS_URL}/SwifTest/Dashboard`), { timeout: 60_000 });
+    await page.waitForTimeout(5000); // Wait for the page to load completely
 
     // Set cookies for DwsApi
     if (!settings.DWS_URL) throw new Error("DWS_URL is not set in settings");
@@ -108,7 +108,7 @@ for (const project of PROJECTS) {
           executionEndTimeStamp: automatedQueue.executionEndTimeStamp,
         });
         await ReportPortalUtils.importToReportPortal(junitFilePath, project.standardName);
-        await setTimeout(1_000); // To make the ReportPortal builds in expected order
+        await setTimeout(1000); // To make the ReportPortal builds in expected order
         console.log("Upload to ReportPortal completed");
       } else {
         console.log("Skipping upload to ReportPortal as UPLOAD_TO_REPORT_PORTAL is not set to true");

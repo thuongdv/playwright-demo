@@ -1,10 +1,10 @@
-import fs from "fs/promises";
-import Path from "path";
+import fs from "node:fs/promises";
+import Path from "node:path";
 
 import settings from "settings";
 import Slack from "utils/SlackApi";
 
-import type { FullResult, FullConfig, Reporter, Suite, TestCase, TestResult } from "@playwright/test/reporter";
+import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestResult } from "@playwright/test/reporter";
 
 type Summary = {
   totalCount: number;
@@ -17,7 +17,7 @@ type Summary = {
 class SlackReporter implements Reporter {
   private totalCount = 0;
   private readonly testResults: Record<string, TestResult[]> = {};
-  private summaryFilePath: string;
+  private readonly summaryFilePath: string;
 
   constructor(options: { reportId?: string }) {
     this.summaryFilePath = Path.join(
@@ -34,10 +34,7 @@ class SlackReporter implements Reporter {
   }
 
   onTestEnd(test: TestCase, result: TestResult): void {
-    const testId = test
-      .titlePath()
-      .filter((title) => title)
-      .join(" > ");
+    const testId = test.titlePath().filter(Boolean).join(" > ");
     if (!this.testResults[testId]) this.testResults[testId] = [];
     this.testResults[testId].push(result);
   }
@@ -82,13 +79,13 @@ class SlackReporter implements Reporter {
     const failed: string[] = [];
     const skipped: string[] = [];
 
-    Object.entries(testResults).forEach(([testId, results]) => {
+    for (const [testId, results] of Object.entries(testResults)) {
       const statuses = results.map((result) => result.status);
       if (statuses.includes("passed")) passed.push(testId);
       if (statuses.includes("passed") && statuses.some((s) => ["failed", "timedOut"].includes(s))) flaky.push(testId);
       if (statuses.every((s) => ["failed", "timedOut", "interrupted"].includes(s))) failed.push(testId);
       if (statuses.includes("skipped")) skipped.push(testId);
-    });
+    }
 
     return {
       totalCount,
@@ -114,7 +111,7 @@ class SlackReporter implements Reporter {
 
   private createSlackReportText(summary: Summary, title: string): string {
     // See: https://api.slack.com/reference/block-kit/composition-objects
-    const maxLength = 3_000;
+    const maxLength = 3000;
     let text = `:playwright-logo-1: ${title}
 \`\`\`
 ■ Number of tests: ${summary.totalCount}

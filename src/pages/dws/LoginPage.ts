@@ -7,7 +7,7 @@ export default class LoginPage {
   private readonly passwordText = this.page.getByLabel("Password");
   private readonly continueButton = this.page.getByRole("button", { name: "Continue" });
 
-  constructor(private page: Page) {}
+  constructor(private readonly page: Page) {}
 
   async goto() {
     await this.page.goto("/login");

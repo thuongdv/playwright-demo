@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import axios from "axios";
 import { format } from "date-fns";
@@ -23,7 +23,7 @@ export class ReportPortalUtils {
         failures: testResults.data.Value.filter((test) => test.successful === "FAIL").length,
         time: testResults.data.Value.reduce((acc, test) => {
           const duration = test.duration.split(":").reduce((acc, time, index) => {
-            return acc + parseFloat(time) * Math.pow(60, 2 - index);
+            return acc + Number.parseFloat(time) * Math.pow(60, 2 - index);
           }, 0);
           return acc + duration;
         }, 0),
@@ -38,7 +38,7 @@ export class ReportPortalUtils {
           name: test.testName,
           classname: test.scenarioName,
           time: test.duration.split(":").reduce((acc, time, index) => {
-            return acc + parseFloat(time) * Math.pow(60, 2 - index);
+            return acc + Number.parseFloat(time) * Math.pow(60, 2 - index);
           }, 0),
           timestamp: format(test.executionStartTimeStamp || new Date().toISOString(), "yyyy-MM-dd'T'HH:mm:ss"),
         },
@@ -48,7 +48,7 @@ export class ReportPortalUtils {
               name: test.testName,
               classname: test.scenarioName,
               time: test.duration.split(":").reduce((acc, time, index) => {
-                return acc + parseFloat(time) * Math.pow(60, 2 - index);
+                return acc + Number.parseFloat(time) * Math.pow(60, 2 - index);
               }, 0),
             },
             ...(test.successful === "FAIL" && {
