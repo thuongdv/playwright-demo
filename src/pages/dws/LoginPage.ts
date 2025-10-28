@@ -14,7 +14,7 @@ export default class LoginPage {
   }
 
   async login(username: string, password: string) {
-    await this.acceptCookiesButton.waitFor({ state: "visible", timeout: 5_000 }).catch(() => {
+    await this.acceptCookiesButton.waitFor({ state: "visible", timeout: 5000 }).catch(() => {
       console.log("No cookie consent popup found, continuing...");
     });
     if (await this.acceptCookiesButton.isVisible()) {
