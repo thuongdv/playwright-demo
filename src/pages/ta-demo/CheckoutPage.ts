@@ -12,7 +12,7 @@ export default class CheckoutPage {
   private readonly emailText: Locator = this.page.getByRole("textbox", { name: /Email address/i });
   private readonly placeOrderButton: Locator = this.page.getByRole("button", { name: /Place Order/i });
 
-  constructor(private page: Page) {}
+  constructor(private readonly page: Page) {}
 
   async fillBillingDetails(details: BillingDetail): Promise<void> {
     await this.fillFirstName(details.firstName);

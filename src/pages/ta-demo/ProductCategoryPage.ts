@@ -10,7 +10,7 @@ export default class ProductCategoryPage {
 
   private readonly productAddedMessage: Locator = this.page.getByText("Product added");
 
-  constructor(private page: Page) {}
+  constructor(private readonly page: Page) {}
 
   async addRandomProductToCart(numberOfProducts: number): Promise<Product[]> {
     await expect(this.productListItems).toHaveCountGTE(numberOfProducts);

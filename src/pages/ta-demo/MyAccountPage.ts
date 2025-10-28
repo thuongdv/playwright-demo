@@ -24,7 +24,7 @@ export class MyAccountPage {
   readonly orderHistoryTableRows: Locator = this.oderHistoryTable.getByRole("row");
   readonly orderHistoryTableHeaders: Locator = this.oderHistoryTable.locator("tr th");
 
-  constructor(private page: Page) {}
+  constructor(private readonly page: Page) {}
 
   async goto(): Promise<void> {
     await this.page.goto("/my-account/");

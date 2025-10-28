@@ -10,7 +10,7 @@ export default class HomePage {
     .getByRole("link")
     .filter({ has: this.page.locator(".et-cart-total") });
 
-  constructor(private page: Page) {}
+  constructor(private readonly page: Page) {}
 
   async goto(): Promise<void> {
     await this.page.goto("/");

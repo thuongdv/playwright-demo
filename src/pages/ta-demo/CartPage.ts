@@ -6,7 +6,7 @@ export default class CartPage {
   private readonly cartItems = this.page.getByRole("row");
   private readonly processCheckoutButton = this.page.getByRole("link", { name: /PROCEED TO CHECKOUT/i });
 
-  constructor(private page: Page) {}
+  constructor(private readonly page: Page) {}
 
   async getCartItemCount(): Promise<number> {
     await this.page.waitForLoadState();
