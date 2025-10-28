@@ -57,7 +57,7 @@ export const expect = baseExpect.extend({
    */
   async toBeVisibleWithReloadPage(locator: Locator, options?: { timeout?: number; interval?: number }) {
     const assertionName = "toBeVisibleWithReloadPage";
-    const timeout = options?.timeout ?? this.timeout ?? 5_000;
+    const timeout = options?.timeout ?? this.timeout ?? 5000;
     const interval = options?.interval ?? 500;
 
     let pass = false;
@@ -111,7 +111,7 @@ export const expect = baseExpect.extend({
    * @returns An object containing a message function and a pass boolean indicating the result.
    */
   async toHaveCountGTE(locator: Locator, expected: number, options?: { timeout?: number }) {
-    const timeout = options?.timeout ?? this.timeout ?? 5_000;
+    const timeout = options?.timeout ?? this.timeout ?? 5000;
 
     const result = await baseExpect
       .poll(async () => await locator.count(), {

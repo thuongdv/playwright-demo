@@ -12,6 +12,8 @@ async function main(): Promise<void> {
   console.log(response.text);
 }
 
-main().catch((error) => {
+try {
+  await main();
+} catch (error) {
   console.error("Error:", error);
-});
+}

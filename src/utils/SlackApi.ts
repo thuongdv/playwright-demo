@@ -1,7 +1,7 @@
 import { WebClient } from "@slack/web-api";
 
 export default class Slack {
-  private static web = new WebClient(process.env.SLACK_TOKEN);
+  private static readonly web = new WebClient(process.env.SLACK_TOKEN);
 
   private constructor() {}
 

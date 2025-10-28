@@ -9,7 +9,7 @@ export default class OrderReceivedPage {
   private readonly orderDate: Locator = this.orderDetailsArea.locator(".date strong");
   private readonly total: Locator = this.orderDetailsArea.locator(".total strong");
 
-  constructor(private page: Page) {}
+  constructor(private readonly page: Page) {}
 
   async getOrderDetails(): Promise<OrderDetail> {
     const orderNumberText = await this.orderNumber.innerText();

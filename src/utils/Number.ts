@@ -29,6 +29,6 @@ export default class NumberUtils {
    * NumberUtils.extractNumber("no numbers")  // returns ""
    */
   static extractNumber(stringNumber: string): string {
-    return stringNumber.trim().replace(/[^0-9.]/g, "");
+    return stringNumber.trim().replaceAll(/[^0-9.]/g, "");
   }
 }

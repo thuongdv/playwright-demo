@@ -58,7 +58,7 @@ export class MyAccountPage {
       hasText: `${orderNumber}`,
     });
 
-    await expect(row).toBeVisibleWithReloadPage({ timeout: 30_000, interval: 5_000 });
+    await expect(row).toBeVisibleWithReloadPage({ timeout: 30_000, interval: 5000 });
 
     const [dateHeaderIndex, statusHeaderIndex, totalHeaderIndex] = await Promise.all([
       this.getOrderHistoryTableHeaderIndex(OrderHistoryTableHeaders.date),
