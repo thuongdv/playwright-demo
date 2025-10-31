@@ -1,7 +1,7 @@
 import { APIRequestContext } from "@playwright/test";
 
 import settings from "settings";
-import { TestResultsResponse } from "utils/DwsTestResult";
+import { TestResultsResponse } from "utils/dws-test-result";
 
 export default class DwsApi {
   private readonly baseUrl: string = `${settings.DWS_URL}/SwifTest`;

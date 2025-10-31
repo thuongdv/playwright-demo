@@ -1,6 +1,6 @@
 import { Page } from "@playwright/test";
 
-import { expect } from "fixtures/BaseFixture";
+import { expect } from "fixtures/base-fixture";
 
 export default class CartPage {
   private readonly cartItems = this.page.getByRole("row");

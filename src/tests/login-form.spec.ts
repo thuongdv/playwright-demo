@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { MyAccountPage } from "pages/ta-demo/MyAccountPage";
+import { MyAccountPage } from "pages/ta-demo/my-account-page";
 import settings from "settings";
 
 test.describe(

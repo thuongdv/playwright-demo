@@ -1,7 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 
 import { OrderDetail } from "models/order-detail";
-import NumberUtils from "utils/Number";
+import NumberUtils from "utils/number-utils";
 
 export default class OrderReceivedPage {
   private readonly orderDetailsArea: Locator = this.page.locator(".order_details");

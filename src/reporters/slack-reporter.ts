@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import Path from "node:path";
 
 import settings from "settings";
-import Slack from "utils/SlackApi";
+import Slack from "utils/slack-api";
 
 import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestResult } from "@playwright/test/reporter";
 

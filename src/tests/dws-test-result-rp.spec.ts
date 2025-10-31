@@ -6,12 +6,12 @@ import { expect, test } from "@playwright/test";
 import { format } from "date-fns";
 import sanitize from "sanitize-filename";
 
-import LoginPage from "pages/dws/LoginPage";
+import LoginPage from "pages/dws/login-page";
 import settings from "settings";
-import DwsApi from "utils/DwsApi";
-import { QueueInfo, TestResultsResponse } from "utils/DwsTestResult";
-import FileUtils from "utils/FileUtils";
-import { ReportPortalUtils } from "utils/ReportPortalUtils";
+import DwsApi from "utils/dws-api";
+import { QueueInfo, TestResultsResponse } from "utils/dws-test-result";
+import FileUtils from "utils/file-utils";
+import { ReportPortalUtils } from "utils/report-portal-utils";
 
 const PROJECTS = [
   { name: "01.) JDEdwards Finance", standardName: "FIN", storeStatusFile: "fin-automated-queue-results.txt" },

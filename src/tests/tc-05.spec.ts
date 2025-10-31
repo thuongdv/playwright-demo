@@ -1,15 +1,15 @@
 import { Page, test } from "@playwright/test";
 
-import { expect } from "fixtures/BaseFixture";
+import { expect } from "fixtures/base-fixture";
 import { billingDetail } from "models/billing-detail";
 import { OrderDetail } from "models/order-detail";
 import { OrderHistory } from "models/order-history";
-import CartPage from "pages/ta-demo/CartPage";
-import OrderReceivedPage from "pages/ta-demo/checkout/OrderReceivedPage";
-import CheckoutPage from "pages/ta-demo/CheckoutPage";
-import HomePage from "pages/ta-demo/HomePage";
-import { MyAccountPage } from "pages/ta-demo/MyAccountPage";
-import ProductCategoryPage from "pages/ta-demo/ProductCategoryPage";
+import CartPage from "pages/ta-demo/cart-page";
+import CheckoutPage from "pages/ta-demo/checkout-page";
+import OrderReceivedPage from "pages/ta-demo/checkout/order-received-page";
+import HomePage from "pages/ta-demo/home-page";
+import { MyAccountPage } from "pages/ta-demo/my-account-page";
+import ProductCategoryPage from "pages/ta-demo/product-category-page";
 import settings from "settings";
 
 let homePage: HomePage;

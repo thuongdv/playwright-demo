@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { Builder } from "xml2js";
 
 import settings from "settings";
-import { QueueInfo, TestResultsResponse } from "utils/DwsTestResult";
+import { QueueInfo, TestResultsResponse } from "utils/dws-test-result";
 
 export class ReportPortalUtils {
   /**

@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 
-import { expect } from "fixtures/BaseFixture";
+import { expect } from "fixtures/base-fixture";
 import { OrderHistory, OrderHistoryTableHeaders } from "models/order-history";
 
 export class MyAccountPage {

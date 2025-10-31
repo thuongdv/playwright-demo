@@ -1,8 +1,8 @@
 import { Locator, Page } from "@playwright/test";
 
-import { expect } from "fixtures/BaseFixture";
+import { expect } from "fixtures/base-fixture";
 import { Product } from "models/product";
-import NumberUtils from "utils/Number";
+import NumberUtils from "utils/number-utils";
 
 export default class ProductCategoryPage {
   private readonly productList: Locator = this.page.locator(".row.products");
