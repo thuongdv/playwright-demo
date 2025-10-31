@@ -7,7 +7,17 @@
     "source.organizeImports": "explicit"
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "cSpell.ignoreWords": ["reportportal", "genai", "unmark", "woocommerce", "networkidle", "dotenv", "sonarqube", "sonarsource"],
+  "cSpell.ignoreWords": [
+    "reportportal",
+    "genai",
+    "unmark",
+    "woocommerce",
+    "networkidle",
+    "dotenv",
+    "sonarqube",
+    "sonarsource",
+    "JDETA"
+  ],
 
   "cSpell.ignorePaths": ["**/node_modules/**", "**/.vscode/**", "package.json", "tsconfig.json"]
 }
