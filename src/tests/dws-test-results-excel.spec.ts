@@ -1,14 +1,12 @@
-import * as fs from "node:fs";
 import * as path from "node:path";
 
 import { expect, test } from "@playwright/test";
-import { format } from "date-fns";
-import * as XLSX from "xlsx";
 
 import LoginPage from "pages/dws/login-page";
 import settings from "settings";
 import DwsApi from "utils/dws-api";
-import { TestResultsResponse } from "utils/dws-test-result";
+import { DwsTestReportExcel } from "utils/dws-test-report-excel";
+import { RowData } from "utils/excel-utils";
 
 const PROJECTS = [
   { name: "01.) JDEdwards Finance", standardName: "FIN" },
@@ -21,90 +19,6 @@ const PROJECTS = [
 
 const EXCEL_FILE = "test-results.xlsx";
 
-// Helper function to process test results and calculate statistics
-function calculateTestStats(testResults: TestResultsResponse) {
-  const stats = {
-    total: testResults.data.Value.length,
-    passed: 0,
-    failed: 0,
-    totalDuration: 0,
-  };
-
-  for (const test of testResults.data.Value) {
-    if (test.successful === "SUCCESS") {
-      stats.passed++;
-    } else {
-      stats.failed++;
-    }
-
-    // Calculate duration in seconds
-    const duration = test.duration.split(":").reduce((acc, time, index) => {
-      return acc + Number.parseFloat(time) * Math.pow(60, 2 - index);
-    }, 0);
-    stats.totalDuration += duration;
-  }
-
-  return stats;
-}
-
-interface ExcelRow {
-  "Queue ID": string;
-  Date: string;
-  "Total Tests": number;
-  Passed: number;
-  Failed: number;
-  "Pass Rate": string;
-  "Total Duration (min)": string;
-}
-
-type ExcelRowData = [string, string, string, string, string, string, string];
-type RawRowData = [string, string, number, number, number, string, string];
-
-interface QueueData {
-  row: RawRowData;
-  queueId: string;
-}
-
-// Helper: Read existing queue IDs from Excel file
-function readExistingQueueIds(excelPath: string): Set<string> {
-  const existingQueueIds = new Set<string>();
-
-  if (fs.existsSync(excelPath)) {
-    const workbook = XLSX.readFile(excelPath);
-    for (const sheetName of workbook.SheetNames) {
-      const sheet = workbook.Sheets[sheetName];
-      const data = XLSX.utils.sheet_to_json<ExcelRow>(sheet);
-      for (const row of data) {
-        if (row["Queue ID"]) {
-          existingQueueIds.add(row["Queue ID"]);
-        }
-      }
-    }
-  }
-
-  return existingQueueIds;
-}
-
-// Helper function to generate row data
-function generateRowData(testResults: TestResultsResponse, queueId: string, executionDate: string): RawRowData {
-  const stats = calculateTestStats(testResults);
-
-  return [
-    queueId,
-    format(new Date(executionDate), "yyyy-MM-dd"),
-    stats.total,
-    stats.passed,
-    stats.failed,
-    `${((stats.passed / stats.total) * 100).toFixed(0)}%`,
-    (stats.totalDuration / 60).toFixed(0),
-  ];
-}
-
-// Helper: Convert raw row data to Excel row data
-function convertToExcelRow(row: RawRowData): ExcelRowData {
-  return [row[0], row[1], row[2].toString(), row[3].toString(), row[4].toString(), row[5], row[6]];
-}
-
 // Helper: process automated queues for a project and generate worksheet
 async function processProjectQueues(
   _project: { name: string; standardName: string },
@@ -112,10 +26,10 @@ async function processProjectQueues(
   numberOfTestResultsToCollect: number,
   dwsApi: DwsApi,
   existingQueueIds: Set<string>,
-): Promise<ExcelRowData[] | null> {
+): Promise<RowData[] | null> {
   if (!automatedQueuesData.data?.Value) throw new Error("No automated queues found for the test queue");
 
-  const queueData: QueueData[] = [];
+  const queueData: { queueId: string; row: RowData }[] = [];
 
   // Process all available queues first
   for (const automatedQueue of automatedQueuesData.data.Value) {
@@ -137,7 +51,11 @@ async function processProjectQueues(
 
     queueData.push({
       queueId,
-      row: generateRowData(automatedTestList, queueId, automatedQueue.executionStartTimeStamp as string),
+      row: DwsTestReportExcel.generateRowData(
+        automatedTestList,
+        queueId,
+        automatedQueue.executionStartTimeStamp as string,
+      ),
     });
   }
 
@@ -147,14 +65,7 @@ async function processProjectQueues(
   queueData.sort((a, b) => b.queueId.localeCompare(a.queueId));
 
   // Take only the requested number of results
-  const limitedData = queueData.slice(0, numberOfTestResultsToCollect);
-
-  return [
-    // Headers
-    ["Queue ID", "Date", "Total Tests", "Passed", "Failed", "Pass Rate", "Total Duration (min)"],
-    // Sorted values
-    ...limitedData.map((d) => convertToExcelRow(d.row)),
-  ];
+  return queueData.slice(0, numberOfTestResultsToCollect).map((d) => d.row);
 }
 
 // Set environment variables to control test execution.
@@ -177,17 +88,11 @@ test("Generate Excel report with test results", async ({ page, request }) => {
   const cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join("; ");
   dwsApi.setCookies(cookieString);
 
-  // Create reports directory if it doesn't exist
-  const reportsPath = settings.REPORTS_PATH;
-  if (!fs.existsSync(reportsPath)) {
-    fs.mkdirSync(reportsPath, { recursive: true });
-  }
-
-  const excelPath = path.join(reportsPath, EXCEL_FILE);
-  const existingQueueIds = readExistingQueueIds(excelPath);
+  const excelPath = path.join(settings.REPORTS_PATH, EXCEL_FILE);
+  const existingQueueIds = DwsTestReportExcel.readExistingQueueIds(excelPath);
 
   // Create workbook
-  const workbook = fs.existsSync(excelPath) ? XLSX.readFile(excelPath) : XLSX.utils.book_new();
+  const workbook = DwsTestReportExcel.getOrCreateWorkbook(excelPath);
 
   // Process each project
   for (const project of PROJECTS) {
@@ -207,7 +112,7 @@ test("Generate Excel report with test results", async ({ page, request }) => {
       continue;
     }
 
-    const wsData = await processProjectQueues(
+    const rowsData = await processProjectQueues(
       project,
       automatedQueuesData,
       numberOfTestResultsToCollect,
@@ -215,33 +120,12 @@ test("Generate Excel report with test results", async ({ page, request }) => {
       existingQueueIds,
     );
 
-    if (wsData) {
-      const ws = XLSX.utils.aoa_to_sheet(wsData);
-
-      // Add column widths
-      ws["!cols"] = [
-        { wch: 15 }, // Queue ID
-        { wch: 12 }, // Date
-        { wch: 12 }, // Total Tests
-        { wch: 10 }, // Passed
-        { wch: 10 }, // Failed
-        { wch: 12 }, // Pass Rate
-        { wch: 20 }, // Total Duration
-      ];
-
-      // Remove existing worksheet if it exists
-      if (workbook.SheetNames.includes(project.standardName)) {
-        const idx = workbook.SheetNames.indexOf(project.standardName);
-        workbook.SheetNames.splice(idx, 1);
-        delete workbook.Sheets[project.standardName];
-      }
-
-      // Add worksheet to workbook
-      XLSX.utils.book_append_sheet(workbook, ws, project.standardName);
+    if (rowsData) {
+      DwsTestReportExcel.updateProjectSheet(workbook, project.standardName, rowsData);
     }
   }
 
   // Save workbook
-  XLSX.writeFile(workbook, excelPath);
+  DwsTestReportExcel.saveWorkbook(workbook, excelPath);
   console.log(`Excel report generated: ${excelPath}`);
 });
