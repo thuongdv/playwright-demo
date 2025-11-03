@@ -11,6 +11,7 @@ export interface TestResultsResponse {
   data: {
     Value: TestResult[];
   };
+  total: number;
 }
 
 export interface QueueInfo {
