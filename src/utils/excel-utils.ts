@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import * as path from "node:path";
 
 import * as XLSX from "xlsx";
 
@@ -83,7 +84,7 @@ export class ExcelUtils {
    * Ensure directory exists for Excel file
    */
   static ensureDirectoryExists(filePath: string): void {
-    const dir = filePath.substring(0, filePath.lastIndexOf("/"));
+    const dir = path.dirname(filePath);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
