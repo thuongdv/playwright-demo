@@ -11,16 +11,20 @@ This project demonstrates end-to-end and UI automation testing using [Microsoft 
 ## 📁 Project Structure
 
 ```
-├── assets/                  # Static assets
-├── docs/                    # Documentation
-├── fixtures/                # Test data and fixtures
-├── pages/                   # Page Object Model classes
-├── reporters/               # Custom reporters
-├── tests/                   # Test cases (main test directory)
-├── utils/                   # Utility functions
-├── playwright.config.ts     # Playwright configuration
-├── package.json             # Project dependencies and scripts
-├── tsconfig.json            # TypeScript configuration
+src/
+├── fixtures/                 # Custom test fixtures and assertions
+├── pages/                    # Page Object Model classes
+│   └── ta-demo/              # Demo site page objects
+├── reporters/                # Custom reporters (Slack)
+├── tests/                    # Test cases
+├── utils/                    # Utility functions and API helpers
+│   └── ReportPortalUtils.ts  # Report Portal integration
+├── settings.ts               # Environment configuration
+│
+├── playwright.config.ts # Playwright configuration
+├── package.json         # Project dependencies and scripts
+├── tsconfig.json        # TypeScript configuration
+└── .env.example         # Environment variables template
 ```
 
 ## 🚀 How to Run Tests
