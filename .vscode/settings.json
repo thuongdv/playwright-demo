@@ -16,7 +16,8 @@
     "dotenv",
     "sonarqube",
     "sonarsource",
-    "JDETA"
+    "JDETA",
+    "maxsize"
   ],
 
   "cSpell.ignorePaths": ["**/node_modules/**", "**/.vscode/**", "package.json", "tsconfig.json"]

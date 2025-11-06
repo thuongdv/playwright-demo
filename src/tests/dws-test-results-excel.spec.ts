@@ -1,8 +1,8 @@
 import * as path from "node:path";
 
 import { expect, test } from "@playwright/test";
-
 import LoginPage from "pages/dws/login-page";
+
 import settings from "settings";
 import DwsApi from "utils/dws-api";
 import { DwsTestReportExcel } from "utils/dws-test-report-excel";

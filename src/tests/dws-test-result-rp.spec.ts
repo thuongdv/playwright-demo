@@ -4,9 +4,9 @@ import { setTimeout } from "node:timers/promises";
 
 import { expect, test } from "@playwright/test";
 import { format } from "date-fns";
+import LoginPage from "pages/dws/login-page";
 import sanitize from "sanitize-filename";
 
-import LoginPage from "pages/dws/login-page";
 import settings from "settings";
 import DwsApi from "utils/dws-api";
 import { QueueInfo, TestResultsResponse } from "utils/dws-test-result";

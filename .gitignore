@@ -8,6 +8,9 @@ node_modules/
 /allure-report/
 /allure-results/
 
+# Logs
+logs/
+
 .env*
 !.env.example
 
