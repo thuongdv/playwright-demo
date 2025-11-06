@@ -44,7 +44,7 @@ export default tseslint.config(
 
       // Import ordering rules
       "import/order": [
-        "error",
+        "off",
         {
           groups: [
             "builtin", // Node.js built-ins

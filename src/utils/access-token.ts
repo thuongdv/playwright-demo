@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 
 import { Mutex } from "async-mutex";
-import { jwtDecode, JwtPayload } from "jwt-decode";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 
 import { tempPath } from "assets";
 

@@ -1,10 +1,10 @@
 import fs from "node:fs/promises";
 import Path from "node:path";
 
+import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestResult } from "@playwright/test/reporter";
+
 import settings from "settings";
 import Slack from "utils/slack-api";
-
-import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestResult } from "@playwright/test/reporter";
 
 type Summary = {
   totalCount: number;
