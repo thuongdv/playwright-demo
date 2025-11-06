@@ -183,4 +183,116 @@ export class DwsTestReportExcel {
   static saveWorkbook(workbook: XLSX.WorkBook, excelPath: string): void {
     ExcelUtils.saveWorkbook(workbook, excelPath);
   }
+
+  /**
+   * Read all pod data from workbook and organize by date
+   */
+  static readAllPodData(workbook: XLSX.WorkBook, podNames: string[]): Map<string, Map<string, { passRate: number }>> {
+    const podDataByDate = new Map<string, Map<string, { passRate: number }>>();
+
+    for (const podName of podNames) {
+      if (!workbook.SheetNames.includes(podName)) {
+        continue;
+      }
+
+      const sheet = workbook.Sheets[podName];
+      const data = ExcelUtils.readWorksheetData<DwsTestReportRow>(sheet);
+
+      for (const row of data) {
+        const date = row.Date;
+        const passRateStr = row["Pass Rate"];
+
+        if (!date || !passRateStr) continue;
+
+        // Parse pass rate (remove % sign)
+        const passRate = Number.parseInt(passRateStr.toString().replace("%", ""), 10);
+
+        if (!podDataByDate.has(date)) {
+          podDataByDate.set(date, new Map());
+        }
+
+        const dateMap = podDataByDate.get(date)!;
+        dateMap.set(podName, { passRate });
+      }
+    }
+
+    return podDataByDate;
+  }
+
+  /**
+   * Filter dates that exist in all pods and generate summary rows
+   */
+  static generateSummaryData(
+    podDataByDate: Map<string, Map<string, { passRate: number }>>,
+    podNames: string[],
+  ): RowData[] {
+    const summaryRows: RowData[] = [];
+
+    // Filter dates that have data for all pods
+    for (const [date, podsData] of podDataByDate.entries()) {
+      // Check if all pods have data for this date
+      const hasAllPods = podNames.every((podName) => podsData.has(podName));
+
+      if (!hasAllPods) {
+        continue;
+      }
+
+      // Calculate average pass rate
+      let totalPassRate = 0;
+      const row: RowData = [date];
+
+      for (const podName of podNames) {
+        const podData = podsData.get(podName)!;
+        row.push(podData.passRate);
+        totalPassRate += podData.passRate;
+      }
+
+      const avgPassRate = Math.round(totalPassRate / podNames.length);
+      row.push(avgPassRate);
+
+      summaryRows.push(row);
+    }
+
+    // Sort by date descending
+    summaryRows.sort((a, b) => {
+      const dateA = new Date(a[0] as string);
+      const dateB = new Date(b[0] as string);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    return summaryRows;
+  }
+
+  /**
+   * Create summary worksheet with common dates across all pods
+   */
+  static createSummarySheet(workbook: XLSX.WorkBook, podNames: string[]): void {
+    const podDataByDate = this.readAllPodData(workbook, podNames);
+    const summaryRows = this.generateSummaryData(podDataByDate, podNames);
+
+    if (summaryRows.length === 0) {
+      return;
+    }
+
+    // Create headers
+    const headers: RowData = ["Date"];
+    for (const podName of podNames) {
+      headers.push(`${podName} % Passed`);
+    }
+    headers.push("% Passed");
+
+    const wsData = [headers, ...summaryRows];
+
+    // Define column widths
+    const columnWidths: ColumnWidth[] = [
+      { wch: 12 }, // Date
+      { wch: 15 }, // MFG % Passed
+      { wch: 15 }, // FIN % Passed
+      { wch: 15 }, // S&D % Passed
+      { wch: 12 }, // % Passed
+    ];
+
+    const ws = ExcelUtils.createWorksheet(wsData, columnWidths);
+    ExcelUtils.updateWorkbookSheet(workbook, "Summary", ws);
+  }
 }
