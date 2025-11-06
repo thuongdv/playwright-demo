@@ -53,7 +53,7 @@ export default class DwsApi {
    * @param page Page number
    * @param pageSize Number of items per page
    */
-  async getAutomatedTestQueues(
+  async GetAutomatedTestQueuesForTestQueue(
     testQueueId: string | number,
     page: number = 1,
     pageSize: number = 50,

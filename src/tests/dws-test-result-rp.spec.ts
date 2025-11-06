@@ -134,7 +134,7 @@ for (const project of PROJECTS) {
     // Find the queue item for the project and fetch automated queues
     const filteredItem = await dwsApi.findQueueItemByTitle(project.name);
     if (!filteredItem?.key) throw new Error("Filtered item does not have a key");
-    const automatedQueuesData = await dwsApi.getAutomatedTestQueues(filteredItem.key);
+    const automatedQueuesData = await dwsApi.GetAutomatedTestQueuesForTestQueue(filteredItem.key);
 
     await processAutomatedQueues(project, automatedQueuesData, numberOfTestResultsToCollect, dwsApi);
   });

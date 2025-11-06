@@ -6,6 +6,7 @@ import LoginPage from "pages/dws/login-page";
 import settings from "settings";
 import DwsApi from "utils/dws-api";
 
+import logger from "logger";
 import { DwsTestReportExcel } from "utils/dws-test-report-excel";
 import { RowData } from "utils/excel-utils";
 
@@ -23,8 +24,9 @@ const EXCEL_FILE = "test-results.xlsx";
 // Helper: process automated queues for a project and generate worksheet
 async function processProjectQueues(
   _project: { name: string; standardName: string },
-  automatedQueuesData: { data?: { Value?: Array<{ key?: string | number; executionStartTimeStamp?: string }> } },
-  numberOfTestResultsToCollect: number,
+  automatedQueuesData: {
+    data?: { Value?: Array<{ key?: string | number; executionStartTimeStamp?: string; duration?: string }> };
+  },
   dwsApi: DwsApi,
   existingQueueIds: Set<string>,
 ): Promise<RowData[] | null> {
@@ -40,23 +42,30 @@ async function processProjectQueues(
 
     // Skip if already processed
     if (existingQueueIds.has(queueId)) {
-      console.log(`Queue ${queueId} already processed, skipping...`);
+      logger.info(`Queue ${queueId} already processed, skipping...`);
       continue;
     }
+
+    logger.info(`Processing queue ${queueId}...`);
 
     const automatedTestList = await dwsApi.getAutomatedTestListForTestQueue(automatedQueue.key as number);
     if (!automatedTestList?.data?.Value?.length) {
-      console.log(`No test results found for queue ${queueId}`);
+      logger.info(`No test results found for queue ${queueId}`);
       continue;
     }
 
+    const rowData: RowData = DwsTestReportExcel.generateRowData(
+      automatedTestList,
+      queueId,
+      automatedQueue.executionStartTimeStamp as string,
+    );
+    // Format duration to HH:MM:SS (remove fractional seconds)
+    const formattedDuration = (automatedQueue.duration as string)?.split(".")[0] || "";
+    rowData.push(formattedDuration);
+
     queueData.push({
       queueId,
-      row: DwsTestReportExcel.generateRowData(
-        automatedTestList,
-        queueId,
-        automatedQueue.executionStartTimeStamp as string,
-      ),
+      row: rowData,
     });
   }
 
@@ -65,8 +74,7 @@ async function processProjectQueues(
   // Sort by queue ID (larger to smaller)
   queueData.sort((a, b) => b.queueId.localeCompare(a.queueId));
 
-  // Take only the requested number of results
-  return queueData.slice(0, numberOfTestResultsToCollect).map((d) => d.row);
+  return queueData.map((qd) => qd.row);
 }
 
 // Set environment variables to control test execution.
@@ -97,29 +105,27 @@ test("Generate Excel report with test results", async ({ page, request }) => {
 
   // Process each project
   for (const project of PROJECTS) {
-    console.log(`Processing ${project.name}...`);
+    logger.info(`Processing ${project.name}...`);
 
     // Get queue item for the project
     const queueItem = await dwsApi.findQueueItemByTitle(project.name);
     if (!queueItem) {
-      console.log(`Queue not found for ${project.name}`);
+      logger.info(`Queue not found for ${project.name}`);
       continue;
     }
 
     // Get automated test queues for the project
-    const automatedQueuesData = await dwsApi.getAutomatedTestQueues(queueItem.key);
+    const automatedQueuesData = await dwsApi.GetAutomatedTestQueuesForTestQueue(
+      queueItem.key,
+      1,
+      numberOfTestResultsToCollect,
+    );
     if (!automatedQueuesData?.data?.Value?.length) {
-      console.log(`No automated queues found for ${project.name}`);
+      logger.info(`No automated queues found for ${project.name}`);
       continue;
     }
 
-    const rowsData = await processProjectQueues(
-      project,
-      automatedQueuesData,
-      numberOfTestResultsToCollect,
-      dwsApi,
-      existingQueueIds,
-    );
+    const rowsData = await processProjectQueues(project, automatedQueuesData, dwsApi, existingQueueIds);
 
     if (rowsData) {
       DwsTestReportExcel.updateProjectSheet(workbook, project.standardName, rowsData);
@@ -128,5 +134,5 @@ test("Generate Excel report with test results", async ({ page, request }) => {
 
   // Save workbook
   DwsTestReportExcel.saveWorkbook(workbook, excelPath);
-  console.log(`Excel report generated: ${excelPath}`);
+  logger.info(`Excel report generated: ${excelPath}`);
 });
