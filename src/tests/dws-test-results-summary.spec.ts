@@ -2,16 +2,10 @@ import * as path from "node:path";
 
 import { test } from "@playwright/test";
 
-import settings from "settings";
-
+import { PROJECTS } from "constants/project-configs";
 import logger from "logger";
+import settings from "settings";
 import { DwsTestReportExcel } from "utils/dws-test-report-excel";
-
-const PROJECTS = [
-  { name: "03.) JDEdwards Manufacturing", standardName: "MFG" },
-  { name: "01.) JDEdwards Finance", standardName: "FIN" },
-  { name: "02.) JDEdwards Sales & Distribution", standardName: "S_D" },
-];
 
 const EXCEL_FILE = "test-results.xlsx";
 

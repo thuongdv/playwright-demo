@@ -3,21 +3,12 @@ import * as path from "node:path";
 import { expect, test } from "@playwright/test";
 import LoginPage from "pages/dws/login-page";
 
+import { PROJECTS } from "constants/project-configs";
+import logger from "logger";
 import settings from "settings";
 import DwsApi from "utils/dws-api";
-
-import logger from "logger";
 import { DwsTestReportExcel } from "utils/dws-test-report-excel";
 import { RowData } from "utils/excel-utils";
-
-const PROJECTS = [
-  { name: "01.) JDEdwards Finance", standardName: "FIN" },
-  {
-    name: "02.) JDEdwards Sales & Distribution",
-    standardName: "S_D",
-  },
-  { name: "03.) JDEdwards Manufacturing", standardName: "MFG" },
-];
 
 const EXCEL_FILE = "test-results.xlsx";
 

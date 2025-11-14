@@ -7,21 +7,13 @@ import { format } from "date-fns";
 import LoginPage from "pages/dws/login-page";
 import sanitize from "sanitize-filename";
 
+import { PROJECTS } from "constants/project-configs";
+import logger from "logger";
 import settings from "settings";
 import DwsApi from "utils/dws-api";
 import { QueueInfo, TestResultsResponse } from "utils/dws-test-result";
 import FileUtils from "utils/file-utils";
 import { ReportPortalUtils } from "utils/report-portal-utils";
-
-const PROJECTS = [
-  { name: "01.) JDEdwards Finance", standardName: "FIN", storeStatusFile: "fin-automated-queue-results.txt" },
-  {
-    name: "02.) JDEdwards Sales & Distribution",
-    standardName: "S_D",
-    storeStatusFile: "sd-automated-queue-results.txt",
-  },
-  { name: "03.) JDEdwards Manufacturing", standardName: "MFG", storeStatusFile: "man-automated-queue-results.txt" },
-];
 
 // Helper: save automatedTestList to filesystem and register queue id
 async function saveAutomatedTestList(
@@ -47,7 +39,7 @@ async function saveAutomatedTestList(
     await fs.promises.writeFile(storeStatusFilePath, "");
   }
   await FileUtils.appendToFirstLine(storeStatusFilePath, automatedQueue.key as string);
-  console.log(`Report saved to: ${filePath}`);
+  logger.info(`Report saved to: ${filePath}`);
   return { filePath, storeStatusFilePath };
 }
 
@@ -58,7 +50,7 @@ async function uploadToReportPortalIfNeeded(
   automatedQueue: any,
 ) {
   if (process.env.UPLOAD_TO_REPORT_PORTAL === "true") {
-    console.log("Uploading to ReportPortal...");
+    logger.info("Uploading to ReportPortal...");
     const queueInfo: QueueInfo = {
       key: automatedQueue.key as string,
       duration: automatedQueue.duration,
@@ -70,9 +62,9 @@ async function uploadToReportPortalIfNeeded(
     const junitFilePath = ReportPortalUtils.createJUnitReport(projectStandardName, automatedTestList, queueInfo);
     await ReportPortalUtils.importToReportPortal(junitFilePath, projectStandardName);
     await setTimeout(1000); // To make the ReportPortal builds in expected order
-    console.log("Upload to ReportPortal completed");
+    logger.info("Upload to ReportPortal completed");
   } else {
-    console.log("Skipping upload to ReportPortal as UPLOAD_TO_REPORT_PORTAL is not set to true");
+    logger.info("Skipping upload to ReportPortal as UPLOAD_TO_REPORT_PORTAL is not set to true");
   }
 }
 
@@ -90,7 +82,7 @@ async function processAutomatedQueues(
   for (let i = numberOfAutomatedQueuesToCollect - 1; i >= 0; i--) {
     const automatedQueue = automatedQueuesData.data.Value[i];
     if (!automatedQueue) {
-      console.log(`No automated queue found at index ${i}`);
+      logger.warn(`No automated queue found at index ${i}`);
       continue;
     }
 
@@ -98,7 +90,7 @@ async function processAutomatedQueues(
 
     const storeStatusFilePath = path.join(settings.REPORTS_PATH, project.storeStatusFile);
     if (await FileUtils.doesFileContain(storeStatusFilePath, automatedQueue.key as string)) {
-      console.log(`${storeStatusFilePath} already contains queue id ${automatedQueue.key}, skipping...`);
+      logger.info(`${storeStatusFilePath} already contains queue id ${automatedQueue.key}, skipping...`);
       continue;
     }
 
