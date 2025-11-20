@@ -2,7 +2,7 @@
 """
 Generate ELS Daily PASS/FAIL report from multiple JSON/TXT report files or folders.
 """
-import argparse, json, base64, io, os, sys, webbrowser, re, glob
+import argparse, json, base64, io, os, sys, webbrowser, re, glob, time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import matplotlib.pyplot as plt
@@ -282,7 +282,7 @@ def main():
                     pname = items[0].get("projectName", os.path.basename(f))
                     project_data[pname] = items
             except Exception as e:
-                print(f"⚠️ Skip {f}: {e}", file=sys.stderr)
+                print(f"Skip {f}: {e}", file=sys.stderr)
 
     if not project_data:
         print("No valid data found!", file=sys.stderr)
@@ -294,16 +294,31 @@ def main():
     if os.path.isdir(first_input):
         report_date = os.path.basename(os.path.normpath(first_input))
 
+    # Check if report.html already exists in the output directory
+    output_path = os.path.abspath(args.output)
+    output_dir = os.path.dirname(output_path)
+    report_html_path = os.path.join(output_dir, "report.html")
+    
+    if os.path.exists(report_html_path):
+        print(f"Report already exists at {report_html_path}. Skipping generation.")
+        if args.open:
+            webbrowser.open_new_tab(report_html_path)
+        return
+
     html = build_html(project_data, report_date)
     with open(args.output, "w", encoding="utf-8") as w:
         w.write(html)
-    print(f"✔ Report generated: {args.output}")
+    print(f"Report generated: {args.output}")
     if args.open:
         webbrowser.open_new_tab(os.path.abspath(args.output))
 
 if __name__ == "__main__":
+    start_time = time.time()
     try:
         main()
     except Exception as e:
         print("Error:", e, file=sys.stderr)
         sys.exit(1)
+    finally:
+        elapsed_time = time.time() - start_time
+        print(f"Execution time: {elapsed_time:.2f} seconds")

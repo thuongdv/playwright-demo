@@ -245,7 +245,7 @@ def main():
     html = build_html(daily_stats, test_history, line_b64, bar_b64)
     with open(args.output, "w", encoding="utf-8") as f:
         f.write(html)
-    print("✔ Index generated:", args.output)
+    print("Index generated:", args.output)
 
 if __name__ == "__main__":
     main()
