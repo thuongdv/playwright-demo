@@ -15,9 +15,9 @@ interface IssueWithBugs {
   bugTickets: string;
 }
 
-// JQL Query to find Bug issues with specific label in JDETA project
+// JQL Query to find Bug issues with specific label in GIVEN project
 // Then we'll extract the parent Stories/Tasks these bugs are linked to
-const JQL_BUG_FILTER = `project = JDETA
+const JQL_BUG_FILTER = `project = ${settings.JIRA_PROJECT}
 AND issuetype = Bug
 AND labels = "DB-Refresh-2025-11-14" ORDER BY created DESC`;
 

@@ -3,6 +3,7 @@ import util from "node:util";
 import { test } from "@playwright/test";
 
 import { JiraClient } from "utils/jira-client";
+import settings from "settings";
 
 // Time periods for data-driven testing
 const TIME_PERIODS = [
@@ -17,7 +18,7 @@ const TIME_PERIODS = [
   { from: "2025-12-09", to: "2025-12-15" },
 ];
 
-const JQL_TEMPLATE = `project = JDETA
+const JQL_TEMPLATE = `project = ${settings.JIRA_PROJECT}
 AND "system/service group[dropdown]" IN (FIN, MFG, "S&D")
 AND status IN (Done, "Production Ready")
 AND (

@@ -16,7 +16,6 @@
     "dotenv",
     "sonarqube",
     "sonarsource",
-    "JDETA",
     "maxsize",
     "pycache",
     "issuetype",

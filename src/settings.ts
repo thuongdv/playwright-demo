@@ -29,6 +29,7 @@ const settings = {
   JIRA_BASE_URL: validatedEnv("JIRA_BASE_URL"),
   JIRA_API_TOKEN: validatedEnv("JIRA_API_TOKEN"),
   JIRA_EMAIL: validatedEnv("JIRA_EMAIL"),
+  JIRA_PROJECT: validatedEnv("JIRA_PROJECT"),
 };
 
 export default settings;
