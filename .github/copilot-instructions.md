@@ -53,6 +53,7 @@ Tips for safe edits
 - Add/update unit or integration tests under `src/tests/` that exercise your change. For quick validation run a specific file with `npx playwright test path/to/file`.
 - Avoid changing global Playwright config unless necessary; prefer environment toggles or new projects in `playwright.config.ts`.
 - If adding new env variables, update `src/settings.ts` and document defaults in `.env.example` (create if missing).
+- **Never include emoji icons in generated code** (e.g., avoid `console.log('🐛 Bugs: ...')` or similar). Keep all code output plain text only.
 
 Examples (concrete snippets from repo)
 

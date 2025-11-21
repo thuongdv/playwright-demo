@@ -18,7 +18,9 @@
     "sonarsource",
     "JDETA",
     "maxsize",
-    "pycache"
+    "pycache",
+    "issuetype",
+    "issuelinks"
   ],
 
   "cSpell.ignorePaths": ["**/node_modules/**", "**/.vscode/**", "package.json", "tsconfig.json"]
