@@ -24,7 +24,7 @@ async function saveAutomatedTestList(
   if (!automatedQueue.executionStartTimeStamp) {
     throw new Error("Automated queue does not have an execution start timestamp");
   }
-  const folderName = format(automatedQueue.executionStartTimeStamp as string, "dd-MM-yyyy");
+  const folderName = format(automatedQueue.executionStartTimeStamp as string, "yyyy-MM-dd");
   const folderPath = path.join(settings.REPORTS_PATH, folderName);
 
   if (!fs.existsSync(folderPath)) {

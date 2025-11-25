@@ -9,7 +9,7 @@ from generate_report import read_items, is_pass
 
 def parse_date(name):
     try:
-        return datetime.strptime(name, "%d-%m-%Y")
+        return datetime.strptime(name, "%Y-%m-%d")
     except:
         return None
 
