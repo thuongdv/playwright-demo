@@ -4,7 +4,7 @@ dotenv.config();
 
 const validatedEnv = (name: string): string => {
   const value = process.env[name];
-  if (!value) throw new Error(`Invalid env ${name}`);
+  if (!value) throw new Error(`Missing environment variable: ${name}`);
 
   return value;
 };
