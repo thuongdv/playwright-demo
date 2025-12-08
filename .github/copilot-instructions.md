@@ -4,10 +4,10 @@ Keep this short and specific — aim for the patterns and commands an agent need
 
 Repository highlights
 
-- TypeScript Playwright test suite with Page Object Model under `src/pages/` and tests in `src/tests/`.
-- Custom fixtures and assertions live in `src/fixtures/BaseFixture.ts` (imports `test` and extends `expect`). Use these helpers instead of raw Playwright expect when editing tests.
-- Environment-based configuration is in `src/settings.ts` which calls `dotenv.config()` and throws for missing required env vars. Many utilities and reporters use these env vars (RP*\*, GEMINI_API_KEY, DWS*_, SLACK\__).
-- Reporting and integrations: Allure (`allure-playwright`), Playwright HTML reporter, Report Portal (`@reportportal/agent-js-playwright`), and a custom Slack reporter in `src/reporters/SlackReporter.ts`.
+- TypeScript Playwright test suite with Page Object Model under `src/pages/ta-demo/` and tests in `src/tests/`.
+- Custom fixtures and assertions live in `src/fixtures/base-fixture.ts` (imports `test` and extends `expect`). Use these helpers instead of raw Playwright expect when editing tests.
+- Environment-based configuration is in `src/settings.ts` which calls `dotenv.config()` and throws for missing required env vars. Required env vars include: RP_*, TA_*, SLACK_*, BASE_URL, DWS_*, REPORTS_PATH, and JIRA_*.
+- Reporting and integrations: Allure (`allure-playwright`), Playwright HTML reporter, Report Portal (`@reportportal/agent-js-playwright`), and a custom Slack reporter in `src/reporters/slack-reporter.ts`.
 
 What to change and how (contract)
 
@@ -29,21 +29,21 @@ Key workflows and commands (use these exact commands)
 Project-specific conventions
 
 - Tests live in `src/tests/` and usually import page objects with path aliases like `pages/ta-demo/HomePage`. Prefer existing page objects over creating new low-level selectors.
-- Page objects follow class-based pattern (constructor takes `Page`) and expose methods for actions (example: `pages/ta-demo/CartPage.ts`).
+- Page objects follow class-based pattern (constructor takes `Page`) and expose methods for actions (example: `pages/ta-demo/cart-page.ts`).
 - Custom expect extensions: `toHaveAmount`, `toBeVisibleWithReloadPage`, `toHaveCountGTE`. Use these where appropriate instead of reimplementing behavior.
 - Settings are strict: `src/settings.ts` validates required env vars at import time. When adding new env usage, update `src/settings.ts` to validate it and consider adding `.env.example` if needed.
 - Reporting flags: `process.env.REPORT === 'rp'` enables Report Portal. To test Report Portal flows locally, set `REPORT=rp` and required RP\_\* env vars.
 
 Integration points & external deps
 
-- Report Portal: configured in `playwright.config.ts` and used by tests like `src/tests/dws-test-result-rp.spec.ts` and `src/utils/ReportPortalUtils.ts` (creates JUnit XML then POSTs to RP API).
-- Slack: `src/reporters/SlackReporter.ts` posts summary messages using `@slack/web-api` and env vars SLACK\_\*.
-- DWS API: `src/utils/DwsApi.ts` interacts with an external DWS service; it expects DWS*URL/DWS*\* env vars.
-- Gemini/GenAI example: `src/ai.ts` shows usage of `@google/genai` with `GEMINI_API_KEY` from settings.
+- Report Portal: configured in `playwright.config.ts` and used with `@reportportal/agent-js-playwright` for test reporting.
+- Slack: `src/reporters/slack-reporter.ts` posts summary messages using `@slack/web-api` and env vars SLACK\_\*.
+- JIRA: `src/utils/jira-client.ts` interacts with JIRA API using env vars JIRA\_\*.
+- Test Automation Site: tests target a demo application configured via TA\_\* env vars.
 
 Patterns and file examples (copy-edit tasks use these)
 
-- When editing tests, import `expect` from `fixtures/BaseFixture` to get project custom matchers: `import { expect } from 'fixtures/BaseFixture';`
+- When editing tests, import `expect` from `fixtures/base-fixture` to get project custom matchers: `import { expect } from 'fixtures/base-fixture';`
 - To add a new page object, put it under `src/pages/<area>/` and follow the existing pattern: constructor(page: Page) and methods returning Locator or performing actions.
 - For reporters or utilities that write files, prefer `settings.REPORTS_PATH` from `src/settings.ts` for locations.
 
@@ -57,16 +57,16 @@ Tips for safe edits
 
 Examples (concrete snippets from repo)
 
-- Custom expect usage: `import { expect } from 'fixtures/BaseFixture'; await expect(locator).toHaveAmount(2);`
+- Custom expect usage: `import { expect } from 'fixtures/base-fixture'; await expect(locator).toHaveAmount(2);`
 - Enable Report Portal in CI/local debug: `REPORT=rp RP_ENDPOINT=... RP_PROJECT=... RP_API_KEY=... npm test`
 
 Files to inspect for more context
 
 - `playwright.config.ts` (default config & RP toggle)
 - `src/settings.ts` (env validation)
-- `src/fixtures/BaseFixture.ts` (custom matchers)
+- `src/fixtures/base-fixture.ts` (custom matchers)
 - `src/pages/` and `src/tests/` (POM and tests)
-- `src/reporters/SlackReporter.ts` and `src/utils/ReportPortalUtils.ts` (reporting integrations)
+- `src/reporters/slack-reporter.ts` and `src/utils/report-portal-utils.ts` (reporting integrations)
 
 If something is unclear
 

@@ -1,5 +1,4 @@
 import * as fs from "node:fs";
-import * as path from "node:path";
 
 import * as XLSX from "xlsx";
 
@@ -78,15 +77,5 @@ export class ExcelUtils {
       rows.push(row);
     }
     return rows;
-  }
-
-  /**
-   * Ensure directory exists for Excel file
-   */
-  static ensureDirectoryExists(filePath: string): void {
-    const dir = path.dirname(filePath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
   }
 }
