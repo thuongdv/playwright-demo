@@ -72,4 +72,11 @@ If something is unclear
 
 - Ask for the intended change's scope (test, page object, reporter, or infra). Provide the test filename or file you want changed and a short description. I will run typecheck and tests for quick verification.
 
+Agent routing (use exact names)
+
+- Use `Context7-Expert` for questions about external libraries or frameworks, API usage, best practices, and version-aware guidance.
+- Use `Playwright Tester Mode` for Playwright test generation, locator fixes, flaky test stabilization, test execution/refinement, and website flow exploration.
+- Use agent names exactly as defined in `.github/agents/*.agent.md` (case-sensitive), and keep task routing aligned with each agent's description.
+- If a request mixes both concerns, first use `Context7-Expert` for library correctness, then use `Playwright Tester Mode` to apply the result in tests.
+
 End of instructions.
