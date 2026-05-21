@@ -1,6 +1,6 @@
 import { Locator, expect as baseExpect } from "@playwright/test";
 
-export { test } from "@playwright/test";
+export { Locator, Page, test } from "@playwright/test";
 
 export const expect = baseExpect.extend({
   async toHaveAmount(locator: Locator, expected: number, options?: { timeout?: number }): Promise<any> {

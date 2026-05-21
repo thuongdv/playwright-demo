@@ -1,6 +1,6 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "fixtures/base-fixture";
 
-import { MyAccountPage } from "pages/ta-demo/my-account-page";
+import MyAccountPage from "pages/ta-demo/my-account.page";
 import settings from "settings";
 
 test.describe(

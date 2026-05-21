@@ -6,7 +6,6 @@
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "explicit"
   },
-  "typescript.preferences.importModuleSpecifier": "non-relative",
   "cSpell.ignoreWords": [
     "reportportal",
     "genai",

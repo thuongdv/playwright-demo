@@ -5,10 +5,10 @@ import { Product } from "models/product";
 import NumberUtils from "utils/number-utils";
 
 export default class ProductCategoryPage {
-  private readonly productList: Locator = this.page.locator(".row.products");
-  private readonly productListItems: Locator = this.productList.locator(".content-product");
+  readonly productList: Locator = this.page.locator(".row.products");
+  readonly productListItems: Locator = this.productList.locator(".content-product");
 
-  private readonly productAddedMessage: Locator = this.page.getByText("Product added");
+  readonly productAddedMessage: Locator = this.page.getByText("Product added");
 
   constructor(private readonly page: Page) {}
 

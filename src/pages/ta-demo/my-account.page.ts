@@ -3,7 +3,7 @@ import { Locator, Page } from "@playwright/test";
 import { expect } from "fixtures/base-fixture";
 import { OrderHistory, OrderHistoryTableHeaders } from "models/order-history";
 
-export class MyAccountPage {
+export default class MyAccountPage {
   readonly usernameText: Locator = this.page.getByLabel("Username or email address *");
   readonly passwordText: Locator = this.page.getByLabel("Password *");
   readonly rememberMeCheckbox: Locator = this.page.getByLabel("Remember me");
@@ -20,9 +20,9 @@ export class MyAccountPage {
   private readonly orderButton: Locator = this.myAccountNavigationArea.getByRole("link", {
     name: "Orders",
   });
-  readonly oderHistoryTable: Locator = this.page.getByRole("table");
-  readonly orderHistoryTableRows: Locator = this.oderHistoryTable.getByRole("row");
-  readonly orderHistoryTableHeaders: Locator = this.oderHistoryTable.locator("tr th");
+  readonly orderHistoryTable: Locator = this.page.getByRole("table");
+  readonly orderHistoryTableRows: Locator = this.orderHistoryTable.getByRole("row");
+  readonly orderHistoryTableHeaders: Locator = this.orderHistoryTable.locator("tr th");
 
   constructor(private readonly page: Page) {}
 

@@ -122,19 +122,18 @@ export class JiraClient {
         maxResults: maxResults.toString(),
         fields: fields.join(","),
       });
-      
+
       // Use nextPageToken if provided, otherwise use startAt
       if (nextPageToken) {
         params.append("nextPageToken", nextPageToken);
       } else if (startAt > 0) {
         params.append("startAt", startAt.toString());
       }
-      
-      const response = await axios.get<any>(
-        `${this.baseUrl}/rest/api/3/search/jql?${params.toString()}`,
-        { headers: this.getHeaders() },
-      );
-      
+
+      const response = await axios.get<any>(`${this.baseUrl}/rest/api/3/search/jql?${params.toString()}`, {
+        headers: this.getHeaders(),
+      });
+
       return {
         issues: response.data.issues || [],
         nextPageToken: response.data.nextPageToken,
@@ -172,10 +171,10 @@ export class JiraClient {
       const response = await this.searchIssues(jql, 0, maxResults, fields, nextPageToken);
       nextPageToken = response.nextPageToken;
       isLast = response.isLast ?? false;
-      
+
       // Track how many new issues we actually added
       let newIssuesAdded = 0;
-      
+
       for (const issue of response.issues) {
         if (!seenKeys.has(issue.key)) {
           seenKeys.add(issue.key);
@@ -183,10 +182,10 @@ export class JiraClient {
           newIssuesAdded++;
         }
       }
-      
+
       hasNewIssues = newIssuesAdded > 0;
       logger.info(`Fetched ${response.issues.length} issues, ${newIssuesAdded} new (total: ${allIssues.length})`);
-      
+
       // Stop if this is the last page or no new issues were added
     } while (!isLast && hasNewIssues);
 

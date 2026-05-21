@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "fixtures/base-fixture";
 
 test(
   "should load the book app and display books",
