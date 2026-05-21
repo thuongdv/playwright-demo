@@ -18,7 +18,6 @@ src/
 ├── reporters/                # Custom reporters (Slack)
 ├── tests/                    # Test cases
 ├── utils/                    # Utility functions and API helpers
-│   └── ReportPortalUtils.ts  # Report Portal integration
 ├── settings.ts               # Environment configuration
 │
 ├── playwright.config.ts # Playwright configuration
@@ -56,9 +55,8 @@ src/
    npx playwright test tests/login-form.spec.ts
    ```
 
-4. **Run with Allure or Report Portal:**
-   - For Allure: Reports are generated automatically (see below).
-   - For Report Portal: Set `REPORT=rp` in your environment before running tests.
+4. **Run with Allure:**
+   - Reports are generated automatically (see below).
 
 ## 📊 How to View Results
 
@@ -78,9 +76,6 @@ src/
 
   Opens the Allure report locally.
 
-- **Report Portal:**
-  If configured, results are sent to your Report Portal instance.
-
 ## 🧩 Features
 
 - Modern Playwright setup with TypeScript
@@ -88,7 +83,6 @@ src/
 - Shadow DOM support
 - Parallel and cross-browser testing
 - Allure and HTML reporting
-- Report Portal integration (optional)
 - Example tests for login, shopping, shadow DOM, and more
 
 ## 🛠️ Useful Commands
@@ -101,7 +95,6 @@ src/
 
 - [Playwright Documentation](https://playwright.dev/docs/intro)
 - [Allure Reporting](https://docs.qameta.io/allure/)
-- [Report Portal](https://reportportal.io/)
 
 ---
 

@@ -1,20 +1,6 @@
 import { devices, PlaywrightTestConfig } from "@playwright/test";
-import _ from "underscore";
 
 import settings from "settings";
-
-const RPconfig = {
-  apiKey: settings.REPORT_PORTAL_TOKEN,
-  endpoint: settings.REPORT_PORTAL_URL,
-  project: settings.REPORT_PORTAL_PROJECT,
-  launch: "playwright-demo",
-  description: "Playwright with Report Portal",
-  includeTestSteps: true,
-};
-
-const config: PlaywrightTestConfig = {
-  reporter: [["@reportportal/agent-js-playwright", RPconfig], ["html"]],
-};
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -68,4 +54,4 @@ const defaultConfig: PlaywrightTestConfig = {
   ],
 };
 
-export default process.env.REPORT === "rp" ? _.extend(defaultConfig, config) : defaultConfig;
+export default defaultConfig;

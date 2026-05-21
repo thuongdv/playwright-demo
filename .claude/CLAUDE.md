@@ -20,7 +20,6 @@ When guidance overlaps, keep this file minimal and defer to skill/agent docs.
 - Runtime settings and required env validation: `src/settings.ts`
 - Reporting/integrations:
   - Playwright HTML + Allure
-  - Report Portal (`@reportportal/agent-js-playwright`)
   - Slack reporter (`src/reporters/slack-reporter.ts`)
   - JIRA client (`src/utils/jira-client.ts`)
 
@@ -35,7 +34,7 @@ When guidance overlaps, keep this file minimal and defer to skill/agent docs.
 ## Environment and configuration safety
 
 - `src/settings.ts` validates required env vars at import time and can fail fast.
-- Required groups include: `RP_*`, `TA_*`, `SLACK_*`, `BASE_URL`, `DWS_*`, `REPORTS_PATH`, `JIRA_*`.
+- Required groups include: `TA_*`, `SLACK_*`, `BASE_URL`, `DWS_*`, `REPORTS_PATH`, `JIRA_*`.
 - If new env vars are introduced:
   - add validation in `src/settings.ts`
   - document in `.env.example` (create/update if needed)

@@ -10,9 +10,6 @@ const validatedEnv = (name: string): string => {
 };
 
 const settings = {
-  REPORT_PORTAL_URL: validatedEnv("RP_ENDPOINT"),
-  REPORT_PORTAL_PROJECT: validatedEnv("RP_PROJECT"),
-  REPORT_PORTAL_TOKEN: validatedEnv("RP_API_KEY"),
   TA_EMAIL: validatedEnv("TA_EMAIL"),
   TA_PASSWORD: validatedEnv("TA_PASSWORD"),
   SLACK_BOT_TOKEN: validatedEnv("SLACK_BOT_TOKEN"),
