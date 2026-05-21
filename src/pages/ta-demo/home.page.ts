@@ -1,9 +1,9 @@
 import { Locator, Page } from "@playwright/test";
 
 export default class HomePage {
-  private readonly headerArea: Locator = this.page.locator("#header");
-  private readonly loginButton: Locator = this.headerArea.getByRole("link", { name: "Log in / Sign up" });
-  private readonly allDepartmentsButton: Locator = this.headerArea.locator(".header-secondary-menu", {
+  readonly headerArea: Locator = this.page.locator("#header");
+  readonly loginButton: Locator = this.headerArea.getByRole("link", { name: "Log in / Sign up" });
+  readonly allDepartmentsButton: Locator = this.headerArea.locator(".header-secondary-menu", {
     hasText: "All departments",
   });
   readonly shoppingCartButton: Locator = this.headerArea

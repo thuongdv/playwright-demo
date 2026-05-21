@@ -3,14 +3,14 @@ import { Locator, Page } from "@playwright/test";
 import { BillingDetail } from "models/billing-detail";
 
 export default class CheckoutPage {
-  private readonly firstNameText: Locator = this.page.getByRole("textbox", { name: /First name/i });
-  private readonly lastNameText: Locator = this.page.getByRole("textbox", { name: /Last name/i });
-  private readonly countryCombobox: Locator = this.page.locator("#billing_country");
-  private readonly streetAddressText: Locator = this.page.getByRole("textbox", { name: /Street address/i });
-  private readonly cityText: Locator = this.page.getByRole("textbox", { name: /Town|City/i });
-  private readonly phoneText: Locator = this.page.getByRole("textbox", { name: /Phone/i });
-  private readonly emailText: Locator = this.page.getByRole("textbox", { name: /Email address/i });
-  private readonly placeOrderButton: Locator = this.page.getByRole("button", { name: /Place Order/i });
+  readonly firstNameText: Locator = this.page.getByRole("textbox", { name: /First name/i });
+  readonly lastNameText: Locator = this.page.getByRole("textbox", { name: /Last name/i });
+  readonly countryCombobox: Locator = this.page.locator("#billing_country");
+  readonly streetAddressText: Locator = this.page.getByRole("textbox", { name: /Street address/i });
+  readonly cityText: Locator = this.page.getByRole("textbox", { name: /Town|City/i });
+  readonly phoneText: Locator = this.page.getByRole("textbox", { name: /Phone/i });
+  readonly emailText: Locator = this.page.getByRole("textbox", { name: /Email address/i });
+  readonly placeOrderButton: Locator = this.page.getByRole("button", { name: /Place Order/i });
 
   constructor(private readonly page: Page) {}
 

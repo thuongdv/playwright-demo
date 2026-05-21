@@ -36,7 +36,6 @@ src/
    ```
 
 2. **Configure environment variables:**
-
    - Copy `.env.example` to `.env` and fill in your information (e.g. `TA_EMAIL`, `TA_PASSWORD`).
 
 3. **Run all tests:**

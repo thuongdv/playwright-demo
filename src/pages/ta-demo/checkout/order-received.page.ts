@@ -4,10 +4,10 @@ import { OrderDetail } from "models/order-detail";
 import NumberUtils from "utils/number-utils";
 
 export default class OrderReceivedPage {
-  private readonly orderDetailsArea: Locator = this.page.locator(".order_details");
-  private readonly orderNumber: Locator = this.orderDetailsArea.locator(".order strong");
-  private readonly orderDate: Locator = this.orderDetailsArea.locator(".date strong");
-  private readonly total: Locator = this.orderDetailsArea.locator(".total strong");
+  readonly orderDetailsArea: Locator = this.page.locator(".order_details");
+  readonly orderNumber: Locator = this.orderDetailsArea.locator(".order strong");
+  readonly orderDate: Locator = this.orderDetailsArea.locator(".date strong");
+  readonly total: Locator = this.orderDetailsArea.locator(".total strong");
 
   constructor(private readonly page: Page) {}
 
