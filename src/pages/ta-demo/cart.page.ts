@@ -1,6 +1,7 @@
 import { Page } from "@playwright/test";
 
 import { expect } from "fixtures/base-fixture";
+import { step } from "utils/step";
 
 export default class CartPage {
   readonly cartItems = this.page.getByRole("row");
@@ -18,6 +19,7 @@ export default class CartPage {
     return (await this.getCartItemCount()) === 0;
   }
 
+  @step("Clear shopping cart")
   async clearShoppingCart(options?: { timeout?: number }): Promise<void> {
     const timeout = options?.timeout ?? 60_000; // Default timeout of 60 seconds
 

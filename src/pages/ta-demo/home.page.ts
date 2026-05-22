@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import { step } from "utils/step";
 
 export default class HomePage {
   readonly headerArea: Locator = this.page.locator("#header");
@@ -16,16 +17,19 @@ export default class HomePage {
     await this.page.goto("/");
   }
 
+  @step("Select department")
   async selectDepartment(department: string): Promise<void> {
     await this.allDepartmentsButton.hover();
     await this.page.getByRole("link", { name: department }).click();
   }
 
+  @step("Click shopping cart button")
   async clickShoppingCartButton(): Promise<void> {
     await this.shoppingCartButton.click();
     await this.page.waitForLoadState();
   }
 
+  @step("Click login button")
   async clickLoginButton(): Promise<void> {
     await this.loginButton.click();
   }

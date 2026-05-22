@@ -1,43 +1,35 @@
-import { expect, Page, test } from "fixtures/base-fixture";
-import { billingDetail } from "models/billing-detail";
+import OrderFlow from "business-flows/order.flow";
+import { expect, test } from "fixtures/base-fixture";
 import { OrderDetail } from "models/order-detail";
 import { OrderHistory } from "models/order-history";
-import CartPage from "pages/ta-demo/cart.page";
-import CheckoutPage from "pages/ta-demo/checkout.page";
-import OrderReceivedPage from "pages/ta-demo/checkout/order-received.page";
-import HomePage from "pages/ta-demo/home.page";
-import MyAccountPage from "pages/ta-demo/my-account.page";
-import ProductCategoryPage from "pages/ta-demo/product-category.page";
 import settings from "settings";
 
-let homePage: HomePage;
-let cartPage: CartPage;
 const orderDetails: OrderDetail[] = [];
 
-test.beforeEach("Login", async ({ page }) => {
-  homePage = new HomePage(page);
+test.beforeEach("Login", async ({ homePage, myAccountPage }) => {
   await homePage.goto();
   await homePage.clickLoginButton();
 
-  const myAccountPage = new MyAccountPage(page);
   await myAccountPage.login(settings.TA_EMAIL, settings.TA_PASSWORD);
 });
 
-test.beforeEach("Clear shopping cart", async ({ page }) => {
+test.beforeEach("Clear shopping cart", async ({ homePage, cartPage }) => {
   await homePage.clickShoppingCartButton();
 
-  cartPage = new CartPage(page);
   await cartPage.clearShoppingCart({ timeout: 60_000 });
 });
 
 test.beforeEach("Create orders", async ({ page }) => {
-  await createOrder(page);
-  await createOrder(page);
+  const orderFlow = new OrderFlow(page);
+
+  const orderDetail1 = await orderFlow.createOrder();
+  orderDetails.push(orderDetail1);
+
+  const orderDetail2 = await orderFlow.createOrder();
+  orderDetails.push(orderDetail2);
 });
 
-test("Verify orders appear in order history - grab order history information", async ({ page }) => {
-  const myAccountPage = new MyAccountPage(page);
-
+test("Verify orders appear in order history - grab order history information", async ({ myAccountPage }) => {
   // 1. Go to My Account page
   await myAccountPage.goto();
 
@@ -53,21 +45,3 @@ test("Verify orders appear in order history - grab order history information", a
     expect.soft(orderHistory.total).toContain(expOrderDetail.total);
   }
 });
-
-const createOrder = async (page: Page) => {
-  await homePage.selectDepartment("Consumer Electronics");
-
-  const productCategoryPage = new ProductCategoryPage(page);
-  await productCategoryPage.addRandomProductToCart(2);
-
-  await homePage.clickShoppingCartButton();
-  await cartPage.clickProcessCheckoutButton();
-
-  const checkoutPage = new CheckoutPage(page);
-  await checkoutPage.fillBillingDetails(billingDetail);
-  await checkoutPage.placeOrder();
-
-  const orderReceivedPage = new OrderReceivedPage(page);
-  const orderDetail: OrderDetail = await orderReceivedPage.getOrderDetails();
-  orderDetails.push(orderDetail);
-};

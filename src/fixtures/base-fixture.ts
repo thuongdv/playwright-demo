@@ -1,6 +1,12 @@
-import { Locator, expect as baseExpect } from "@playwright/test";
+import { Locator, expect as baseExpect, test as baseTest } from "@playwright/test";
+import CartPage from "pages/ta-demo/cart.page";
+import CheckoutPage from "pages/ta-demo/checkout.page";
+import OrderReceivedPage from "pages/ta-demo/checkout/order-received.page";
+import HomePage from "pages/ta-demo/home.page";
+import MyAccountPage from "pages/ta-demo/my-account.page";
+import ProductCategoryPage from "pages/ta-demo/product-category.page";
 
-export { Locator, Page, test } from "@playwright/test";
+export { Locator, Page } from "@playwright/test";
 
 export const expect = baseExpect.extend({
   async toHaveAmount(locator: Locator, expected: number, options?: { timeout?: number }): Promise<any> {
@@ -124,5 +130,41 @@ export const expect = baseExpect.extend({
       message: () => `Expected element count to be greater than or equal to ${expected}, but got ${result}`,
       pass: true,
     };
+  },
+});
+
+type Pages = {
+  homePage: HomePage;
+  cartPage: CartPage;
+  myAccountPage: MyAccountPage;
+  orderReceivedPage: OrderReceivedPage;
+  checkoutPage: CheckoutPage;
+  productCategoryPage: ProductCategoryPage;
+};
+
+export const test = baseTest.extend<Pages>({
+  homePage: async ({ page }, use) => {
+    const homePage = new HomePage(page);
+    await use(homePage);
+  },
+  cartPage: async ({ page }, use) => {
+    const cartPage = new CartPage(page);
+    await use(cartPage);
+  },
+  myAccountPage: async ({ page }, use) => {
+    const myAccountPage = new MyAccountPage(page);
+    await use(myAccountPage);
+  },
+  orderReceivedPage: async ({ page }, use) => {
+    const orderReceivedPage = new OrderReceivedPage(page);
+    await use(orderReceivedPage);
+  },
+  checkoutPage: async ({ page }, use) => {
+    const checkoutPage = new CheckoutPage(page);
+    await use(checkoutPage);
+  },
+  productCategoryPage: async ({ page }, use) => {
+    const productCategoryPage = new ProductCategoryPage(page);
+    await use(productCategoryPage);
   },
 });

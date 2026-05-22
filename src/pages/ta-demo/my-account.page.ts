@@ -2,6 +2,7 @@ import { Locator, Page } from "@playwright/test";
 
 import { expect } from "fixtures/base-fixture";
 import { OrderHistory, OrderHistoryTableHeaders } from "models/order-history";
+import { step } from "utils/step";
 
 export default class MyAccountPage {
   readonly usernameText: Locator = this.page.getByLabel("Username or email address *");
@@ -26,10 +27,12 @@ export default class MyAccountPage {
 
   constructor(private readonly page: Page) {}
 
+  @step("Navigate to My Account page")
   async goto(): Promise<void> {
     await this.page.goto("/my-account/");
   }
 
+  @step("Login with username and password")
   async login(username: string, password: string, rememberMe = false): Promise<void> {
     await this.usernameText.fill(username);
     await this.passwordText.fill(password);
@@ -39,6 +42,7 @@ export default class MyAccountPage {
     await this.loginButton.click();
   }
 
+  @step("Click order button")
   async clickOrderButton(): Promise<void> {
     await this.orderButton.click();
   }
@@ -53,6 +57,7 @@ export default class MyAccountPage {
    * @returns A promise that resolves to an {@link OrderHistory} object containing the order number, date, status, and total.
    * @throws Will throw an error if the row for the given order number is not found or not visible within the timeout period.
    */
+  @step("Get order history for order number {orderNumber}")
   async getOrderHistory(orderNumber: number): Promise<OrderHistory> {
     const row = this.orderHistoryTableRows.filter({
       hasText: `${orderNumber}`,
