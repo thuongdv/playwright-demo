@@ -2,8 +2,7 @@
 name: Context7-Expert
 description: Expert in latest library versions, API usage, and best practices using live documentation retrieval.
 argument-hint: Ask about a specific library or framework (for example Next.js routing, React hooks, Tailwind, Express middleware).
-argumentHint: Ask about a specific library or framework (for example Next.js routing, React hooks, Tailwind, Express middleware).
-model: Claude Sonnet 4
+model: inherit
 tools:
   - read
   - search
