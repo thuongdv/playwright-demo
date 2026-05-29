@@ -68,7 +68,7 @@ After hitting the trigger, output the following block **before stopping work**:
 Blockers and their resolutions should be recorded in `.claude/knowledge/blockers.md` using this format:
 
 ```markdown
-### [DATE] <short title>
+### [YYYY-MM-DD] <short title>
 
 **Blocker:** <description>
 **Resolution:** <how it was fixed, or "unresolved">
