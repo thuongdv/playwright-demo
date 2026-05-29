@@ -11,22 +11,22 @@ Rather than having every test run a login flow, you can log in once in a setup s
 Use `page.context().storageState({ path: '...' })` to export all cookies, localStorage, and sessionStorage values.
 
 ```typescript
-import { test as setup, expect } from '@playwright/test';
+import { test as setup, expect } from "@playwright/test";
 
-setup('authenticate user and save storage state', async ({ page }) => {
+setup("authenticate user and save storage state", async ({ page }) => {
   // 1. Navigate to login page
-  await page.goto('/login');
+  await page.goto("/login");
 
   // 2. Perform authentication flow
-  await page.getByLabel('Username').fill('testuser');
-  await page.getByLabel('Password').fill('securepassword');
-  await page.getByRole('button', { name: 'Log in' }).click();
+  await page.getByLabel("Username").fill("testuser");
+  await page.getByLabel("Password").fill("securepassword");
+  await page.getByRole("button", { name: "Log in" }).click();
 
   // 3. Confirm login succeeded (web-first assertion)
-  await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 
   // 4. Save authentication state to a file
-  await page.context().storageState({ path: 'playwright/.auth/user.json' });
+  await page.context().storageState({ path: "playwright/.auth/user.json" });
 });
 ```
 
@@ -40,12 +40,12 @@ If almost all tests in your suite require authentication, specify the `storageSt
 
 ```typescript
 // playwright.config.ts
-import { defineConfig } from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   use: {
     // Path to the saved authentication state
-    storageState: 'playwright/.auth/user.json',
+    storageState: "playwright/.auth/user.json",
   },
 });
 ```
@@ -55,13 +55,13 @@ export default defineConfig({
 If only specific tests require authentication, you can pass `storageState` as an option to individual `test.use()` blocks.
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
 // Instruct all tests in this file to reuse the saved auth state
-test.use({ storageState: 'playwright/.auth/user.json' });
+test.use({ storageState: "playwright/.auth/user.json" });
 
-test('view secure dashboard', async ({ page }) => {
-  await page.goto('/dashboard');
-  await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+test("view secure dashboard", async ({ page }) => {
+  await page.goto("/dashboard");
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 });
 ```
