@@ -15,7 +15,7 @@ When guidance overlaps, keep this file minimal and defer to skill/agent docs.
 
 - TypeScript Playwright test automation project.
 - Tests: `src/tests/`
-- Page objects: `src/pages/ta-demo/`
+- Page objects: `src/pages/`
 - Custom fixtures and assertions: `src/fixtures/base-fixture.ts`
 - Runtime settings and required env validation: `src/settings.ts`
 - Reporting/integrations:
@@ -58,8 +58,17 @@ Use these exact names:
 - **Playwright Tester Mode**: Playwright test creation, locator repair, flaky test debugging, browser flow validation.
 - **playwright-cli** skill: direct browser automation workflows and Playwright CLI operations.
 - **playwright-skill** skill: reusable TypeScript Playwright test architecture/patterns.
+- **karpathy-guidelines** skill: behavioral guardrails for implementation/review/refactor tasks; prioritize explicit assumptions, minimal scope, surgical edits, and verifiable success criteria.
+
+When using this skill, require a short goal-check loop:
+
+1. define assumptions and success checks
+2. implement the smallest change that satisfies the request
+3. verify with focused checks/tests before broad runs
 
 For mixed requests, resolve API/library correctness first (Context7-Expert), then implement/refine tests (Playwright Tester Mode).
+
+For quality-sensitive code changes, apply karpathy-guidelines before and during implementation, then validate with the repository test workflow.
 
 ## High-value files to inspect first
 
@@ -68,7 +77,5 @@ For mixed requests, resolve API/library correctness first (Context7-Expert), the
 - `src/fixtures/base-fixture.ts`
 - `src/pages/`
 - `src/tests/`
-- `src/reporters/slack-reporter.ts`
-- `src/utils/jira-client.ts`
 
 End of instructions.
