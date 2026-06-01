@@ -191,10 +191,14 @@ function parseArgs(argv: string[]): CliArgs {
       continue;
     }
 
-    const [flag, inlineValue] = argument.split("=", 2);
-    const nextValue = inlineValue ?? argv[index + 1];
+    const separatorIndex = argument.indexOf("=");
+    const flag = separatorIndex >= 0 ? argument.slice(0, separatorIndex) : argument;
+    const inlineValue = separatorIndex >= 0 ? argument.slice(separatorIndex + 1) : undefined;
+    const spaceSeparatedValue = argv[index + 1];
+    const nextValue =
+      inlineValue ?? (spaceSeparatedValue && !spaceSeparatedValue.startsWith("--") ? spaceSeparatedValue : undefined);
 
-    if (!inlineValue && nextValue && !nextValue.startsWith("--")) {
+    if (inlineValue === undefined && nextValue) {
       index += 1;
     }
 
@@ -212,7 +216,7 @@ function parseArgs(argv: string[]): CliArgs {
         parsed.id = nextValue;
         break;
       case "--help":
-        printHelpAndExit();
+        printHelpAndExit(0);
         break;
       default:
         break;
@@ -220,13 +224,13 @@ function parseArgs(argv: string[]): CliArgs {
   }
 
   if (!parsed.file || !parsed.template || !parsed.outputPath) {
-    printHelpAndExit();
+    printHelpAndExit(1);
   }
 
   return parsed as CliArgs;
 }
 
-function printHelpAndExit(): never {
+function printHelpAndExit(code: number): never {
   console.log(
     [
       "Usage:",
@@ -242,7 +246,7 @@ function printHelpAndExit(): never {
     ].join("\n"),
   );
 
-  process.exit(1);
+  process.exit(code);
 }
 
 main().catch((error: unknown) => {
