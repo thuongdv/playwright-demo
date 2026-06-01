@@ -1,0 +1,60 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug spec-gen (Prompt ID)",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "spec-gen",
+        "--",
+        "--file=tmp/TestCases.xlsx",
+        "--id=${input:specGenTestCaseId}",
+        "--template=src/utils/excel2md/test-template.md",
+        "--output-path=tmp"
+      ],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug spec-gen (TC_01)",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "spec-gen",
+        "--",
+        "--file=tmp/TestCases.xlsx",
+        "--id=TC_01",
+        "--template=src/utils/excel2md/test-template.md",
+        "--output-path=tmp"
+      ],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${file}",
+      "outFiles": ["${workspaceFolder}/**/*.js"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "specGenTestCaseId",
+      "type": "promptString",
+      "description": "Enter test case ID for spec-gen (example: TC_01)",
+      "default": "TC_01"
+    }
+  ]
+}

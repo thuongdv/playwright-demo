@@ -46,15 +46,15 @@ for (const expOrderDetail of orderDetails) {
 
 Here are the most common web-first assertions you should use:
 
-| Matcher | Description |
-| :--- | :--- |
-| `await expect(locator).toBeVisible()` | Element is visible on screen |
-| `await expect(locator).toBeHidden()` | Element is not visible or not in DOM |
-| `await expect(locator).toBeEnabled()` | Form control is enabled |
-| `await expect(locator).toBeDisabled()` | Form control is disabled |
-| `await expect(locator).toHaveText(text)` | Element matches exact or substring text |
-| `await expect(locator).toContainText(text)` | Element contains text |
-| `await expect(locator).toHaveValue(value)` | Input field has value |
-| `await expect(locator).toBeChecked()` | Checkbox or radio button is checked |
-| `await expect(page).toHaveURL(url)` | Page URL matches value |
-| `await expect(page).toHaveTitle(title)` | Page title matches value |
+| Matcher                                     | Description                             |
+| :------------------------------------------ | :-------------------------------------- |
+| `await expect(locator).toBeVisible()`       | Element is visible on screen            |
+| `await expect(locator).toBeHidden()`        | Element is not visible or not in DOM    |
+| `await expect(locator).toBeEnabled()`       | Form control is enabled                 |
+| `await expect(locator).toBeDisabled()`      | Form control is disabled                |
+| `await expect(locator).toHaveText(text)`    | Element matches exact or substring text |
+| `await expect(locator).toContainText(text)` | Element contains text                   |
+| `await expect(locator).toHaveValue(value)`  | Input field has value                   |
+| `await expect(locator).toBeChecked()`       | Checkbox or radio button is checked     |
+| `await expect(page).toHaveURL(url)`         | Page URL matches value                  |
+| `await expect(page).toHaveTitle(title)`     | Page title matches value                |
