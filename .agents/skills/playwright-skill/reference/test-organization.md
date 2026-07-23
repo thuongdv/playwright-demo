@@ -24,7 +24,7 @@ Tests should be fully isolated and independent so they can be run in parallel in
 Use `test.beforeEach` to prepare state or perform setup actions (like navigating to a base URL or logging in) rather than sharing global state variables between test blocks.
 
 ```typescript
-import { test, expect } from "@playwright/test";
+import { test, expect } from "fixtures/base-fixture";
 
 test.describe("Shopping Cart", () => {
   // Setup runs independently before each test block
@@ -49,9 +49,7 @@ test.describe("Shopping Cart", () => {
 For complex user journeys, organize the test into clear logical blocks using sequential step descriptions. This creates excellent logging in the Playwright HTML report and helps developers easily trace failures.
 
 ```typescript
-test("Verify orders appear in order history - grab order history information", async ({ page }) => {
-  const myAccountPage = new MyAccountPage(page);
-
+test("Verify orders appear in order history - grab order history information", async ({ myAccountPage }) => {
   // 1. Go to My Account page
   await myAccountPage.goto();
 

@@ -15,7 +15,7 @@ Use page objects to keep selectors and page behavior in one place. Tests should 
 ## Class Template
 
 ```typescript
-import { type Locator, type Page } from "@playwright/test";
+import { type Locator, type Page } from "fixtures/base-fixture";
 
 export class ExamplePage {
   readonly title: Locator = this.page.getByRole("heading", { name: "Example" });
@@ -65,13 +65,11 @@ Avoid:
 import { test, expect } from "fixtures/base-fixture";
 import { ExamplePage } from "pages/ta-demo/example.page";
 
-test("user can submit form", async ({ page }) => {
-  const examplePage = new ExamplePage(page);
-
+test("user can submit form", async ({ examplePage }) => {
   await examplePage.goto();
   await examplePage.submit();
 
-  await expect(page.getByRole("status")).toHaveText("Submitted");
+  await expect(examplePage.status).toHaveText("Submitted");
 });
 ```
 

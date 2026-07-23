@@ -1,84 +1,122 @@
-# Playwright CLI & Commands Reference
+# Playwright CLI Reference (`playwright-cli`)
 
-This guide provides a comprehensive list of Playwright CLI commands and debugging options to run, inspect, and troubleshoot tests.
+This guide provides a comprehensive list of `npx playwright-cli` commands for interacting with, inspecting, and automating the Application Under Test (AUT).
 
-## Common CLI Commands
+`playwright-cli` ([microsoft/playwright-cli](https://github.com/microsoft/playwright-cli)) is a command-line interface designed for token-efficient browser automation and interactive debugging without needing to load large tool schemas.
 
-Run these commands from the root directory of your Playwright project:
+---
 
+## 1. Element Targeting Strategies
+
+Commands in `playwright-cli` support targeting DOM elements using snapshot references, CSS selectors, or Playwright locator expressions:
+
+### A. Snapshot Reference IDs (Recommended)
+After taking a page snapshot with `npx playwright-cli snapshot`, elements are assigned lightweight reference IDs (e.g. `e1`, `e15`):
 ```bash
-npx playwright test                          # Run all tests in headless mode
-npx playwright test --ui                     # Open interactive UI mode (highly recommended)
-npx playwright test --debug                  # Run tests with step-through debugger / inspector
-npx playwright test --project=chromium       # Run tests only on Chromium browser
-npx playwright test tests/login.spec.ts      # Run a specific test file
-npx playwright show-report                   # Open the HTML test report
-npx playwright codegen https://example.com   # Open code generator to record browser actions
-npx playwright test --update-snapshots       # Re-generate and update visual baseline screenshots
+npx playwright-cli snapshot
+npx playwright-cli click e15
+```
+
+### B. CSS Selectors
+Target elements directly via standard CSS selectors:
+```bash
+npx playwright-cli click "#main > button.submit"
+```
+
+### C. Playwright Locators
+Target elements using Playwright role or test ID locator syntax:
+```bash
+# Role locator
+npx playwright-cli click "getByRole('button', { name: 'Submit' })"
+
+# Test ID locator
+npx playwright-cli click "getByTestId('submit-button')"
 ```
 
 ---
 
-## Debugging Tools & Options
+## 2. Categorized Command Reference
 
-Use these built-in Playwright tools to diagnose and solve test failures.
+### Browser & Session Lifecycle
 
-### 1. Interactive UI Mode
+Manage the browser instance and page navigation:
 
-UI Mode provides an outstanding interactive developer experience. You can see DOM snapshots, console logs, network requests, and step back and forth through every test action.
+| Command | Description |
+| :--- | :--- |
+| `npx playwright-cli open [url]` | Launch browser session, optionally navigating directly to target URL |
+| `npx playwright-cli goto <url>` | Navigate active session page to specified URL |
+| `npx playwright-cli resize <w> <h>` | Resize browser viewport (width x height in pixels) |
+| `npx playwright-cli close` | Close the active browser session |
+
+### DOM Inspection & Snapshots
+
+Capture element hierarchies, locate specific text, and inspect element references:
+
+| Command | Description |
+| :--- | :--- |
+| `npx playwright-cli snapshot` | Capture current page DOM snapshot and generate element reference IDs |
+| `npx playwright-cli snapshot --filename=<f>` | Save page snapshot output to a specific file |
+| `npx playwright-cli snapshot <ref>` | Capture snapshot scoped specifically to a target element |
+| `npx playwright-cli snapshot --depth=<N>` | Limit snapshot tree depth for maximum performance and token efficiency |
+| `npx playwright-cli find <text>` | Search snapshot for literal text matches and return matching element nodes |
+| `npx playwright-cli find --regex <pattern>` | Search snapshot tree using a regular expression pattern |
+
+### Element Interactions
+
+Interact with input elements, buttons, checkboxes, dropdowns, and file uploads:
+
+| Command | Description |
+| :--- | :--- |
+| `npx playwright-cli fill <ref> <text>` | Clear and fill text into an editable element |
+| `npx playwright-cli fill <ref> <text> --submit` | Fill text into element and immediately press `Enter` to submit |
+| `npx playwright-cli type <text>` | Type raw text keystrokes into currently focused element |
+| `npx playwright-cli click <ref> [button]` | Perform a click on target element (optional button: `left`, `right`, `middle`) |
+| `npx playwright-cli dblclick <ref> [button]` | Perform a double click on target element |
+| `npx playwright-cli check <ref>` | Check a checkbox or radio button |
+| `npx playwright-cli uncheck <ref>` | Uncheck a checkbox element |
+| `npx playwright-cli select <ref> <val>` | Select an option in a `<select>` dropdown menu by value |
+| `npx playwright-cli hover <ref>` | Hover cursor over target element |
+| `npx playwright-cli drag <startRef> <endRef>` | Perform drag-and-drop from source element to destination element |
+| `npx playwright-cli drop <ref> --path=<file>` | Drop external file onto a drop zone element |
+| `npx playwright-cli drop <ref> --data="k=v"` | Drop custom data payload onto an element |
+| `npx playwright-cli upload <file>` | Upload single or multiple files to active file input |
+
+### JS Evaluation & Dialog Handling
+
+Execute custom JavaScript snippet or handle browser alert/confirm/prompt dialogs:
+
+| Command | Description |
+| :--- | :--- |
+| `npx playwright-cli eval <func> [ref]` | Evaluate JavaScript expression on active page or specific target element |
+| `npx playwright-cli dialog-accept [prompt]` | Accept an active browser modal dialog with optional prompt text response |
+| `npx playwright-cli dialog-dismiss` | Dismiss an active browser modal dialog |
+
+---
+
+## 3. Step-by-Step AUT Interaction Workflow Example
+
+Below is a complete end-to-end example demonstrating how to use `playwright-cli` to inspect and interact with an AUT (Application Under Test):
 
 ```bash
-npx playwright test --ui
-```
+# 1. Open the AUT URL in browser
+npx playwright-cli open https://example.com/login
 
-### 2. Playwright Inspector (Debug Mode)
+# 2. Capture snapshot to identify element references (e1 = email field, e2 = password field, e3 = submit button)
+npx playwright-cli snapshot
 
-Step through each line of your test execution interactively. Playwright will open a browser window alongside the Inspector window.
+# 3. Fill in user credentials
+npx playwright-cli fill e1 "user@example.com"
+npx playwright-cli fill e2 "SecretPassword123"
 
-```bash
-npx playwright test --debug
-```
+# 4. Click login submit button
+npx playwright-cli click e3
 
-_Tip: You can add `await page.pause()` anywhere in your test code to automatically pause execution and open the Inspector at that line._
+# 5. Take post-login snapshot to inspect updated DOM and verify navigation
+npx playwright-cli snapshot
 
-### 3. Trace Viewer (Post-Mortem Debugging)
+# 6. Find welcome message element
+npx playwright-cli find "Welcome back"
 
-Traces record video, screencasts, network activity, and DOM snapshots during execution. They are perfect for debugging flaky tests in CI environments.
-
-Configure trace collection in `playwright.config.ts`:
-
-```typescript
-// playwright.config.ts
-import { defineConfig } from "@playwright/test";
-
-export default defineConfig({
-  use: {
-    // Collect trace when retrying a failed test
-    trace: "on-first-retry",
-  },
-});
-```
-
-View the trace file locally:
-
-```bash
-npx playwright show-trace path/to/trace.zip
-```
-
-### 4. Video Recording
-
-Capture video records of test execution, especially useful to visual-verify failures.
-
-Configure video recording in `playwright.config.ts`:
-
-```typescript
-// playwright.config.ts
-import { defineConfig } from "@playwright/test";
-
-export default defineConfig({
-  use: {
-    // Record video for failed tests on the first retry
-    video: "on-first-retry",
-  },
-});
+# 7. Close browser session upon completion
+npx playwright-cli close
 ```
