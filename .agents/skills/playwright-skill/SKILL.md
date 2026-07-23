@@ -15,6 +15,9 @@ This skill provides comprehensive patterns, workflows, and tools for writing pro
 After generating or modifying any test, follow this workflow:
 
 1. **Verify & Fix**: Resolve any compiler or syntax errors immediately.
+   ```bash
+   npm run tsc && npm run lint:fix && npm run format:fix
+   ```
 2. **Execute Locally**: Validate correctness using the specific test runner command:
    ```bash
    npx playwright test --project=chromium
@@ -31,6 +34,7 @@ The instructions for this skill are modularized into highly focused sub-guides. 
 | Reference Guide                                                     | Description & When to Read                                                                                                                                                                                 |
 | :------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **[Element Locators](reference/locator.md)**                        | Selector priorities, accessibility roles, getByRole/getByLabel, and custom IDs. _Read when locating page elements._                                                                                        |
+| **[DOM Inspection](reference/dom-inspection.md)**                   | Programmatic DOM evaluation, token-efficient element discovery, validation debugging, and widget sync. _Read when discovering locators or debugging forms._                                                |
 | **[Web-First Assertions](reference/assertion.md)**                  | Auto-retry assertions, non-retrying anti-patterns, soft assertions, and assertion tables. _Read when writing checks._                                                                                      |
 | **[Test Organization](reference/test-organization.md)**             | Anti-patterns table, test isolation, setup blocks, and readable test steps. _Read when designing test suites._                                                                                             |
 | **[Page Object Model (POM)](reference/page-object-model.md)**       | POM patterns, base pages, class templates, and maintenance rules. _Read when creating or refactoring POM._                                                                                                 |

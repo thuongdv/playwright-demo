@@ -4,8 +4,10 @@
   "main": "index.js",
   "scripts": {
     "tsc": "npx tsc --noEmit",
-    "lint": "npx eslint .",
-    "format": "prettier --write .",
+    "lint:check": "npx eslint .",
+    "lint:fix": "npx eslint --fix .",
+    "format": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
     "spec-gen": "tsx src/utils/excel2md/spec-gen.ts",
     "test": "npx playwright test --config=playwright.config.ts",
     "test:qat": "dotenv -e .env.qat -- npx playwright test --config=playwright.config.ts",

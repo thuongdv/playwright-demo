@@ -1,6 +1,8 @@
-import { devices, PlaywrightTestConfig } from "@playwright/test";
+import { devices, PlaywrightTestConfig, TraceMode } from "@playwright/test";
 
 import settings from "settings";
+
+const traceMode = (process.env.TRACE_MODE || (process.env.CI ? "retain-on-failure" : "on")) as TraceMode;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -30,7 +32,7 @@ const defaultConfig: PlaywrightTestConfig = {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: settings.BASE_URL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "retain-on-failure",
+    trace: traceMode,
     /* Screenshot on failure. */
     screenshot: "only-on-failure",
     // Record video only when retrying a test for the first time.
@@ -43,6 +45,10 @@ const defaultConfig: PlaywrightTestConfig = {
 
   /* Configure projects for major browsers */
   projects: [
+    {
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1600, height: 900 } },
+    },
     {
       name: "Google Chrome",
       use: {

@@ -21,5 +21,8 @@
     "defval"
   ],
 
-  "cSpell.ignorePaths": ["**/node_modules/**", "**/.vscode/**", "package.json", "tsconfig.json"]
+  "cSpell.ignorePaths": ["**/node_modules/**", "**/.vscode/**", "package.json", "tsconfig.json"],
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }
