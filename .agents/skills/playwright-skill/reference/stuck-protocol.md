@@ -59,13 +59,13 @@ After hitting the trigger, output the following block **before stopping work**:
 
 - Stop work on the blocked sub-task.
 - Continue with other unblocked parts of the request (if any).
-- Record persistent blockers in `.claude/knowledge/blockers.md` so they survive across sessions.
+- Record persistent blockers in `.agents/knowledge/blockers.md` so they survive across sessions.
 
 ---
 
 ## Knowledge Persistence
 
-Blockers and their resolutions should be recorded in `.claude/knowledge/blockers.md` using this format:
+Blockers and their resolutions should be recorded in `.agents/knowledge/blockers.md` using this format:
 
 ```markdown
 ### [YYYY-MM-DD] <short title>

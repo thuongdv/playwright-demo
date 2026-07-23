@@ -1,6 +1,4 @@
-import { Page } from "@playwright/test";
-
-import { expect } from "fixtures/base-fixture";
+import { expect, Page } from "fixtures/base-fixture";
 import { step } from "utils/step";
 
 export default class CartPage {

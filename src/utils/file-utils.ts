@@ -12,7 +12,7 @@ export default class FileUtils {
       return data.split("\n");
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(`Failed to read file lines: ${errorMessage}`);
+      throw new Error(`Failed to read file lines: ${errorMessage}`, { cause: error });
     }
   }
 
@@ -45,7 +45,7 @@ export default class FileUtils {
       await fs.promises.writeFile(filePath, newContent);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(`Failed to append content to first line: ${errorMessage}`);
+      throw new Error(`Failed to append content to first line: ${errorMessage}`, { cause: error });
     }
   }
 
@@ -59,7 +59,7 @@ export default class FileUtils {
       await fs.promises.appendFile(filePath, `\n${content}`);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(`Failed to append line to file: ${errorMessage}`);
+      throw new Error(`Failed to append line to file: ${errorMessage}`, { cause: error });
     }
   }
 

@@ -20,7 +20,7 @@ After generating or modifying any test, follow this workflow:
    npx playwright test --project=chromium
    ```
 3. **Handle Failures**: If tests fail, refer to [reference/debugging-flaky.md](reference/debugging-flaky.md) for a troubleshooting checklist.
-4. **Stuck Protocol**: If any sub-task (locator, action, assertion, navigation) cannot be resolved after **2–3 attempts**, stop retrying and emit a structured summary. See [reference/stuck-protocol.md](reference/stuck-protocol.md). Record persistent blockers in [.claude/knowledge/blockers.md](../../knowledge/blockers.md).
+4. **Stuck Protocol**: If any sub-task (locator, action, assertion, navigation) cannot be resolved after **2–3 attempts**, stop retrying and emit a structured summary. See [reference/stuck-protocol.md](reference/stuck-protocol.md). Record persistent blockers in [.agents/knowledge/blockers.md](../../knowledge/blockers.md).
 
 ---
 

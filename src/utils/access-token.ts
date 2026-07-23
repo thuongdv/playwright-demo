@@ -119,9 +119,9 @@ export default class AccessToken {
         decodedToken = jwtDecode<JwtPayload & { [key: string]: unknown }>(token);
       } catch (error: unknown) {
         if (error instanceof Error) {
-          throw new Error(`Failed to decode JWT token: ${error.message}`);
+          throw new Error(`Failed to decode JWT token: ${error.message}`, { cause: error });
         } else {
-          throw new Error("An unknown error occurred during JWT decoding.");
+          throw new Error("An unknown error occurred during JWT decoding.", { cause: error });
         }
       }
 

@@ -106,4 +106,10 @@ src/
 
 ---
 
+## Common agent skills
+
+
+
+---
+
 Feel free to contribute or open issues for improvements!

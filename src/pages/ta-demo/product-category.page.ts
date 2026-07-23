@@ -1,6 +1,4 @@
-import { Locator, Page } from "@playwright/test";
-
-import { expect } from "fixtures/base-fixture";
+import { expect, Locator, Page } from "fixtures/base-fixture";
 import { Product } from "models/product";
 import NumberUtils from "utils/number-utils";
 

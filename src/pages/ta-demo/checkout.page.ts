@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page } from "fixtures/base-fixture";
 
 import { BillingDetail } from "models/billing-detail";
 

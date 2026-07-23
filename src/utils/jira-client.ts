@@ -164,8 +164,8 @@ export class JiraClient {
     const seenKeys = new Set<string>();
     const maxResults = 100;
     let nextPageToken: string | undefined;
-    let isLast = false;
-    let hasNewIssues = true;
+    let isLast: boolean;
+    let hasNewIssues: boolean;
 
     do {
       const response = await this.searchIssues(jql, 0, maxResults, fields, nextPageToken);

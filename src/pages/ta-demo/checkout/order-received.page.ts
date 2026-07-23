@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page } from "fixtures/base-fixture";
 
 import { OrderDetail } from "models/order-detail";
 import NumberUtils from "utils/number-utils";
