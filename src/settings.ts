@@ -13,7 +13,6 @@ const settings = {
   TA_EMAIL: validatedEnv("TA_EMAIL"),
   TA_PASSWORD: validatedEnv("TA_PASSWORD"),
   SLACK_BOT_TOKEN: validatedEnv("SLACK_BOT_TOKEN"),
-  BASE_URL: validatedEnv("BASE_URL"),
   APP_ROOT_PATH: process.cwd(),
   REPORT_ID: process.env.REPORT_ID,
   SLACK_REPORT_CHANNEL_ID: process.env.SLACK_REPORT_CHANNEL_ID ?? "",
@@ -26,6 +25,8 @@ const settings = {
   JIRA_API_TOKEN: validatedEnv("JIRA_API_TOKEN"),
   JIRA_EMAIL: validatedEnv("JIRA_EMAIL"),
   JIRA_PROJECT: validatedEnv("JIRA_PROJECT"),
+  CI: process.env.CI || false,
+  
 };
 
 export default settings;

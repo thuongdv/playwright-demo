@@ -24,6 +24,17 @@ jobs:
         run: npm run test:ui-hotel
         env:
           CI: true
+          TA_EMAIL: dummy
+          TA_PASSWORD: dummy
+          SLACK_BOT_TOKEN: dummy
+          DWS_URL: dummy
+          DWS_EMAIL: dummy
+          DWS_PASSWORD: dummy
+          REPORTS_PATH: dummy
+          JIRA_BASE_URL: dummy
+          JIRA_API_TOKEN: dummy
+          JIRA_EMAIL: dummy
+          JIRA_PROJECT: dummy
 
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}

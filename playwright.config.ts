@@ -25,16 +25,14 @@ const defaultConfig: PlaywrightTestConfig = {
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: !!settings.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 1 : 0,
+  retries: settings.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: settings.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [["html"]],
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: settings.BASE_URL || "https://hotel-example-site.takeyaqa.dev/en-US/",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: traceMode,
     /* Screenshot on failure. */
@@ -57,7 +55,7 @@ const defaultConfig: PlaywrightTestConfig = {
           devices["Desktop Chrome"]),
         channel: browserChannel,
         viewport: { width: 1600, height: 900 },
-        baseURL: settings.BASE_URL || "https://hotel-example-site.takeyaqa.dev/en-US/",
+        baseURL: process.env.BASE_HOTEL_URL || "https://hotel-example-site.takeyaqa.dev/en-US/",
       },
     },
     {
