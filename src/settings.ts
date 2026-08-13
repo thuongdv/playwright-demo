@@ -26,7 +26,6 @@ const settings = {
   JIRA_EMAIL: validatedEnv("JIRA_EMAIL"),
   JIRA_PROJECT: validatedEnv("JIRA_PROJECT"),
   CI: process.env.CI || false,
-  
 };
 
 export default settings;
