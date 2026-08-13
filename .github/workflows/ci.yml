@@ -5,8 +5,8 @@ on:
   pull_request:
     branches: [main, master]
 jobs:
-  test:
-    timeout-minutes: 15
+  code-style-check:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
