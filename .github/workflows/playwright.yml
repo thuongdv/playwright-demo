@@ -3,13 +3,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write
 
 jobs:
   test:
@@ -49,26 +43,16 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-      - name: Upload GitHub Pages artifact
-        if: ${{ !cancelled() }}
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy Playwright Report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: playwright-report/
-
-  deploy:
-    name: Deploy Playwright Report to GitHub Pages
-    if: ${{ !cancelled() }}
-    needs: test
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report
+          destination_dir: reports/${{ github.run_id }} # Stores each run in a separate folder
 
       - name: Add Report Link to Workflow Summary
+        if: always()
         run: |
           echo "### 📊 Playwright Report" >> $GITHUB_STEP_SUMMARY
-          echo "View the live report here: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "View the live report here: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/${{ github.run_id }}/" >> $GITHUB_STEP_SUMMARY
