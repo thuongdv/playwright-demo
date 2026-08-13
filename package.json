@@ -10,7 +10,8 @@
     "format:check": "npx prettier --check .",
     "spec-gen": "tsx src/utils/excel2md/spec-gen.ts",
     "test": "npx playwright test --config=playwright.config.ts",
-    "test:qat": "dotenv -e .env.qat -- npx playwright test --config=playwright.config.ts",
+    "test:ui-hotel": "npx playwright test --config=playwright.config.ts --project=ui-hotel",
+    "test:qa": "dotenv -e .env.qa -- npx playwright test --config=playwright.config.ts",
     "report": "npx playwright show-report"
   },
   "repository": {

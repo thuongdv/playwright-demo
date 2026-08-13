@@ -4,6 +4,10 @@ import settings from "settings";
 
 const traceMode = (process.env.TRACE_MODE || (process.env.CI ? "retain-on-failure" : "on")) as TraceMode;
 
+// Browser configuration
+const browserName = (process.env.BROWSER as "chromium" | "firefox" | "webkit") || "chromium";
+const browserChannel = process.env.BROWSER_CHANNEL || "chrome";
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -27,10 +31,10 @@ const defaultConfig: PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [["html"], ["allure-playwright"]],
+  reporter: [["html"]],
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: settings.BASE_URL,
+    baseURL: settings.BASE_URL || "https://hotel-example-site.takeyaqa.dev/en-US/",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: traceMode,
     /* Screenshot on failure. */
@@ -45,6 +49,17 @@ const defaultConfig: PlaywrightTestConfig = {
 
   /* Configure projects for major browsers */
   projects: [
+    {
+      name: "ui-hotel",
+      testDir: "./src/tests/ui/hotel",
+      use: {
+        ...(devices[`Desktop ${browserName.charAt(0).toUpperCase() + browserName.slice(1)}`] ||
+          devices["Desktop Chrome"]),
+        channel: browserChannel,
+        viewport: { width: 1600, height: 900 },
+        baseURL: settings.BASE_URL || "https://hotel-example-site.takeyaqa.dev/en-US/",
+      },
+    },
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"], viewport: { width: 1600, height: 900 } },

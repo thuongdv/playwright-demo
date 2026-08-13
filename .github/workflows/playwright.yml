@@ -20,7 +20,9 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
-        run: npm run test
+        run: npm run test:ui-hotel
+        env:
+          CI: true
 
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
