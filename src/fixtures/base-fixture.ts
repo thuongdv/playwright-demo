@@ -2,12 +2,12 @@ import { Locator, expect as baseExpect, test as baseTest } from "@playwright/tes
 import HotelHomePage from "pages/hotel/home.page";
 import HotelLoginPage from "pages/hotel/login.page";
 import HotelPlansPage from "pages/hotel/plans.page";
-import CartPage from "pages/ta-demo/cart.page";
-import CheckoutPage from "pages/ta-demo/checkout.page";
-import OrderReceivedPage from "pages/ta-demo/checkout/order-received.page";
-import HomePage from "pages/ta-demo/home.page";
-import MyAccountPage from "pages/ta-demo/my-account.page";
-import ProductCategoryPage from "pages/ta-demo/product-category.page";
+import CartPage from "pages/ta/cart.page";
+import CheckoutPage from "pages/ta/checkout.page";
+import OrderReceivedPage from "pages/ta/checkout/order-received.page";
+import HomePage from "pages/ta/home.page";
+import MyAccountPage from "pages/ta/my-account.page";
+import ProductCategoryPage from "pages/ta/product-category.page";
 
 export { Locator, Page } from "@playwright/test";
 

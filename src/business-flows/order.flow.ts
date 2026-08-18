@@ -1,11 +1,11 @@
 import { Page } from "fixtures/base-fixture";
 import { billingDetail } from "models/billing-detail";
 import { OrderDetail } from "models/order-detail";
-import CartPage from "pages/ta-demo/cart.page";
-import CheckoutPage from "pages/ta-demo/checkout.page";
-import OrderReceivedPage from "pages/ta-demo/checkout/order-received.page";
-import HomePage from "pages/ta-demo/home.page";
-import ProductCategoryPage from "pages/ta-demo/product-category.page";
+import CartPage from "pages/ta/cart.page";
+import CheckoutPage from "pages/ta/checkout.page";
+import OrderReceivedPage from "pages/ta/checkout/order-received.page";
+import HomePage from "pages/ta/home.page";
+import ProductCategoryPage from "pages/ta/product-category.page";
 import { step } from "utils/step";
 
 export default class OrderFlow {

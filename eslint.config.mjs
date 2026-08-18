@@ -21,7 +21,7 @@ export default defineConfig(
 
   // Ignore this config file itself
   {
-    ignores: ["eslint.config.mjs"],
+    ignores: ["eslint.config.mjs", "playwright-report"],
   },
 
   // Add import plugin and rules

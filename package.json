@@ -5,13 +5,13 @@
   "scripts": {
     "tsc": "npx tsc --noEmit",
     "lint:check": "npx eslint .",
-    "lint:fix": "npx eslint --fix .",
+    "lint": "npx eslint --fix .",
     "format": "npx prettier --write .",
     "format:check": "npx prettier --check .",
     "spec-gen": "tsx src/utils/excel2md/spec-gen.ts",
-    "test": "npx playwright test --config=playwright.config.ts",
     "test:ui-hotel": "npx playwright test --config=playwright.config.ts --project=ui-hotel",
     "test:qa": "dotenv -e .env.qa -- npx playwright test --config=playwright.config.ts",
+    "test:ui-ta": "npx playwright test --config=playwright.config.ts --project=ui-ta",
     "report": "npx playwright show-report"
   },
   "repository": {

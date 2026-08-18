@@ -59,6 +59,17 @@ const defaultConfig: PlaywrightTestConfig = {
       },
     },
     {
+      name: "ui-ta",
+      testDir: "./src/tests/ui/ta",
+      use: {
+        ...(devices[`Desktop ${browserName.charAt(0).toUpperCase() + browserName.slice(1)}`] ||
+          devices["Desktop Chrome"]),
+        channel: browserChannel,
+        viewport: { width: 1600, height: 900 },
+        baseURL: process.env.BASE_TA_URL || "https://demo.testarchitect.com/",
+      },
+    },
+    {
       name: "chromium",
       use: { ...devices["Desktop Chrome"], viewport: { width: 1600, height: 900 } },
     },
