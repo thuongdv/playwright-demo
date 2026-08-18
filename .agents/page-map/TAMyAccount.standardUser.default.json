@@ -1,0 +1,116 @@
+{
+  "$schema": "./schema.json",
+  "route": "/my-account/",
+  "pageKey": "TAMyAccount",
+  "capturedAt": "2026-08-18T06:36:01.262Z",
+  "appBuild": "local-dev",
+  "harvesterVersion": "1.0.0",
+  "auth": {
+    "roleKey": "standardUser",
+    "stateGeneratedAt": "2026-08-18T06:37:45.037Z"
+  },
+  "state": {
+    "variantKey": "default"
+  },
+  "elements": [
+    {
+      "key": "accountDetailsLink",
+      "role": "link",
+      "accessibleName": "Account details",
+      "locator": "getByRole('link', { name: 'Account details' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "addressesLink",
+      "role": "link",
+      "accessibleName": "Addresses",
+      "locator": "getByRole('link', { name: 'Addresses' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "dashboardLink",
+      "role": "link",
+      "accessibleName": "Dashboard",
+      "locator": "getByRole('link', { name: 'Dashboard' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "downloadsLink",
+      "role": "link",
+      "accessibleName": "Downloads",
+      "locator": "getByRole('link', { name: 'Downloads' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "logoutLink",
+      "role": "link",
+      "accessibleName": "Logout",
+      "locator": "getByRole('link', { name: 'Logout' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "ordersLink",
+      "role": "link",
+      "accessibleName": "Orders",
+      "locator": "getByRole('link', { name: 'Orders' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "subscriptionsLink",
+      "role": "link",
+      "accessibleName": "Subscriptions",
+      "locator": "getByRole('link', { name: 'Subscriptions' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "basicLocalAvatarTextbox",
+      "role": "textbox",
+      "locator": "locator('#basic-local-avatar')",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "basicUserAvatarNonceTextbox",
+      "role": "textbox",
+      "locator": "locator('#_basic_user_avatar_nonce')",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    }
+  ],
+  "ariaDigest": "sha256:a2f7fd9ad9e3459e311157c5b1f8b905e80c2ede43a0b96ce31ec13644d48bd5",
+  "notes": []
+}

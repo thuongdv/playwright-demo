@@ -1,0 +1,163 @@
+{
+  "$schema": "./schema.json",
+  "route": "/my-account/",
+  "pageKey": "TAMyAccount",
+  "capturedAt": "2026-08-18T06:35:54.698Z",
+  "appBuild": "local-dev",
+  "harvesterVersion": "1.0.0",
+  "auth": {
+    "roleKey": "unauthenticated"
+  },
+  "state": {
+    "variantKey": "default"
+  },
+  "elements": [
+    {
+      "key": "logInButton",
+      "role": "button",
+      "accessibleName": "Log in",
+      "locator": "getByRole('button', { name: 'Log in' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "registerButton",
+      "role": "button",
+      "accessibleName": "Register",
+      "locator": "getByRole('button', { name: 'Register' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "rememberMeCheckbox",
+      "role": "checkbox",
+      "accessibleName": "Remember me",
+      "locator": "getByRole('checkbox', { name: 'Remember me' })",
+      "fallbackLocators": ["locator('#rememberme')"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "loginHeading",
+      "role": "heading",
+      "accessibleName": "Login",
+      "locator": "getByRole('heading', { name: 'Login' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "registerHeading",
+      "role": "heading",
+      "accessibleName": "Register",
+      "locator": "getByRole('heading', { name: 'Register' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "lostYourPasswordLink",
+      "role": "link",
+      "accessibleName": "Lost your password?",
+      "locator": "getByRole('link', { name: 'Lost your password?' })",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "lostYourPasswordLink2",
+      "role": "link",
+      "accessibleName": "Lost your password?",
+      "locator": "getByRole('link', { name: 'Lost your password?' })",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "privacyPolicyLink",
+      "role": "link",
+      "accessibleName": "privacy policy",
+      "locator": "getByRole('link', { name: 'privacy policy' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "woocommerceLoginNonceTextbox",
+      "role": "textbox",
+      "locator": "locator('#woocommerce-login-nonce')",
+      "count": 4,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "woocommerceRegisterNonceTextbox",
+      "role": "textbox",
+      "locator": "locator('#woocommerce-register-nonce')",
+      "count": 4,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "emailAddressTextbox",
+      "role": "textbox",
+      "accessibleName": "Email address *",
+      "locator": "getByLabel('Email address *')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Email address *' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "passwordTextbox",
+      "role": "textbox",
+      "accessibleName": "Password *",
+      "locator": "getByLabel('Password *')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Password *' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "usernameOrEmailAddressTextbox",
+      "role": "textbox",
+      "accessibleName": "Username or email address *",
+      "locator": "getByLabel('Username or email address *')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Username or email address *' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    }
+  ],
+  "ariaDigest": "sha256:63a15cbee13d3a7732b666832c91e32a60fc2561b3908c43389b359192ae792d",
+  "notes": []
+}

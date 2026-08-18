@@ -4,14 +4,17 @@ import * as fs from "fs";
 import * as path from "path";
 import * as prettier from "prettier";
 import { PageMap, PageMapIndex, validatePageMap } from "../page-map/schema";
+import { ensureAuthState, setupAuthState } from "./auth/auth-manager";
+import { getAllKnownSecrets } from "./auth/env";
 import { extractPageMap } from "./extractor";
 import { assertNoSecrets } from "./sanitizer";
 import { HarvesterConfig, HarvesterOptions, HarvestResult } from "./types";
 
-async function formatJson(content: object): Promise<string> {
+async function formatJson(content: object, filepath?: string): Promise<string> {
   const raw = JSON.stringify(content, null, 2);
   try {
-    return await prettier.format(raw, { parser: "json" });
+    const config = filepath ? await prettier.resolveConfig(filepath) : null;
+    return await prettier.format(raw, { ...config, filepath, parser: "json" });
   } catch {
     return raw + "\n";
   }
@@ -72,6 +75,7 @@ export async function runHarvester(options?: Partial<HarvesterOptions>): Promise
   const appBuild = harvesterConfig.appBuild || getAppBuild();
   const harvesterVersion = harvesterConfig.harvesterVersion || "1.0.0";
   const defaultBaseURL = harvesterConfig.baseURL || "http://localhost:3000";
+  const knownSecrets = getAllKnownSecrets();
 
   let targets = harvesterConfig.targets;
   if (only) {
@@ -96,97 +100,134 @@ export async function runHarvester(options?: Partial<HarvesterOptions>): Promise
       const pageMapVariants: PageMap[] = [];
 
       for (const roleKey of roles) {
+        // Pre-harvest Auth Setup / Freshness validation
+        let authInfo = await ensureAuthState(roleKey, baseURL, harvesterConfig.authStorageDir);
+
         for (const variant of variants) {
           console.log(`[Harvester] Harvesting ${target.pageKey} (role: ${roleKey}, variant: ${variant.key})...`);
 
-          const context = await browser.newContext({
-            baseURL,
-            viewport: { width: 1280, height: 800 },
-          });
-          const page = await context.newPage();
-
+          let harvestAttempt = 0;
+          let harvestSuccess = false;
+          let newPageMap: PageMap | null = null;
           const fileName = `${target.pageKey}.${roleKey}.${variant.key}.json`;
           const filePath = path.join(outputDir, fileName);
 
-          let existingPageMap: PageMap | undefined;
-          if (fs.existsSync(filePath)) {
+          while (harvestAttempt < 2 && !harvestSuccess) {
+            harvestAttempt++;
+            const context = await browser.newContext({
+              baseURL,
+              storageState: authInfo.storageStatePath,
+              viewport: { width: 1280, height: 800 },
+            });
+            const page = await context.newPage();
+
             try {
-              const raw = fs.readFileSync(filePath, "utf8");
-              existingPageMap = JSON.parse(raw) as PageMap;
-            } catch {
-              // Ignore corrupt previous files
+              let existingPageMap: PageMap | undefined;
+              if (fs.existsSync(filePath)) {
+                try {
+                  const raw = fs.readFileSync(filePath, "utf8");
+                  existingPageMap = JSON.parse(raw) as PageMap;
+                } catch {
+                  // Ignore corrupt previous files
+                }
+              }
+
+              // Apply state fixture if provided
+              if (typeof variant.fixture === "function") {
+                await variant.fixture({ page, browserContext: context, baseURL });
+              }
+
+              // Navigate to target route
+              const targetUrl = target.route.startsWith("http")
+                ? target.route
+                : new URL(target.route, baseURL.endsWith("/") ? baseURL : `${baseURL}/`).toString();
+              const resp = await page.goto(targetUrl, {
+                waitUntil: target.settle?.waitFor || "domcontentloaded",
+                timeout: target.settle?.timeoutMs || 30_000,
+              });
+
+              // Mid-run auth expiry detection
+              if (
+                roleKey !== "unauthenticated" &&
+                (resp?.status() === 401 || (page.url().includes("/login") && !target.route.includes("/login")))
+              ) {
+                console.warn(
+                  `[Harvester] Mid-run session expiry detected for role '${roleKey}'. Refreshing auth state and retrying...`,
+                );
+                await context.close();
+                authInfo = await setupAuthState(roleKey, baseURL, harvesterConfig.authStorageDir);
+                continue;
+              }
+
+              if (target.settle?.extraSelector) {
+                await page.locator(target.settle.extraSelector).first().waitFor({ state: "attached", timeout: 10_000 });
+              }
+
+              // Apply openers if present
+              if (variant.openers) {
+                for (const opener of variant.openers) {
+                  console.log(`[Harvester] Executing opener: ${opener.description}`);
+                  await opener.action(page);
+                }
+              }
+
+              // Extract Page Map
+              newPageMap = await extractPageMap(page, target, variant, roleKey, {
+                appBuild,
+                harvesterVersion,
+                existingPageMap,
+                baseURL,
+              });
+
+              if (authInfo.stateGeneratedAt) {
+                newPageMap.auth.stateGeneratedAt = authInfo.stateGeneratedAt;
+              }
+
+              // Check for change / determinism preservation
+              let hasChanged = true;
+              let isNew = true;
+
+              if (existingPageMap) {
+                isNew = false;
+                if (existingPageMap.ariaDigest === newPageMap.ariaDigest) {
+                  // Digest is identical: preserve capturedAt to ensure byte-level zero git diff
+                  newPageMap.capturedAt = existingPageMap.capturedAt;
+                  hasChanged = false;
+                }
+              }
+
+              // Sanitization check with known environment credentials
+              assertNoSecrets(newPageMap, knownSecrets);
+
+              // Schema validation check
+              validatePageMap(newPageMap);
+
+              pageMapVariants.push(newPageMap);
+
+              if (!dryRun) {
+                const formatted = await formatJson(newPageMap, filePath);
+                fs.writeFileSync(filePath, formatted, "utf8");
+              }
+
+              results.push({
+                pageKey: target.pageKey,
+                roleKey,
+                variantKey: variant.key,
+                filePath,
+                pageMap: newPageMap,
+                isNew,
+                hasChanged,
+              });
+
+              harvestSuccess = true;
+            } finally {
+              await context.close();
             }
           }
 
-          // Apply state fixture if provided
-          if (typeof variant.fixture === "function") {
-            await variant.fixture({ page, browserContext: context, baseURL });
+          if (!harvestSuccess) {
+            throw new Error(`Failed to harvest target '${target.pageKey}' for role '${roleKey}' after retry.`);
           }
-
-          // Navigate to target route
-          const targetUrl = target.route.startsWith("http") ? target.route : `${baseURL}${target.route}`;
-          await page.goto(targetUrl, {
-            waitUntil: target.settle?.waitFor || "domcontentloaded",
-            timeout: target.settle?.timeoutMs || 30_000,
-          });
-
-          if (target.settle?.extraSelector) {
-            await page.locator(target.settle.extraSelector).first().waitFor({ state: "attached", timeout: 10_000 });
-          }
-
-          // Apply openers if present
-          if (variant.openers) {
-            for (const opener of variant.openers) {
-              console.log(`[Harvester] Executing opener: ${opener.description}`);
-              await opener.action(page);
-            }
-          }
-
-          // Extract Page Map
-          const newPageMap = await extractPageMap(page, target, variant, roleKey, {
-            appBuild,
-            harvesterVersion,
-            existingPageMap,
-            baseURL,
-          });
-
-          // Check for change / determinism preservation
-          let hasChanged = true;
-          let isNew = true;
-
-          if (existingPageMap) {
-            isNew = false;
-            if (existingPageMap.ariaDigest === newPageMap.ariaDigest) {
-              // Digest is identical: preserve capturedAt to ensure byte-level zero git diff
-              newPageMap.capturedAt = existingPageMap.capturedAt;
-              hasChanged = false;
-            }
-          }
-
-          // Sanitization check
-          assertNoSecrets(newPageMap);
-
-          // Schema validation check
-          validatePageMap(newPageMap);
-
-          pageMapVariants.push(newPageMap);
-
-          if (!dryRun) {
-            const formatted = await formatJson(newPageMap);
-            fs.writeFileSync(filePath, formatted, "utf8");
-          }
-
-          results.push({
-            pageKey: target.pageKey,
-            roleKey,
-            variantKey: variant.key,
-            filePath,
-            pageMap: newPageMap,
-            isNew,
-            hasChanged,
-          });
-
-          await context.close();
         }
       }
 
@@ -240,7 +281,7 @@ export async function runHarvester(options?: Partial<HarvesterOptions>): Promise
         }
 
         assertNoSecrets(pageIndex);
-        const formattedIndex = await formatJson(pageIndex);
+        const formattedIndex = await formatJson(pageIndex, indexFilePath);
         fs.writeFileSync(indexFilePath, formattedIndex, "utf8");
       }
     }

@@ -1,0 +1,153 @@
+{
+  "$schema": "./schema.json",
+  "route": "/en-US/login.html",
+  "pageKey": "HotelLogin",
+  "capturedAt": "2026-08-18T10:18:19.618Z",
+  "appBuild": "local-dev",
+  "harvesterVersion": "1.0.0",
+  "auth": {
+    "roleKey": "unauthenticated"
+  },
+  "state": {
+    "variantKey": "default"
+  },
+  "elements": [
+    {
+      "key": "loginButton",
+      "role": "button",
+      "accessibleName": "Login",
+      "locator": "getByRole('button', { name: 'Login' })",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "loginButton2",
+      "role": "button",
+      "accessibleName": "Login",
+      "locator": "getByRole('button', { name: 'Login' })",
+      "fallbackLocators": ["locator('#login-button')"],
+      "count": 2,
+      "requiresScoping": true,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "toggleNavigationButton",
+      "role": "button",
+      "accessibleName": "Toggle navigation",
+      "locator": "getByRole('button', { name: 'Toggle navigation' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "hotelPlanisphereHeading",
+      "role": "heading",
+      "accessibleName": "Hotel Planisphere",
+      "locator": "getByRole('heading', { name: 'Hotel Planisphere' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "loginHeading",
+      "role": "heading",
+      "accessibleName": "Login",
+      "locator": "getByRole('heading', { name: 'Login' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "githubLink",
+      "role": "link",
+      "accessibleName": "GitHub",
+      "locator": "getByRole('link', { name: 'GitHub' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "homeLink",
+      "role": "link",
+      "accessibleName": "Home",
+      "locator": "getByRole('link', { name: 'Home' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "hotelPlanisphereLink",
+      "role": "link",
+      "accessibleName": "Hotel Planisphere",
+      "locator": "getByRole('link', { name: 'Hotel Planisphere' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "reserveLink",
+      "role": "link",
+      "accessibleName": "Reserve",
+      "locator": "getByRole('link', { name: 'Reserve' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "signUpLink",
+      "role": "link",
+      "accessibleName": "Sign up",
+      "locator": "getByRole('link', { name: 'Sign up' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "emailTextbox",
+      "role": "textbox",
+      "accessibleName": "Email",
+      "locator": "getByLabel('Email')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Email' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "passwordTextbox",
+      "role": "textbox",
+      "accessibleName": "Password",
+      "locator": "getByLabel('Password')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Password' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    }
+  ],
+  "ariaDigest": "sha256:2de527f703528e7ed3bd94970d0be906015ba53b53d2801b4af53332857d9e1b",
+  "notes": []
+}

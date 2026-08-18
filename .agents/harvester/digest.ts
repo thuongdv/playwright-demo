@@ -21,8 +21,13 @@ export function computeAriaDigest(ariaSnapshotText: string, elements: PageMapEle
     enabled: el.enabled,
   }));
 
-  // Clean snapshot text (normalize whitespace / line endings)
-  const normalizedAria = ariaSnapshotText.replace(/\r\n/g, "\n").trim();
+  // Clean snapshot text (normalize whitespace, line endings, volatile nonces, tokens, and internal refs)
+  const normalizedAria = ariaSnapshotText
+    .replace(/\r\n/g, "\n")
+    .replace(/\[ref=[^\]]+\]/g, "")
+    .replace(/([?&])(_wpnonce|_token|token|nonce|csrf|session|timestamp|_)=[a-zA-Z0-9_-]+/gi, "$1$2=<DYNAMIC>")
+    .replace(/_wpnonce=[a-zA-Z0-9]+/gi, "_wpnonce=<DYNAMIC>")
+    .trim();
 
   const payload = JSON.stringify({
     aria: normalizedAria,

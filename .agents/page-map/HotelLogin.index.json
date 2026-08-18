@@ -1,0 +1,24 @@
+{
+  "pageKey": "HotelLogin",
+  "route": "/en-US/login.html",
+  "roles": ["unauthenticated"],
+  "variants": ["default"],
+  "commonElementKeys": [
+    "emailTextbox",
+    "githubLink",
+    "homeLink",
+    "hotelPlanisphereHeading",
+    "hotelPlanisphereLink",
+    "loginButton",
+    "loginButton2",
+    "loginHeading",
+    "passwordTextbox",
+    "reserveLink",
+    "signUpLink",
+    "toggleNavigationButton"
+  ],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": []
+  },
+  "lastUpdated": "2026-08-18T10:18:19.644Z"
+}

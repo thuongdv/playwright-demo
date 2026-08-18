@@ -9,6 +9,7 @@
     "format": "npx prettier --write .",
     "format:check": "npx prettier --check .",
     "spec-gen": "tsx src/utils/excel2md/spec-gen.ts",
+    "harvest": "tsx .agents/harvester/run.ts --config .agents/harvester/targets.ts",
     "test:ui-hotel": "npx playwright test --config=playwright.config.ts --project=ui-hotel",
     "test:qa": "dotenv -e .env.qa -- npx playwright test --config=playwright.config.ts",
     "test:ui-ta": "npx playwright test --config=playwright.config.ts --project=ui-ta",

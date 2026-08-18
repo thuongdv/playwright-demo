@@ -1,8 +1,8 @@
 {
   "$schema": "./schema.json",
-  "route": "/en-US/index.html",
-  "pageKey": "HotelHome",
-  "capturedAt": "2026-08-18T06:37:01.208Z",
+  "route": "/en-US/signup.html",
+  "pageKey": "HotelSignup",
+  "capturedAt": "2026-08-18T10:18:20.731Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -24,13 +24,13 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "logoutButton",
+      "key": "signUpButton",
       "role": "button",
-      "accessibleName": "Logout",
-      "locator": "getByRole('button', { name: 'Logout' })",
+      "accessibleName": "Sign up",
+      "locator": "getByRole('button', { name: 'Sign up' })",
       "count": 1,
       "requiresScoping": false,
-      "visible": false,
+      "visible": true,
       "enabled": true,
       "firstSeenBuild": "local-dev"
     },
@@ -46,10 +46,11 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "confirmationPageHeading",
-      "role": "heading",
-      "accessibleName": "Confirmation Page",
-      "locator": "getByRole('heading', { name: 'Confirmation Page' })",
+      "key": "receiveNotificationCheckbox",
+      "role": "checkbox",
+      "accessibleName": "Receive notification",
+      "locator": "getByLabel('Receive notification')",
+      "fallbackLocators": ["getByRole('checkbox', { name: 'Receive notification' })"],
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -57,10 +58,11 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "detailsHeading",
-      "role": "heading",
-      "accessibleName": "Details",
-      "locator": "getByRole('heading', { name: 'Details' })",
+      "key": "genderCombobox",
+      "role": "combobox",
+      "accessibleName": "Gender",
+      "locator": "getByLabel('Gender')",
+      "fallbackLocators": ["getByRole('combobox', { name: 'Gender' })"],
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -79,98 +81,10 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "loginPageHeading",
+      "key": "signUpHeading",
       "role": "heading",
-      "accessibleName": "Login Page",
-      "locator": "getByRole('heading', { name: 'Login Page' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "myPageHeading",
-      "role": "heading",
-      "accessibleName": "My Page",
-      "locator": "getByRole('heading', { name: 'My Page' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "noticeHeading",
-      "role": "heading",
-      "accessibleName": "Notice",
-      "locator": "getByRole('heading', { name: 'Notice' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "plansPageHeading",
-      "role": "heading",
-      "accessibleName": "Plans Page",
-      "locator": "getByRole('heading', { name: 'Plans Page' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "reservationPageHeading",
-      "role": "heading",
-      "accessibleName": "Reservation Page",
-      "locator": "getByRole('heading', { name: 'Reservation Page' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "signUpPageHeading",
-      "role": "heading",
-      "accessibleName": "Sign up Page",
-      "locator": "getByRole('heading', { name: 'Sign up Page' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "siteStructureHeading",
-      "role": "heading",
-      "accessibleName": "Site Structure",
-      "locator": "getByRole('heading', { name: 'Site Structure' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "termsOfUseHeading",
-      "role": "heading",
-      "accessibleName": "Terms of Use",
-      "locator": "getByRole('heading', { name: 'Terms of Use' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "heading",
-      "role": "heading",
-      "accessibleName": "This site is a sandbox to practice test automation.",
-      "locator": "getByRole('heading', { name: 'This site is a sandbox to practice test automation.' })",
+      "accessibleName": "Sign up",
+      "locator": "getByRole('heading', { name: 'Sign up' })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -211,39 +125,6 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "httpshotelExampleSitetakeyaqadevLink",
-      "role": "link",
-      "accessibleName": "https://hotel-example-site.takeyaqa.dev/",
-      "locator": "getByRole('link', { name: 'https://hotel-example-site.takeyaqa.dev/' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "mitLicenseLink",
-      "role": "link",
-      "accessibleName": "MIT License",
-      "locator": "getByRole('link', { name: 'MIT License' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "mypageLink",
-      "role": "link",
-      "accessibleName": "Mypage",
-      "locator": "getByRole('link', { name: 'Mypage' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": false,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
       "key": "reserveLink",
       "role": "link",
       "accessibleName": "Reserve",
@@ -264,8 +145,116 @@
       "visible": true,
       "enabled": true,
       "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "membershipRadio",
+      "role": "radio",
+      "accessibleName": "Membership",
+      "locator": "getByRole('radio', { name: 'Membership' })",
+      "fallbackLocators": ["locator('#rank-normal')"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "premiumMembershipRadio",
+      "role": "radio",
+      "accessibleName": "PREMIUM Membership",
+      "locator": "getByRole('radio', { name: 'PREMIUM Membership' })",
+      "fallbackLocators": ["locator('#rank-premium')"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "addressTextbox",
+      "role": "textbox",
+      "accessibleName": "Address",
+      "locator": "getByLabel('Address')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Address' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "dateOfBirthTextbox",
+      "role": "textbox",
+      "accessibleName": "Date of birth",
+      "locator": "getByLabel('Date of birth')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Date of birth' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "emailRequiredTextbox",
+      "role": "textbox",
+      "accessibleName": "Email required",
+      "locator": "getByLabel('Email required')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Email required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "nameRequiredTextbox",
+      "role": "textbox",
+      "accessibleName": "Name required",
+      "locator": "getByLabel('Name required')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Name required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "passwordConfirmationRequiredTextbox",
+      "role": "textbox",
+      "accessibleName": "Password (confirmation) required",
+      "locator": "getByLabel('Password (confirmation) required')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Password (confirmation) required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "passwordRequiredTextbox",
+      "role": "textbox",
+      "accessibleName": "Password required",
+      "locator": "getByLabel('Password required')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Password required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "telTextbox",
+      "role": "textbox",
+      "accessibleName": "Tel",
+      "locator": "getByLabel('Tel')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Tel' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:f723d8df20d105280286eba044c741d00fd6d0ef4770e4cf4299b8447d6c5ab6",
+  "ariaDigest": "sha256:b1088abfc9851dfac03cfdf616368a8d892d34aec4066b97444e714e16b0f345",
   "notes": []
 }

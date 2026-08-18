@@ -1,0 +1,33 @@
+{
+  "pageKey": "HotelSignup",
+  "route": "/en-US/signup.html",
+  "roles": ["unauthenticated"],
+  "variants": ["default"],
+  "commonElementKeys": [
+    "addressTextbox",
+    "dateOfBirthTextbox",
+    "emailRequiredTextbox",
+    "genderCombobox",
+    "githubLink",
+    "homeLink",
+    "hotelPlanisphereHeading",
+    "hotelPlanisphereLink",
+    "loginButton",
+    "membershipRadio",
+    "nameRequiredTextbox",
+    "passwordConfirmationRequiredTextbox",
+    "passwordRequiredTextbox",
+    "premiumMembershipRadio",
+    "receiveNotificationCheckbox",
+    "reserveLink",
+    "signUpButton",
+    "signUpHeading",
+    "signUpLink",
+    "telTextbox",
+    "toggleNavigationButton"
+  ],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": []
+  },
+  "lastUpdated": "2026-08-18T10:18:20.751Z"
+}

@@ -35,6 +35,77 @@ export const config: HarvesterConfig = {
         extraSelector: ".card",
       },
     },
+    {
+      pageKey: "HotelLogin",
+      route: "/en-US/login.html",
+      rootSelector: "body",
+      roles: ["unauthenticated"],
+      variants: [
+        {
+          key: "default",
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
+    {
+      pageKey: "HotelSignup",
+      route: "/en-US/signup.html",
+      rootSelector: "body",
+      roles: ["unauthenticated"],
+      variants: [
+        {
+          key: "default",
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
+    {
+      pageKey: "HotelMyPage",
+      route: "/en-US/mypage.html",
+      rootSelector: "body",
+      roles: ["hotelUser"],
+      variants: [
+        {
+          key: "default",
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
+    {
+      pageKey: "HotelReservation",
+      route: "/en-US/reserve.html?plan-id=0",
+      rootSelector: "body",
+      roles: ["unauthenticated"],
+      variants: [
+        {
+          key: "default",
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
+    {
+      pageKey: "TAMyAccount",
+      route: "/my-account/",
+      baseURL: process.env.BASE_TA_URL || "https://demo.testarchitect.com",
+      rootSelector: ".woocommerce-MyAccount-navigation-wrapper, #customer_login",
+      roles: ["unauthenticated", "standardUser"],
+      variants: [
+        {
+          key: "default",
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
   ],
 };
 

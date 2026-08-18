@@ -1,0 +1,36 @@
+{
+  "pageKey": "TAMyAccount",
+  "route": "/my-account/",
+  "roles": ["unauthenticated", "standardUser"],
+  "variants": ["default"],
+  "commonElementKeys": [],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": [
+      "emailAddressTextbox",
+      "logInButton",
+      "loginHeading",
+      "lostYourPasswordLink",
+      "lostYourPasswordLink2",
+      "passwordTextbox",
+      "privacyPolicyLink",
+      "registerButton",
+      "registerHeading",
+      "rememberMeCheckbox",
+      "usernameOrEmailAddressTextbox",
+      "woocommerceLoginNonceTextbox",
+      "woocommerceRegisterNonceTextbox"
+    ],
+    "standardUser.default": [
+      "accountDetailsLink",
+      "addressesLink",
+      "basicLocalAvatarTextbox",
+      "basicUserAvatarNonceTextbox",
+      "dashboardLink",
+      "downloadsLink",
+      "logoutLink",
+      "ordersLink",
+      "subscriptionsLink"
+    ]
+  },
+  "lastUpdated": "2026-08-18T06:36:01.281Z"
+}

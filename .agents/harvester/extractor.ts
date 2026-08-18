@@ -148,10 +148,14 @@ export async function extractPageMap(
       };
 
       const getScope = (el) => {
-        const row = el.closest("tr, [role='row'], .card, .modal, .table-row, [data-testid*='row'], [data-testid*='item']");
+        const row = el.closest(
+          "tr, [role='row'], .card, .modal, .table-row, [data-testid*='row'], [data-testid*='item'], .product, .product-item, .carousel-item, li.product",
+        );
         if (row) {
           if (row.classList.contains("card")) return { scope: "Card", scopeLocator: ".card" };
           if (row.classList.contains("modal")) return { scope: "Modal", scopeLocator: ".modal" };
+          if (row.classList.contains("product") || row.classList.contains("product-item"))
+            return { scope: "Product", scopeLocator: ".product" };
           if (row.tagName === "TR" || row.getAttribute("role") === "row") return { scope: "Row", scopeLocator: "tr" };
           return { scope: "Item", scopeLocator: "[data-testid*='item'], [data-testid*='row']" };
         }
@@ -289,7 +293,9 @@ export async function extractPageMap(
     } else if (raw.placeholder) {
       locator = `getByPlaceholder('${raw.placeholder}')`;
     } else if (raw.id) {
-      locator = `locator('#${raw.id}')`;
+      locator = raw.id.match(/[-_]\d{2,}$/)
+        ? `locator('[id^="${raw.id.replace(/[-_]\d{2,}$/, "")}"]')`
+        : `locator('#${raw.id}')`;
     } else if (raw.cssSelector) {
       locator = `locator('${raw.cssSelector}')`;
       notes.push(`Element '${key}' uses scoped CSS selector '${raw.cssSelector}' as a last resort.`);

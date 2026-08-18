@@ -1,0 +1,32 @@
+{
+  "pageKey": "HotelReservation",
+  "route": "/en-US/reserve.html?plan-id=0",
+  "roles": ["unauthenticated"],
+  "variants": ["default"],
+  "commonElementKeys": [
+    "breakfastCheckbox",
+    "checkInRequiredTextbox",
+    "confirmationRequiredCombobox",
+    "earlyCheckInCheckbox",
+    "emailRequiredTextbox",
+    "githubLink",
+    "guestsRequiredSpinbutton",
+    "hotelPlanisphereLink",
+    "nameRequiredTextbox",
+    "planIdHiddenTextbox",
+    "planNameHeading",
+    "planNameHiddenTextbox",
+    "reservationHeading",
+    "roomBillHiddenTextbox",
+    "sightseeingCheckbox",
+    "specialRequestTextbox",
+    "stayRequiredSpinbutton",
+    "submitButton",
+    "telRequiredTextbox",
+    "totalHeading"
+  ],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": []
+  },
+  "lastUpdated": "2026-08-18T10:19:11.920Z"
+}

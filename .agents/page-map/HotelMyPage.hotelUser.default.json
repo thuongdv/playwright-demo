@@ -1,22 +1,35 @@
 {
   "$schema": "./schema.json",
-  "route": "/en-US/index.html",
-  "pageKey": "HotelHome",
-  "capturedAt": "2026-08-18T06:37:01.208Z",
+  "route": "/en-US/mypage.html",
+  "pageKey": "HotelMyPage",
+  "capturedAt": "2026-08-18T10:19:10.482Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
-    "roleKey": "unauthenticated"
+    "roleKey": "hotelUser",
+    "stateGeneratedAt": "2026-08-18T10:19:35.778Z"
   },
   "state": {
     "variantKey": "default"
   },
   "elements": [
     {
-      "key": "loginButton",
+      "key": "deleteAccountButton",
       "role": "button",
-      "accessibleName": "Login",
-      "locator": "getByRole('button', { name: 'Login' })",
+      "accessibleName": "Delete Account",
+      "locator": "getByRole('button', { name: 'Delete Account' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": false,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "iconSettingButton",
+      "role": "button",
+      "accessibleName": "Icon Setting",
+      "locator": "getByRole('button', { name: 'Icon Setting' })",
+      "fallbackLocators": ["locator('#icon-link')"],
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -30,7 +43,7 @@
       "locator": "getByRole('button', { name: 'Logout' })",
       "count": 1,
       "requiresScoping": false,
-      "visible": false,
+      "visible": true,
       "enabled": true,
       "firstSeenBuild": "local-dev"
     },
@@ -46,10 +59,10 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "confirmationPageHeading",
+      "key": "addressHeading",
       "role": "heading",
-      "accessibleName": "Confirmation Page",
-      "locator": "getByRole('heading', { name: 'Confirmation Page' })",
+      "accessibleName": "Address",
+      "locator": "getByRole('heading', { name: 'Address' })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -57,10 +70,32 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "detailsHeading",
+      "key": "dateOfBirthHeading",
       "role": "heading",
-      "accessibleName": "Details",
-      "locator": "getByRole('heading', { name: 'Details' })",
+      "accessibleName": "Date of birth",
+      "locator": "getByRole('heading', { name: 'Date of birth' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "emailHeading",
+      "role": "heading",
+      "accessibleName": "Email",
+      "locator": "getByRole('heading', { name: 'Email' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "genderHeading",
+      "role": "heading",
+      "accessibleName": "Gender",
+      "locator": "getByRole('heading', { name: 'Gender' })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -79,10 +114,10 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "loginPageHeading",
+      "key": "membershipHeading",
       "role": "heading",
-      "accessibleName": "Login Page",
-      "locator": "getByRole('heading', { name: 'Login Page' })",
+      "accessibleName": "Membership",
+      "locator": "getByRole('heading', { name: 'Membership' })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -90,10 +125,10 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "myPageHeading",
+      "key": "mypageHeading",
       "role": "heading",
-      "accessibleName": "My Page",
-      "locator": "getByRole('heading', { name: 'My Page' })",
+      "accessibleName": "MyPage",
+      "locator": "getByRole('heading', { name: 'MyPage' })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -101,10 +136,10 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "noticeHeading",
+      "key": "nameHeading",
       "role": "heading",
-      "accessibleName": "Notice",
-      "locator": "getByRole('heading', { name: 'Notice' })",
+      "accessibleName": "Name",
+      "locator": "getByRole('heading', { name: 'Name' })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -112,10 +147,10 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "plansPageHeading",
+      "key": "notificationHeading",
       "role": "heading",
-      "accessibleName": "Plans Page",
-      "locator": "getByRole('heading', { name: 'Plans Page' })",
+      "accessibleName": "Notification",
+      "locator": "getByRole('heading', { name: 'Notification' })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -123,54 +158,10 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "reservationPageHeading",
+      "key": "telHeading",
       "role": "heading",
-      "accessibleName": "Reservation Page",
-      "locator": "getByRole('heading', { name: 'Reservation Page' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "signUpPageHeading",
-      "role": "heading",
-      "accessibleName": "Sign up Page",
-      "locator": "getByRole('heading', { name: 'Sign up Page' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "siteStructureHeading",
-      "role": "heading",
-      "accessibleName": "Site Structure",
-      "locator": "getByRole('heading', { name: 'Site Structure' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "termsOfUseHeading",
-      "role": "heading",
-      "accessibleName": "Terms of Use",
-      "locator": "getByRole('heading', { name: 'Terms of Use' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "heading",
-      "role": "heading",
-      "accessibleName": "This site is a sandbox to practice test automation.",
-      "locator": "getByRole('heading', { name: 'This site is a sandbox to practice test automation.' })",
+      "accessibleName": "Tel",
+      "locator": "getByRole('heading', { name: 'Tel' })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -211,35 +202,13 @@
       "firstSeenBuild": "local-dev"
     },
     {
-      "key": "httpshotelExampleSitetakeyaqadevLink",
-      "role": "link",
-      "accessibleName": "https://hotel-example-site.takeyaqa.dev/",
-      "locator": "getByRole('link', { name: 'https://hotel-example-site.takeyaqa.dev/' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "mitLicenseLink",
-      "role": "link",
-      "accessibleName": "MIT License",
-      "locator": "getByRole('link', { name: 'MIT License' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
-    },
-    {
       "key": "mypageLink",
       "role": "link",
       "accessibleName": "Mypage",
       "locator": "getByRole('link', { name: 'Mypage' })",
       "count": 1,
       "requiresScoping": false,
-      "visible": false,
+      "visible": true,
       "enabled": true,
       "firstSeenBuild": "local-dev"
     },
@@ -253,19 +222,8 @@
       "visible": true,
       "enabled": true,
       "firstSeenBuild": "local-dev"
-    },
-    {
-      "key": "signUpLink",
-      "role": "link",
-      "accessibleName": "Sign up",
-      "locator": "getByRole('link', { name: 'Sign up' })",
-      "count": 1,
-      "requiresScoping": false,
-      "visible": true,
-      "enabled": true,
-      "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:f723d8df20d105280286eba044c741d00fd6d0ef4770e4cf4299b8447d6c5ab6",
+  "ariaDigest": "sha256:ad9523fac0d9f00ec9f13a93018fdf3f6ff8e895ea56f5ec9fbcf93bb0be265a",
   "notes": []
 }

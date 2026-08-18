@@ -79,7 +79,8 @@ export function generateElementKey(role: string, name?: string, testId?: string,
   } else if (name && name.length <= 40) {
     base = name;
   } else if (id) {
-    base = id;
+    // Strip dynamic trailing numbers like product_cat-563 or post-124
+    base = id.replace(/[-_]\d{2,}$/, "");
   } else {
     base = role;
   }

@@ -1,0 +1,247 @@
+{
+  "$schema": "./schema.json",
+  "route": "/en-US/reserve.html?plan-id=0",
+  "pageKey": "HotelReservation",
+  "capturedAt": "2026-08-18T10:19:11.909Z",
+  "appBuild": "local-dev",
+  "harvesterVersion": "1.0.0",
+  "auth": {
+    "roleKey": "unauthenticated"
+  },
+  "state": {
+    "variantKey": "default"
+  },
+  "elements": [
+    {
+      "key": "submitButton",
+      "role": "button",
+      "accessibleName": "Confirm Reservation",
+      "testId": "submit-button",
+      "locator": "getByTestId('submit-button')",
+      "fallbackLocators": ["getByRole('button', { name: 'Confirm Reservation' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": false,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "breakfastCheckbox",
+      "role": "checkbox",
+      "accessibleName": "Breakfast",
+      "locator": "getByLabel('Breakfast')",
+      "fallbackLocators": ["getByRole('checkbox', { name: 'Breakfast' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "earlyCheckInCheckbox",
+      "role": "checkbox",
+      "accessibleName": "Early check-in",
+      "locator": "getByLabel('Early check-in')",
+      "fallbackLocators": ["getByRole('checkbox', { name: 'Early check-in' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "sightseeingCheckbox",
+      "role": "checkbox",
+      "accessibleName": "Sightseeing",
+      "locator": "getByLabel('Sightseeing')",
+      "fallbackLocators": ["getByRole('checkbox', { name: 'Sightseeing' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "confirmationRequiredCombobox",
+      "role": "combobox",
+      "accessibleName": "Confirmation required",
+      "locator": "getByLabel('Confirmation required')",
+      "fallbackLocators": ["getByRole('combobox', { name: 'Confirmation required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "planNameHeading",
+      "role": "heading",
+      "locator": "locator('#plan-name')",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "reservationHeading",
+      "role": "heading",
+      "accessibleName": "Reservation",
+      "locator": "getByRole('heading', { name: 'Reservation' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "totalHeading",
+      "role": "heading",
+      "accessibleName": "Total",
+      "locator": "getByRole('heading', { name: 'Total' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "githubLink",
+      "role": "link",
+      "accessibleName": "GitHub",
+      "locator": "getByRole('link', { name: 'GitHub' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "hotelPlanisphereLink",
+      "role": "link",
+      "accessibleName": "Hotel Planisphere",
+      "locator": "getByRole('link', { name: 'Hotel Planisphere' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "guestsRequiredSpinbutton",
+      "role": "spinbutton",
+      "accessibleName": "Guests required",
+      "locator": "getByRole('spinbutton', { name: 'Guests required' })",
+      "fallbackLocators": ["locator('#head-count')"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "stayRequiredSpinbutton",
+      "role": "spinbutton",
+      "accessibleName": "Stay required",
+      "locator": "getByRole('spinbutton', { name: 'Stay required' })",
+      "fallbackLocators": ["locator('#term')"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "planIdHiddenTextbox",
+      "role": "textbox",
+      "locator": "locator('#plan-id-hidden')",
+      "count": 3,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "planNameHiddenTextbox",
+      "role": "textbox",
+      "locator": "locator('#plan-name-hidden')",
+      "count": 3,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "roomBillHiddenTextbox",
+      "role": "textbox",
+      "locator": "locator('#room-bill-hidden')",
+      "count": 3,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "checkInRequiredTextbox",
+      "role": "textbox",
+      "accessibleName": "Check-in required",
+      "locator": "getByLabel('Check-in required')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Check-in required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "emailRequiredTextbox",
+      "role": "textbox",
+      "accessibleName": "Email required",
+      "locator": "getByLabel('Email required')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Email required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": false,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "nameRequiredTextbox",
+      "role": "textbox",
+      "accessibleName": "Name required",
+      "locator": "getByLabel('Name required')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Name required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "specialRequestTextbox",
+      "role": "textbox",
+      "accessibleName": "Special request",
+      "locator": "getByLabel('Special request')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Special request' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "telRequiredTextbox",
+      "role": "textbox",
+      "accessibleName": "Tel required",
+      "locator": "getByLabel('Tel required')",
+      "fallbackLocators": ["getByRole('textbox', { name: 'Tel required' })"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": false,
+      "firstSeenBuild": "local-dev"
+    }
+  ],
+  "ariaDigest": "sha256:f6c851f7f9b8457c406cf8d99687ae812a937a55acfdab780b6727155f8d262d",
+  "notes": []
+}

@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/en-US/plans.html",
   "pageKey": "HotelPlans",
-  "capturedAt": "2026-08-18T05:01:27.364Z",
+  "capturedAt": "2026-08-18T06:37:03.162Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -230,6 +230,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:6263afa617b6a6d49a2d0bac3027a55f9dd9cd9b89ac011f436580c2badf4d8d",
+  "ariaDigest": "sha256:716beef98c54b2c570d1d135caf0de52e03be7196cfa2f343b9ce4a18c444c1c",
   "notes": []
 }
