@@ -1,0 +1,31 @@
+{
+  "pageKey": "HotelPlans",
+  "route": "/en-US/plans.html",
+  "roles": ["unauthenticated"],
+  "variants": ["default"],
+  "commonElementKeys": [
+    "businessTripHeading",
+    "forHoneymoonHeading",
+    "githubLink",
+    "homeLink",
+    "hotelPlanisphereHeading",
+    "hotelPlanisphereLink",
+    "loginButton",
+    "logoutButton",
+    "mypageLink",
+    "planWithSpecialOffersHeading",
+    "plansHeading",
+    "reserveLink",
+    "reserveRoomLink",
+    "signUpLink",
+    "stayingWithoutMealsHeading",
+    "toggleNavigationButton",
+    "withBeautySalonHeading",
+    "withComplimentaryTicketHeading",
+    "withPrivateOnsenHeading"
+  ],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": []
+  },
+  "lastUpdated": "2026-08-18T05:01:27.371Z"
+}

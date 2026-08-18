@@ -1,0 +1,235 @@
+{
+  "$schema": "./schema.json",
+  "route": "/en-US/plans.html",
+  "pageKey": "HotelPlans",
+  "capturedAt": "2026-08-18T05:01:27.364Z",
+  "appBuild": "local-dev",
+  "harvesterVersion": "1.0.0",
+  "auth": {
+    "roleKey": "unauthenticated"
+  },
+  "state": {
+    "variantKey": "default"
+  },
+  "elements": [
+    {
+      "key": "loginButton",
+      "role": "button",
+      "accessibleName": "Login",
+      "locator": "getByRole('button', { name: 'Login' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "logoutButton",
+      "role": "button",
+      "accessibleName": "Logout",
+      "locator": "getByRole('button', { name: 'Logout' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "toggleNavigationButton",
+      "role": "button",
+      "accessibleName": "Toggle navigation",
+      "locator": "getByRole('button', { name: 'Toggle navigation' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "hotelPlanisphereHeading",
+      "role": "heading",
+      "accessibleName": "Hotel Planisphere",
+      "locator": "getByRole('heading', { name: 'Hotel Planisphere' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "plansHeading",
+      "role": "heading",
+      "accessibleName": "Plans",
+      "locator": "getByRole('heading', { name: 'Plans' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "githubLink",
+      "role": "link",
+      "accessibleName": "GitHub",
+      "locator": "getByRole('link', { name: 'GitHub' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "homeLink",
+      "role": "link",
+      "accessibleName": "Home",
+      "locator": "getByRole('link', { name: 'Home' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "hotelPlanisphereLink",
+      "role": "link",
+      "accessibleName": "Hotel Planisphere",
+      "locator": "getByRole('link', { name: 'Hotel Planisphere' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "mypageLink",
+      "role": "link",
+      "accessibleName": "Mypage",
+      "locator": "getByRole('link', { name: 'Mypage' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "reserveLink",
+      "role": "link",
+      "accessibleName": "Reserve",
+      "locator": "getByRole('link', { name: 'Reserve' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "signUpLink",
+      "role": "link",
+      "accessibleName": "Sign up",
+      "locator": "getByRole('link', { name: 'Sign up' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "businessTripHeading",
+      "role": "heading",
+      "accessibleName": "Business trip",
+      "locator": "getByRole('heading', { name: 'Business trip' })",
+      "scope": "Card",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "forHoneymoonHeading",
+      "role": "heading",
+      "accessibleName": "For honeymoon",
+      "locator": "getByRole('heading', { name: 'For honeymoon' })",
+      "scope": "Card",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "planWithSpecialOffersHeading",
+      "role": "heading",
+      "accessibleName": "Plan with special offers",
+      "locator": "getByRole('heading', { name: 'Plan with special offers' })",
+      "scope": "Card",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "stayingWithoutMealsHeading",
+      "role": "heading",
+      "accessibleName": "Staying without meals",
+      "locator": "getByRole('heading', { name: 'Staying without meals' })",
+      "scope": "Card",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "withBeautySalonHeading",
+      "role": "heading",
+      "accessibleName": "With beauty salon",
+      "locator": "getByRole('heading', { name: 'With beauty salon' })",
+      "scope": "Card",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "withComplimentaryTicketHeading",
+      "role": "heading",
+      "accessibleName": "With complimentary ticket",
+      "locator": "getByRole('heading', { name: 'With complimentary ticket' })",
+      "scope": "Card",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "withPrivateOnsenHeading",
+      "role": "heading",
+      "accessibleName": "With private onsen",
+      "locator": "getByRole('heading', { name: 'With private onsen' })",
+      "scope": "Card",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "reserveRoomLink",
+      "role": "link",
+      "accessibleName": "Reserve room",
+      "locator": "getByRole('link', { name: 'Reserve room' })",
+      "scope": "Card",
+      "count": 7,
+      "requiresScoping": true,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    }
+  ],
+  "ariaDigest": "sha256:6263afa617b6a6d49a2d0bac3027a55f9dd9cd9b89ac011f436580c2badf4d8d",
+  "notes": []
+}

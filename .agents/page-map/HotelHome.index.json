@@ -1,0 +1,35 @@
+{
+  "pageKey": "HotelHome",
+  "route": "/en-US/index.html",
+  "roles": ["unauthenticated"],
+  "variants": ["default"],
+  "commonElementKeys": [
+    "confirmationPageHeading",
+    "detailsHeading",
+    "githubLink",
+    "heading",
+    "homeLink",
+    "hotelPlanisphereHeading",
+    "hotelPlanisphereLink",
+    "httpshotelExampleSitetakeyaqadevLink",
+    "loginButton",
+    "loginPageHeading",
+    "logoutButton",
+    "mitLicenseLink",
+    "myPageHeading",
+    "mypageLink",
+    "noticeHeading",
+    "plansPageHeading",
+    "reservationPageHeading",
+    "reserveLink",
+    "signUpLink",
+    "signUpPageHeading",
+    "siteStructureHeading",
+    "termsOfUseHeading",
+    "toggleNavigationButton"
+  ],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": []
+  },
+  "lastUpdated": "2026-08-18T04:57:48.661Z"
+}
