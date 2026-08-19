@@ -51,28 +51,28 @@ export class HotelReservationGeneratedPage {
   /**
    * Role: `link` | Accessible Name: "GitHub"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'GitHub' })`
+   * Locator: `getByRole('link', { name: 'GitHub', exact: true })`
    */
   get githubLink(): Locator {
-    return this.page.getByRole("link", { name: "GitHub" });
+    return this.page.getByRole("link", { name: "GitHub", exact: true });
   }
 
   /**
    * Role: `spinbutton` | Accessible Name: "Guests required"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('spinbutton', { name: 'Guests required' })`
+   * Locator: `getByRole('spinbutton', { name: 'Guests required', exact: true })`
    */
   get guestsRequiredSpinbutton(): Locator {
-    return this.page.getByRole("spinbutton", { name: "Guests required" });
+    return this.page.getByRole("spinbutton", { name: "Guests required", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Hotel Planisphere"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'Hotel Planisphere' })`
+   * Locator: `getByRole('link', { name: 'Hotel Planisphere', exact: true })`
    */
   get hotelPlanisphereLink(): Locator {
-    return this.page.getByRole("link", { name: "Hotel Planisphere" });
+    return this.page.getByRole("link", { name: "Hotel Planisphere", exact: true });
   }
 
   /**
@@ -124,10 +124,10 @@ export class HotelReservationGeneratedPage {
   /**
    * Role: `heading` | Accessible Name: "Reservation"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('heading', { name: 'Reservation' })`
+   * Locator: `getByRole('heading', { name: 'Reservation', exact: true })`
    */
   get reservationHeading(): Locator {
-    return this.page.getByRole("heading", { name: "Reservation" });
+    return this.page.getByRole("heading", { name: "Reservation", exact: true });
   }
 
   /**
@@ -165,10 +165,10 @@ export class HotelReservationGeneratedPage {
   /**
    * Role: `spinbutton` | Accessible Name: "Stay required"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('spinbutton', { name: 'Stay required' })`
+   * Locator: `getByRole('spinbutton', { name: 'Stay required', exact: true })`
    */
   get stayRequiredSpinbutton(): Locator {
-    return this.page.getByRole("spinbutton", { name: "Stay required" });
+    return this.page.getByRole("spinbutton", { name: "Stay required", exact: true });
   }
 
   /**
@@ -192,10 +192,10 @@ export class HotelReservationGeneratedPage {
   /**
    * Role: `heading` | Accessible Name: "Total"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('heading', { name: 'Total' })`
+   * Locator: `getByRole('heading', { name: 'Total', exact: true })`
    */
   get totalHeading(): Locator {
-    return this.page.getByRole("heading", { name: "Total" });
+    return this.page.getByRole("heading", { name: "Total", exact: true });
   }
 }
 

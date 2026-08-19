@@ -1,0 +1,248 @@
+{
+  "$schema": "./schema.json",
+  "route": "/login",
+  "pageKey": "AELogin",
+  "capturedAt": "2026-08-19T09:45:35.130Z",
+  "appBuild": "local-dev",
+  "harvesterVersion": "1.0.0",
+  "auth": {
+    "roleKey": "unauthenticated"
+  },
+  "state": {
+    "variantKey": "default"
+  },
+  "elements": [
+    {
+      "key": "subscribeButton",
+      "role": "button",
+      "locator": "locator('#subscribe')",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "loginButton",
+      "role": "button",
+      "accessibleName": "Login",
+      "locator": "getByRole('button', { name: 'Login', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "signupButton",
+      "role": "button",
+      "accessibleName": "Signup",
+      "locator": "getByRole('button', { name: 'Signup', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "loginToYourAccountHeading",
+      "role": "heading",
+      "accessibleName": "Login to your account",
+      "locator": "getByRole('heading', { name: 'Login to your account', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "newUserSignupHeading",
+      "role": "heading",
+      "accessibleName": "New User Signup!",
+      "locator": "getByRole('heading', { name: 'New User Signup!', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "orHeading",
+      "role": "heading",
+      "accessibleName": "OR",
+      "locator": "getByRole('heading', { name: 'OR', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "subscriptionHeading",
+      "role": "heading",
+      "accessibleName": "Subscription",
+      "locator": "getByRole('heading', { name: 'Subscription', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "scrollupLink",
+      "role": "link",
+      "locator": "locator('#scrollUp')",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "apiTestingLink",
+      "role": "link",
+      "accessibleName": "API Testing",
+      "locator": "getByRole('link', { name: 'API Testing', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "cartLink",
+      "role": "link",
+      "accessibleName": "Cart",
+      "locator": "getByRole('link', { name: 'Cart', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "contactUsLink",
+      "role": "link",
+      "accessibleName": "Contact us",
+      "locator": "getByRole('link', { name: 'Contact us', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "homeLink",
+      "role": "link",
+      "accessibleName": "Home",
+      "locator": "getByRole('link', { name: 'Home', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "signupLoginLink",
+      "role": "link",
+      "accessibleName": "Signup / Login",
+      "locator": "getByRole('link', { name: 'Signup / Login', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "testCasesLink",
+      "role": "link",
+      "accessibleName": "Test Cases",
+      "locator": "getByRole('link', { name: 'Test Cases', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "videoTutorialsLink",
+      "role": "link",
+      "accessibleName": "Video Tutorials",
+      "locator": "getByRole('link', { name: 'Video Tutorials', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "productsLink",
+      "role": "link",
+      "accessibleName": " Products",
+      "locator": "getByRole('link', { name: ' Products', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "emailAddressTextbox",
+      "role": "textbox",
+      "accessibleName": "Email Address",
+      "locator": "getByRole('textbox', { name: 'Email Address', exact: true })",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "emailAddressTextbox2",
+      "role": "textbox",
+      "accessibleName": "Email Address",
+      "locator": "getByRole('textbox', { name: 'Email Address', exact: true })",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "nameTextbox",
+      "role": "textbox",
+      "accessibleName": "Name",
+      "locator": "getByRole('textbox', { name: 'Name', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "passwordTextbox",
+      "role": "textbox",
+      "accessibleName": "Password",
+      "locator": "getByRole('textbox', { name: 'Password', exact: true })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "yourEmailAddressTextbox",
+      "role": "textbox",
+      "accessibleName": "Your email address",
+      "locator": "getByRole('textbox', { name: 'Your email address', exact: true })",
+      "fallbackLocators": ["locator('#susbscribe_email')"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    }
+  ],
+  "ariaDigest": "sha256:c4dcf97562dfabbcc7d0bb4a44a414a24fb974600b3ff880fdf7ab36ead52ac9",
+  "notes": []
+}

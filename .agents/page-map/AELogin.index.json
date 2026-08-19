@@ -1,0 +1,33 @@
+{
+  "pageKey": "AELogin",
+  "route": "/login",
+  "roles": ["unauthenticated"],
+  "variants": ["default"],
+  "commonElementKeys": [
+    "apiTestingLink",
+    "cartLink",
+    "contactUsLink",
+    "emailAddressTextbox",
+    "emailAddressTextbox2",
+    "homeLink",
+    "loginButton",
+    "loginToYourAccountHeading",
+    "nameTextbox",
+    "newUserSignupHeading",
+    "orHeading",
+    "passwordTextbox",
+    "productsLink",
+    "scrollupLink",
+    "signupButton",
+    "signupLoginLink",
+    "subscribeButton",
+    "subscriptionHeading",
+    "testCasesLink",
+    "videoTutorialsLink",
+    "yourEmailAddressTextbox"
+  ],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": []
+  },
+  "lastUpdated": "2026-08-19T09:30:04.325Z"
+}

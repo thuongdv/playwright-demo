@@ -35,6 +35,7 @@ function parseArgs(): CodegenOptions {
 function getAreaFromPageKey(pageKey: string): string {
   if (pageKey.startsWith("Hotel")) return "hotel";
   if (pageKey.startsWith("TA")) return "ta";
+  if (pageKey.startsWith("AE") || pageKey.startsWith("AutomationExercise")) return "automationexercise";
   return "common";
 }
 

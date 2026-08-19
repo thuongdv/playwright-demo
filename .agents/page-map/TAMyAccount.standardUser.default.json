@@ -2,12 +2,12 @@
   "$schema": "./schema.json",
   "route": "/my-account/",
   "pageKey": "TAMyAccount",
-  "capturedAt": "2026-08-18T06:36:01.262Z",
+  "capturedAt": "2026-08-19T09:45:31.850Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
     "roleKey": "standardUser",
-    "stateGeneratedAt": "2026-08-18T06:37:45.037Z"
+    "stateGeneratedAt": "2026-08-19T09:45:23.178Z"
   },
   "state": {
     "variantKey": "default"
@@ -17,7 +17,7 @@
       "key": "accountDetailsLink",
       "role": "link",
       "accessibleName": "Account details",
-      "locator": "getByRole('link', { name: 'Account details' })",
+      "locator": "getByRole('link', { name: 'Account details', exact: true })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -28,7 +28,7 @@
       "key": "addressesLink",
       "role": "link",
       "accessibleName": "Addresses",
-      "locator": "getByRole('link', { name: 'Addresses' })",
+      "locator": "getByRole('link', { name: 'Addresses', exact: true })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -39,7 +39,7 @@
       "key": "dashboardLink",
       "role": "link",
       "accessibleName": "Dashboard",
-      "locator": "getByRole('link', { name: 'Dashboard' })",
+      "locator": "getByRole('link', { name: 'Dashboard', exact: true })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -50,7 +50,7 @@
       "key": "downloadsLink",
       "role": "link",
       "accessibleName": "Downloads",
-      "locator": "getByRole('link', { name: 'Downloads' })",
+      "locator": "getByRole('link', { name: 'Downloads', exact: true })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -61,7 +61,7 @@
       "key": "logoutLink",
       "role": "link",
       "accessibleName": "Logout",
-      "locator": "getByRole('link', { name: 'Logout' })",
+      "locator": "getByRole('link', { name: 'Logout', exact: true })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -72,7 +72,7 @@
       "key": "ordersLink",
       "role": "link",
       "accessibleName": "Orders",
-      "locator": "getByRole('link', { name: 'Orders' })",
+      "locator": "getByRole('link', { name: 'Orders', exact: true })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -83,7 +83,7 @@
       "key": "subscriptionsLink",
       "role": "link",
       "accessibleName": "Subscriptions",
-      "locator": "getByRole('link', { name: 'Subscriptions' })",
+      "locator": "getByRole('link', { name: 'Subscriptions', exact: true })",
       "count": 1,
       "requiresScoping": false,
       "visible": true,
@@ -111,6 +111,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:a2f7fd9ad9e3459e311157c5b1f8b905e80c2ede43a0b96ce31ec13644d48bd5",
+  "ariaDigest": "sha256:6ed93d5205384012cd1fdaf14b3751886c6d5d20c72f60b1b904c6433a72f312",
   "notes": []
 }

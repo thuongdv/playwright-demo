@@ -14,6 +14,7 @@
     "test:ui-hotel": "npx playwright test --config=playwright.config.ts --project=ui-hotel",
     "test:qa": "dotenv -e .env.qa -- npx playwright test --config=playwright.config.ts",
     "test:ui-ta": "npx playwright test --config=playwright.config.ts --project=ui-ta",
+    "test:ui-ae": "npx playwright test --config=playwright.config.ts --project=ui-ae",
     "report": "npx playwright show-report"
   },
   "repository": {

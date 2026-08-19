@@ -6,19 +6,19 @@ export class TAMyAccountGeneratedPage {
   /**
    * Role: `link` | Accessible Name: "Account details"
    * Variants: [standardUser.default]
-   * Locator: `getByRole('link', { name: 'Account details' })`
+   * Locator: `getByRole('link', { name: 'Account details', exact: true })`
    */
   get accountDetailsLink(): Locator {
-    return this.page.getByRole("link", { name: "Account details" });
+    return this.page.getByRole("link", { name: "Account details", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Addresses"
    * Variants: [standardUser.default]
-   * Locator: `getByRole('link', { name: 'Addresses' })`
+   * Locator: `getByRole('link', { name: 'Addresses', exact: true })`
    */
   get addressesLink(): Locator {
-    return this.page.getByRole("link", { name: "Addresses" });
+    return this.page.getByRole("link", { name: "Addresses", exact: true });
   }
 
   /**
@@ -52,19 +52,19 @@ export class TAMyAccountGeneratedPage {
   /**
    * Role: `link` | Accessible Name: "Dashboard"
    * Variants: [standardUser.default]
-   * Locator: `getByRole('link', { name: 'Dashboard' })`
+   * Locator: `getByRole('link', { name: 'Dashboard', exact: true })`
    */
   get dashboardLink(): Locator {
-    return this.page.getByRole("link", { name: "Dashboard" });
+    return this.page.getByRole("link", { name: "Dashboard", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Downloads"
    * Variants: [standardUser.default]
-   * Locator: `getByRole('link', { name: 'Downloads' })`
+   * Locator: `getByRole('link', { name: 'Downloads', exact: true })`
    */
   get downloadsLink(): Locator {
-    return this.page.getByRole("link", { name: "Downloads" });
+    return this.page.getByRole("link", { name: "Downloads", exact: true });
   }
 
   /**
@@ -79,65 +79,65 @@ export class TAMyAccountGeneratedPage {
   /**
    * Role: `button` | Accessible Name: "Log in"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('button', { name: 'Log in' })`
+   * Locator: `getByRole('button', { name: 'Log in', exact: true })`
    */
   get logInButton(): Locator {
-    return this.page.getByRole("button", { name: "Log in" });
+    return this.page.getByRole("button", { name: "Log in", exact: true });
   }
 
   /**
    * Role: `heading` | Accessible Name: "Login"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('heading', { name: 'Login' })`
+   * Locator: `getByRole('heading', { name: 'Login', exact: true })`
    */
   get loginHeading(): Locator {
-    return this.page.getByRole("heading", { name: "Login" });
+    return this.page.getByRole("heading", { name: "Login", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Logout"
    * Variants: [standardUser.default]
-   * Locator: `getByRole('link', { name: 'Logout' })`
+   * Locator: `getByRole('link', { name: 'Logout', exact: true })`
    */
   get logoutLink(): Locator {
-    return this.page.getByRole("link", { name: "Logout" });
+    return this.page.getByRole("link", { name: "Logout", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Lost your password?"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'Lost your password?' })`
+   * Locator: `getByRole('link', { name: 'Lost your password?', exact: true })`
    */
   get lostYourPasswordLink(): Locator {
-    return this.page.getByRole("link", { name: "Lost your password?" });
+    return this.page.getByRole("link", { name: "Lost your password?", exact: true });
   }
 
   /** Scoped accessor for `lostYourPasswordLink` within a parent container (Container) */
   getScopedLostYourPasswordLink(scope: Locator): Locator {
-    return scope.getByRole("link", { name: "Lost your password?" });
+    return scope.getByRole("link", { name: "Lost your password?", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Lost your password?"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'Lost your password?' })`
+   * Locator: `getByRole('link', { name: 'Lost your password?', exact: true })`
    */
   get lostYourPasswordLink2(): Locator {
-    return this.page.getByRole("link", { name: "Lost your password?" });
+    return this.page.getByRole("link", { name: "Lost your password?", exact: true });
   }
 
   /** Scoped accessor for `lostYourPasswordLink2` within a parent container (Container) */
   getScopedLostYourPasswordLink2(scope: Locator): Locator {
-    return scope.getByRole("link", { name: "Lost your password?" });
+    return scope.getByRole("link", { name: "Lost your password?", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Orders"
    * Variants: [standardUser.default]
-   * Locator: `getByRole('link', { name: 'Orders' })`
+   * Locator: `getByRole('link', { name: 'Orders', exact: true })`
    */
   get ordersLink(): Locator {
-    return this.page.getByRole("link", { name: "Orders" });
+    return this.page.getByRole("link", { name: "Orders", exact: true });
   }
 
   /**
@@ -152,46 +152,46 @@ export class TAMyAccountGeneratedPage {
   /**
    * Role: `link` | Accessible Name: "privacy policy"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'privacy policy' })`
+   * Locator: `getByRole('link', { name: 'privacy policy', exact: true })`
    */
   get privacyPolicyLink(): Locator {
-    return this.page.getByRole("link", { name: "privacy policy" });
+    return this.page.getByRole("link", { name: "privacy policy", exact: true });
   }
 
   /**
    * Role: `button` | Accessible Name: "Register"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('button', { name: 'Register' })`
+   * Locator: `getByRole('button', { name: 'Register', exact: true })`
    */
   get registerButton(): Locator {
-    return this.page.getByRole("button", { name: "Register" });
+    return this.page.getByRole("button", { name: "Register", exact: true });
   }
 
   /**
    * Role: `heading` | Accessible Name: "Register"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('heading', { name: 'Register' })`
+   * Locator: `getByRole('heading', { name: 'Register', exact: true })`
    */
   get registerHeading(): Locator {
-    return this.page.getByRole("heading", { name: "Register" });
+    return this.page.getByRole("heading", { name: "Register", exact: true });
   }
 
   /**
    * Role: `checkbox` | Accessible Name: "Remember me"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('checkbox', { name: 'Remember me' })`
+   * Locator: `getByRole('checkbox', { name: 'Remember me', exact: true })`
    */
   get rememberMeCheckbox(): Locator {
-    return this.page.getByRole("checkbox", { name: "Remember me" });
+    return this.page.getByRole("checkbox", { name: "Remember me", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Subscriptions"
    * Variants: [standardUser.default]
-   * Locator: `getByRole('link', { name: 'Subscriptions' })`
+   * Locator: `getByRole('link', { name: 'Subscriptions', exact: true })`
    */
   get subscriptionsLink(): Locator {
-    return this.page.getByRole("link", { name: "Subscriptions" });
+    return this.page.getByRole("link", { name: "Subscriptions", exact: true });
   }
 
   /**

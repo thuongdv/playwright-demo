@@ -15,74 +15,74 @@ export class HotelLoginGeneratedPage {
   /**
    * Role: `link` | Accessible Name: "GitHub"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'GitHub' })`
+   * Locator: `getByRole('link', { name: 'GitHub', exact: true })`
    */
   get githubLink(): Locator {
-    return this.page.getByRole("link", { name: "GitHub" });
+    return this.page.getByRole("link", { name: "GitHub", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Home"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'Home' })`
+   * Locator: `getByRole('link', { name: 'Home', exact: true })`
    */
   get homeLink(): Locator {
-    return this.page.getByRole("link", { name: "Home" });
+    return this.page.getByRole("link", { name: "Home", exact: true });
   }
 
   /**
    * Role: `heading` | Accessible Name: "Hotel Planisphere"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('heading', { name: 'Hotel Planisphere' })`
+   * Locator: `getByRole('heading', { name: 'Hotel Planisphere', exact: true })`
    */
   get hotelPlanisphereHeading(): Locator {
-    return this.page.getByRole("heading", { name: "Hotel Planisphere" });
+    return this.page.getByRole("heading", { name: "Hotel Planisphere", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Hotel Planisphere"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'Hotel Planisphere' })`
+   * Locator: `getByRole('link', { name: 'Hotel Planisphere', exact: true })`
    */
   get hotelPlanisphereLink(): Locator {
-    return this.page.getByRole("link", { name: "Hotel Planisphere" });
+    return this.page.getByRole("link", { name: "Hotel Planisphere", exact: true });
   }
 
   /**
    * Role: `button` | Accessible Name: "Login"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('button', { name: 'Login' })`
+   * Locator: `getByRole('button', { name: 'Login', exact: true })`
    */
   get loginButton(): Locator {
-    return this.page.getByRole("button", { name: "Login" });
+    return this.page.getByRole("button", { name: "Login", exact: true });
   }
 
   /** Scoped accessor for `loginButton` within a parent container (Container) */
   getScopedLoginButton(scope: Locator): Locator {
-    return scope.getByRole("button", { name: "Login" });
+    return scope.getByRole("button", { name: "Login", exact: true });
   }
 
   /**
    * Role: `button` | Accessible Name: "Login"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('button', { name: 'Login' })`
+   * Locator: `getByRole('button', { name: 'Login', exact: true })`
    */
   get loginButton2(): Locator {
-    return this.page.getByRole("button", { name: "Login" });
+    return this.page.getByRole("button", { name: "Login", exact: true });
   }
 
   /** Scoped accessor for `loginButton2` within a parent container (Container) */
   getScopedLoginButton2(scope: Locator): Locator {
-    return scope.getByRole("button", { name: "Login" });
+    return scope.getByRole("button", { name: "Login", exact: true });
   }
 
   /**
    * Role: `heading` | Accessible Name: "Login"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('heading', { name: 'Login' })`
+   * Locator: `getByRole('heading', { name: 'Login', exact: true })`
    */
   get loginHeading(): Locator {
-    return this.page.getByRole("heading", { name: "Login" });
+    return this.page.getByRole("heading", { name: "Login", exact: true });
   }
 
   /**
@@ -97,28 +97,28 @@ export class HotelLoginGeneratedPage {
   /**
    * Role: `link` | Accessible Name: "Reserve"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'Reserve' })`
+   * Locator: `getByRole('link', { name: 'Reserve', exact: true })`
    */
   get reserveLink(): Locator {
-    return this.page.getByRole("link", { name: "Reserve" });
+    return this.page.getByRole("link", { name: "Reserve", exact: true });
   }
 
   /**
    * Role: `link` | Accessible Name: "Sign up"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('link', { name: 'Sign up' })`
+   * Locator: `getByRole('link', { name: 'Sign up', exact: true })`
    */
   get signUpLink(): Locator {
-    return this.page.getByRole("link", { name: "Sign up" });
+    return this.page.getByRole("link", { name: "Sign up", exact: true });
   }
 
   /**
    * Role: `button` | Accessible Name: "Toggle navigation"
    * Variants: [unauthenticated.default]
-   * Locator: `getByRole('button', { name: 'Toggle navigation' })`
+   * Locator: `getByRole('button', { name: 'Toggle navigation', exact: true })`
    */
   get toggleNavigationButton(): Locator {
-    return this.page.getByRole("button", { name: "Toggle navigation" });
+    return this.page.getByRole("button", { name: "Toggle navigation", exact: true });
   }
 }
 

@@ -1,4 +1,8 @@
 import { Locator, expect as baseExpect, test as baseTest } from "@playwright/test";
+import AEAccountCreatedPage from "pages/automationexercise/account-created.page";
+import AEHomePage from "pages/automationexercise/home.page";
+import AELoginPage from "pages/automationexercise/login.page";
+import AESignupPage from "pages/automationexercise/signup.page";
 import HotelHomePage from "pages/hotel/home.page";
 import HotelLoginPage from "pages/hotel/login.page";
 import HotelMyPage from "pages/hotel/mypage.page";
@@ -150,6 +154,10 @@ type Pages = {
   hotelPlansPage: HotelPlansPage;
   hotelSignupPage: HotelSignupPage;
   hotelMyPage: HotelMyPage;
+  aeHomePage: AEHomePage;
+  aeLoginPage: AELoginPage;
+  aeSignupPage: AESignupPage;
+  aeAccountCreatedPage: AEAccountCreatedPage;
 };
 
 export const test = baseTest.extend<Pages>({
@@ -196,5 +204,21 @@ export const test = baseTest.extend<Pages>({
   hotelMyPage: async ({ page }, use) => {
     const hotelMyPage = new HotelMyPage(page);
     await use(hotelMyPage);
+  },
+  aeHomePage: async ({ page }, use) => {
+    const aeHomePage = new AEHomePage(page);
+    await use(aeHomePage);
+  },
+  aeLoginPage: async ({ page }, use) => {
+    const aeLoginPage = new AELoginPage(page);
+    await use(aeLoginPage);
+  },
+  aeSignupPage: async ({ page }, use) => {
+    const aeSignupPage = new AESignupPage(page);
+    await use(aeSignupPage);
+  },
+  aeAccountCreatedPage: async ({ page }, use) => {
+    const aeAccountCreatedPage = new AEAccountCreatedPage(page);
+    await use(aeAccountCreatedPage);
   },
 });

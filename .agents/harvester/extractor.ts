@@ -278,15 +278,20 @@ export async function extractPageMap(
     if (raw.testId) {
       locator = `getByTestId('${raw.testId}')`;
       if (accessibleName && isInteractive) {
-        fallbackLocators.push(`getByRole('${raw.role}', { name: '${accessibleName}' })`);
+        fallbackLocators.push(`getByRole('${raw.role}', { name: '${accessibleName}', exact: true })`);
       }
     } else if (raw.label && (raw.role === "textbox" || raw.role === "combobox" || raw.role === "checkbox")) {
       locator = `getByLabel('${raw.label}')`;
       if (accessibleName) {
-        fallbackLocators.push(`getByRole('${raw.role}', { name: '${accessibleName}' })`);
+        fallbackLocators.push(`getByRole('${raw.role}', { name: '${accessibleName}', exact: true })`);
       }
     } else if (accessibleName) {
-      locator = `getByRole('${raw.role}', { name: '${accessibleName}' })`;
+      locator = `getByRole('${raw.role}', { name: '${accessibleName}', exact: true })`;
+      if (raw.id) {
+        fallbackLocators.push(`locator('#${raw.id}')`);
+      }
+    } else if (accessibleNamePattern) {
+      locator = `getByRole('${raw.role}', { name: /${accessibleNamePattern}/ })`;
       if (raw.id) {
         fallbackLocators.push(`locator('#${raw.id}')`);
       }

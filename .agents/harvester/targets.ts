@@ -114,6 +114,21 @@ export const config: HarvesterConfig = {
             await page.goto(resolveTargetUrl("/en-US/reserve.html?plan-id=0", baseURL), {
               waitUntil: "domcontentloaded",
             });
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const year = tomorrow.getFullYear();
+            const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+            const day = String(tomorrow.getDate()).padStart(2, "0");
+            const dateStr = `${year}/${month}/${day}`;
+            await page.locator("#date").fill(dateStr);
+            await page.evaluate((d) => {
+              const $ = (window as any).$;
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+              if ($ && $("#date").data("datepicker")) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                $("#date").datepicker("setDate", d);
+              }
+            }, dateStr);
             await page.locator("#term").fill("1");
             await page.locator("#head-count").fill("1");
             await page.locator("#username").fill("Test User");
@@ -130,6 +145,21 @@ export const config: HarvesterConfig = {
             await page.goto(resolveTargetUrl("/en-US/reserve.html?plan-id=0", baseURL), {
               waitUntil: "domcontentloaded",
             });
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const year = tomorrow.getFullYear();
+            const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+            const day = String(tomorrow.getDate()).padStart(2, "0");
+            const dateStr = `${year}/${month}/${day}`;
+            await page.locator("#date").fill(dateStr);
+            await page.evaluate((d) => {
+              const $ = (window as any).$;
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+              if ($ && $("#date").data("datepicker")) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                $("#date").datepicker("setDate", d);
+              }
+            }, dateStr);
             await page.locator("#term").fill("1");
             await page.locator("#head-count").fill("1");
             await page.locator("#username").fill("Test User");
@@ -166,6 +196,107 @@ export const config: HarvesterConfig = {
       variants: [
         {
           key: "default",
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
+    {
+      pageKey: "AEHome",
+      route: "/",
+      baseURL: process.env.BASE_AE_URL || "https://automationexercise.com",
+      rootSelector: "body",
+      roles: ["unauthenticated"],
+      variants: [
+        {
+          key: "default",
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
+    {
+      pageKey: "AELogin",
+      route: "/login",
+      baseURL: process.env.BASE_AE_URL || "https://automationexercise.com",
+      rootSelector: "body",
+      roles: ["unauthenticated"],
+      variants: [
+        {
+          key: "default",
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
+    {
+      pageKey: "AESignup",
+      route: "/signup",
+      baseURL: process.env.BASE_AE_URL || "https://automationexercise.com",
+      rootSelector: "body",
+      roles: ["unauthenticated"],
+      variants: [
+        {
+          key: "default",
+          fixture: async ({ page, baseURL }: { page: Page; baseURL?: string }) => {
+            const email = `harvester_${Date.now()}@example.com`;
+            await page.goto(resolveTargetUrl("/login", baseURL || "https://automationexercise.com"), {
+              waitUntil: "domcontentloaded",
+            });
+            await page.locator("form[action='/signup'] input[name='name']").fill("Harvester Temp");
+            await page.locator("form[action='/signup'] input[name='email']").fill(email);
+            await Promise.all([
+              page.waitForURL("**/signup", { waitUntil: "domcontentloaded", timeout: 15_000 }),
+              page.locator("form[action='/signup'] button[type='submit']").click(),
+            ]);
+          },
+        },
+      ],
+      settle: {
+        waitFor: "domcontentloaded",
+      },
+    },
+    {
+      pageKey: "AEAccountCreated",
+      route: "/account_created",
+      baseURL: process.env.BASE_AE_URL || "https://automationexercise.com",
+      rootSelector: "body",
+      roles: ["unauthenticated"],
+      variants: [
+        {
+          key: "default",
+          fixture: async ({ page, baseURL }: { page: Page; baseURL?: string }) => {
+            const email = `harvester_${Date.now()}@example.com`;
+            await page.goto(resolveTargetUrl("/login", baseURL || "https://automationexercise.com"), {
+              waitUntil: "domcontentloaded",
+            });
+            await page.locator("form[action='/signup'] input[name='name']").fill("Harvester Temp");
+            await page.locator("form[action='/signup'] input[name='email']").fill(email);
+            await Promise.all([
+              page.waitForURL("**/signup", { waitUntil: "domcontentloaded", timeout: 15_000 }),
+              page.locator("form[action='/signup'] button[type='submit']").click(),
+            ]);
+            await page.locator("#id_gender1").check();
+            await page.locator("#password").fill("Password123!");
+            await page.locator("#days").selectOption("1");
+            await page.locator("#months").selectOption("1");
+            await page.locator("#years").selectOption("2000");
+            await page.locator("#first_name").fill("John");
+            await page.locator("#last_name").fill("Doe");
+            await page.locator("#address1").fill("123 Main St");
+            await page.locator("#country").selectOption("United States");
+            await page.locator("#state").fill("NY");
+            await page.locator("#city").fill("New York");
+            await page.locator("#zipcode").fill("10001");
+            await page.locator("#mobile_number").fill("1234567890");
+            await Promise.all([
+              page.waitForURL("**/account_created", { waitUntil: "domcontentloaded", timeout: 15_000 }),
+              page.locator("button[data-qa='create-account']").click(),
+            ]);
+          },
         },
       ],
       settle: {

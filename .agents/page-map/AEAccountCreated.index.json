@@ -1,0 +1,26 @@
+{
+  "pageKey": "AEAccountCreated",
+  "route": "/account_created",
+  "roles": ["unauthenticated"],
+  "variants": ["default"],
+  "commonElementKeys": [
+    "accountCreatedHeading",
+    "apiTestingLink",
+    "cartLink",
+    "contactUsLink",
+    "continueLink",
+    "homeLink",
+    "productsLink",
+    "scrollupLink",
+    "signupLoginLink",
+    "subscribeButton",
+    "subscriptionHeading",
+    "testCasesLink",
+    "videoTutorialsLink",
+    "yourEmailAddressTextbox"
+  ],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": []
+  },
+  "lastUpdated": "2026-08-19T09:30:23.691Z"
+}
