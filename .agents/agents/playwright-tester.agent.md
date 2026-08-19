@@ -3,15 +3,6 @@ name: Playwright Tester Mode
 description: Playwright testing specialist for E2E generation, locator fixes, flaky test stabilization, and test execution refinement.
 argument-hint: Use for Playwright test generation, flaky test debugging, locator repair, and browser flow validation.
 model: inherit
-tools:
-  - read
-  - search
-  - edit/editFiles
-  - execute/runInTerminal
-  - execute/getTerminalOutput
-  - execute/runTests
-  - read/problems
-  - playwright/*
 ---
 
 # Playwright Tester Mode
