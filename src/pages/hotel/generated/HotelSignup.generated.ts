@@ -90,7 +90,7 @@ export class HotelSignupGeneratedPage {
    * Locator: `getByRole('radio', { name: 'Membership' })`
    */
   get membershipRadio(): Locator {
-    return this.page.getByRole("radio", { name: "Membership" });
+    return this.page.getByRole("radio", { name: "Membership", exact: true });
   }
 
   /**

@@ -4,6 +4,7 @@ import { step } from "utils/step";
 export default class HotelHomePage {
   readonly navLoginLink: Locator = this.page.locator("a[href*='login.html']");
   readonly navReserveLink: Locator = this.page.locator("a[href*='plans.html']");
+  readonly navSignUpLink: Locator = this.page.getByRole("link", { name: "Sign up" });
 
   constructor(private readonly page: Page) {}
 
@@ -16,6 +17,12 @@ export default class HotelHomePage {
   async clickLoginLink(): Promise<void> {
     await this.navLoginLink.click();
     await this.page.waitForURL("**/login.html");
+  }
+
+  @step("Click Sign up link in navigation")
+  async clickSignUpLink(): Promise<void> {
+    await this.navSignUpLink.click();
+    await this.page.waitForURL("**/signup.html");
   }
 
   @step("Click Reserve link in navigation")

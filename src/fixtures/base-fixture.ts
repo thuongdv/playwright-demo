@@ -1,7 +1,9 @@
 import { Locator, expect as baseExpect, test as baseTest } from "@playwright/test";
 import HotelHomePage from "pages/hotel/home.page";
 import HotelLoginPage from "pages/hotel/login.page";
+import HotelMyPage from "pages/hotel/mypage.page";
 import HotelPlansPage from "pages/hotel/plans.page";
+import HotelSignupPage from "pages/hotel/signup.page";
 import CartPage from "pages/ta/cart.page";
 import CheckoutPage from "pages/ta/checkout.page";
 import OrderReceivedPage from "pages/ta/checkout/order-received.page";
@@ -146,6 +148,8 @@ type Pages = {
   hotelHomePage: HotelHomePage;
   hotelLoginPage: HotelLoginPage;
   hotelPlansPage: HotelPlansPage;
+  hotelSignupPage: HotelSignupPage;
+  hotelMyPage: HotelMyPage;
 };
 
 export const test = baseTest.extend<Pages>({
@@ -184,5 +188,13 @@ export const test = baseTest.extend<Pages>({
   hotelPlansPage: async ({ page }, use) => {
     const hotelPlansPage = new HotelPlansPage(page);
     await use(hotelPlansPage);
+  },
+  hotelSignupPage: async ({ page }, use) => {
+    const hotelSignupPage = new HotelSignupPage(page);
+    await use(hotelSignupPage);
+  },
+  hotelMyPage: async ({ page }, use) => {
+    const hotelMyPage = new HotelMyPage(page);
+    await use(hotelMyPage);
   },
 });

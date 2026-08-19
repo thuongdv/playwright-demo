@@ -162,7 +162,7 @@ export class HotelMyPageGeneratedPage {
    * Locator: `getByRole('heading', { name: 'Tel' })`
    */
   get telHeading(): Locator {
-    return this.page.getByRole("heading", { name: "Tel" });
+    return this.page.getByRole("heading", { name: "Tel", exact: true });
   }
 
   /**
