@@ -20,6 +20,7 @@ When instructed to deliver a test (e.g., `Deliver PLANS_001`):
 ```
 
 ### Phase 1: Route & Target Evaluation
+
 1. Read the markdown test specification in `tests-md/<TEST_ID>.md`.
 2. Identify all pages, routes, user roles, and UI interactions required by the scenario.
 3. Check [.agents/harvester/targets.ts](../harvester/targets.ts) and `.agents/page-map/` to verify if target pages and elements exist.
@@ -27,6 +28,7 @@ When instructed to deliver a test (e.g., `Deliver PLANS_001`):
    - Add/update the target entry in [.agents/harvester/targets.ts](../harvester/targets.ts) with appropriate `pageKey`, `route`, `roles`, `variants`, and `settle` conditions.
 
 ### Phase 2: Page Map Harvesting & POM Codegen
+
 1. If targets were added or updated, harvest the canonical page maps:
    ```bash
    npm run harvest
@@ -39,6 +41,7 @@ When instructed to deliver a test (e.g., `Deliver PLANS_001`):
 3. If custom domain methods or step helpers are required, add them to `src/pages/<area>/<PageKey>.page.ts`.
 
 ### Phase 3: Browser-Free Test Authoring
+
 1. Read `.agents/page-map/<PageKey>.index.json` and `<PageKey>.<role>.<variant>.json` offline to find exact, deterministic element keys and locators.
 2. **Never launch a browser during authoring** to inspect DOM.
 3. Author the test spec in `src/tests/ui/<area>/<TEST_ID>.spec.ts`:
@@ -48,14 +51,18 @@ When instructed to deliver a test (e.g., `Deliver PLANS_001`):
    - Follow clean step hierarchy with `test.step(...)` or `@step` decorators.
 
 ### Phase 4: Static Validation & Quality Checks
+
 Run TypeScript type-checking and linter checks:
+
 ```bash
 npm run format && npm run lint
 npm run tsc && npm run lint:check && npm run format:check
 ```
+
 If errors occur, fix them immediately.
 
 ### Phase 5: Test Execution & Verification
+
 1. Run only the targeted test using Playwright grep:
    ```bash
    # For hotel suite:
@@ -71,7 +78,9 @@ If errors occur, fix them immediately.
    ```
 
 ### Phase 6: Delivery Summary
+
 Summarize the delivery:
+
 - **Test ID & Name**
 - **Files Created / Modified** (Page targets, generated POMs, test specs)
 - **Execution Result** (Pass / Fail status with execution duration)
