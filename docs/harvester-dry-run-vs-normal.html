@@ -1,0 +1,1765 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page-Map Harvester: Dry Run vs Normal Run</title>
+    <meta
+      name="description"
+      content="Comprehensive developer and QA guide comparing dry-run and normal execution modes of the Playwright page-map harvester."
+    />
+    <style>
+      :root {
+        --bg: #0f141c;
+        --surface: #181f2a;
+        --surface-raised: #202938;
+        --surface-overlay: #283346;
+        --border: #2d384c;
+        --border-subtle: #1f2736;
+        --text: #e2e8f0;
+        --text-muted: #94a3b8;
+        --text-dim: #64748b;
+
+        /* Color Legend Tokens */
+        --blue-bg: rgba(37, 99, 235, 0.12);
+        --blue-border: #3b82f6;
+        --blue-text: #60a5fa;
+        --blue-solid: #2563eb;
+
+        --amber-bg: rgba(217, 119, 6, 0.12);
+        --amber-border: #f59e0b;
+        --amber-text: #fbbf24;
+        --amber-solid: #d97706;
+
+        --green-bg: rgba(16, 185, 129, 0.12);
+        --green-border: #10b981;
+        --green-text: #34d399;
+        --green-solid: #059669;
+
+        --red-bg: rgba(239, 68, 68, 0.12);
+        --red-border: #ef4444;
+        --red-text: #f87171;
+        --red-solid: #dc2626;
+
+        --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 14px;
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
+        --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.35);
+        --max-width: 1180px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+        padding-bottom: 80px;
+      }
+
+      /* Layout */
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* Header */
+      header.site-header {
+        background: linear-gradient(180deg, #161e2b 0%, #0f141c 100%);
+        border-bottom: 1px solid var(--border);
+        padding: 48px 0 36px;
+        margin-bottom: 36px;
+      }
+
+      .badge-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .pill-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text-muted);
+      }
+
+      .pill-badge.playwright {
+        border-color: #2e7d32;
+        background: rgba(46, 125, 50, 0.15);
+        color: #81c784;
+      }
+
+      h1.page-title {
+        font-size: 2.35rem;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: -0.025em;
+        line-height: 1.25;
+        margin-bottom: 12px;
+      }
+
+      .lead-text {
+        font-size: 1.15rem;
+        color: var(--text-muted);
+        max-width: 820px;
+      }
+
+      /* Legend Bar */
+      .legend-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 16px 20px;
+        margin: 28px 0;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .legend-title {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-dim);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .legend-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13.5px;
+        font-weight: 500;
+      }
+
+      .legend-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        flex-shrink: 0;
+      }
+
+      .legend-indicator.blue {
+        background-color: var(--blue-solid);
+        box-shadow: 0 0 8px var(--blue-border);
+      }
+      .legend-indicator.amber {
+        background-color: var(--amber-solid);
+        box-shadow: 0 0 8px var(--amber-border);
+      }
+      .legend-indicator.green {
+        background-color: var(--green-solid);
+        box-shadow: 0 0 8px var(--green-border);
+      }
+      .legend-indicator.red {
+        background-color: var(--red-solid);
+        box-shadow: 0 0 8px var(--red-border);
+      }
+
+      /* Nav bar quick jumps */
+      .quick-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 24px 0 40px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .quick-nav a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 13.5px;
+        padding: 6px 12px;
+        border-radius: var(--radius-sm);
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        transition: all 0.15s ease;
+      }
+
+      .quick-nav a:hover {
+        color: #ffffff;
+        border-color: var(--blue-border);
+        background: var(--surface-raised);
+      }
+
+      /* Section Styling */
+      section {
+        margin-bottom: 48px;
+        scroll-margin-top: 24px;
+      }
+
+      h2.section-heading {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      h3.subsection-heading {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #f1f5f9;
+        margin: 24px 0 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      p {
+        margin-bottom: 14px;
+        color: #cbd5e1;
+      }
+
+      /* Code Blocks */
+      .code-wrapper {
+        position: relative;
+        margin: 14px 0 20px;
+        border-radius: var(--radius-md);
+        background: #090d13;
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+
+      .code-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 14px;
+        background: #121822;
+        border-bottom: 1px solid var(--border-subtle);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+
+      .copy-btn {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        cursor: pointer;
+        font-family: var(--font-sans);
+        transition: all 0.15s ease;
+      }
+
+      .copy-btn:hover {
+        background: var(--surface-raised);
+        color: #ffffff;
+        border-color: var(--text-muted);
+      }
+
+      pre {
+        padding: 14px 16px;
+        overflow-x: auto;
+        font-family: var(--font-mono);
+        font-size: 13.5px;
+        line-height: 1.55;
+        color: #e2e8f0;
+      }
+
+      code {
+        font-family: var(--font-mono);
+        font-size: 0.9em;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: #93c5fd;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+        color: inherit;
+      }
+
+      /* Terminal Log Formatting */
+      .log-box {
+        background: #090d14;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border);
+        padding: 16px;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        line-height: 1.6;
+        margin: 16px 0;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+      }
+
+      .log-line {
+        display: block;
+        margin-bottom: 4px;
+        word-break: break-all;
+      }
+
+      .log-time {
+        color: var(--text-dim);
+      }
+      .log-info {
+        color: var(--blue-text);
+        font-weight: 600;
+      }
+      .log-target {
+        color: #f8fafc;
+        font-weight: 600;
+      }
+      .log-highlight-amber {
+        color: var(--amber-text);
+        background: rgba(245, 158, 11, 0.15);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+      .log-highlight-green {
+        color: var(--green-text);
+        background: rgba(16, 185, 129, 0.15);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+      .log-highlight-red {
+        color: var(--red-text);
+        background: rgba(239, 68, 68, 0.15);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+
+      /* Comparison Panels (2-column layout) */
+      .split-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin: 24px 0;
+      }
+
+      @media (max-width: 860px) {
+        .split-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--shadow-sm);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+      }
+
+      .panel.dry-run-panel::before {
+        background: linear-gradient(90deg, var(--amber-solid), var(--blue-solid));
+      }
+
+      .panel.normal-run-panel::before {
+        background: linear-gradient(90deg, var(--green-solid), var(--blue-solid));
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .panel-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .mode-tag {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 4px;
+        letter-spacing: 0.05em;
+      }
+
+      .mode-tag.dry {
+        background: var(--amber-bg);
+        color: var(--amber-text);
+        border: 1px solid var(--amber-border);
+      }
+
+      .mode-tag.normal {
+        background: var(--green-bg);
+        color: var(--green-text);
+        border: 1px solid var(--green-border);
+      }
+
+      .steps-list {
+        list-style-type: none;
+        counter-reset: step-counter;
+        margin: 16px 0;
+      }
+
+      .steps-list li {
+        position: relative;
+        padding-left: 36px;
+        margin-bottom: 12px;
+        font-size: 14.5px;
+        color: var(--text);
+      }
+
+      .steps-list li::before {
+        content: counter(step-counter);
+        counter-increment: step-counter;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--surface-overlay);
+        border: 1px solid var(--border);
+        color: #93c5fd;
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .steps-list li.highlight-no-write::before {
+        background: var(--amber-solid);
+        border-color: var(--amber-border);
+        color: #000000;
+      }
+
+      .steps-list li.highlight-write::before {
+        background: var(--green-solid);
+        border-color: var(--green-border);
+        color: #ffffff;
+      }
+
+      /* Callout & Notice Boxes */
+      .callout {
+        border-radius: var(--radius-md);
+        padding: 18px 20px;
+        margin: 20px 0;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        font-size: 15px;
+      }
+
+      .callout-icon {
+        flex-shrink: 0;
+        width: 22px;
+        height: 22px;
+        margin-top: 2px;
+      }
+
+      .callout-content {
+        flex: 1;
+      }
+
+      .callout-title {
+        font-weight: 700;
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      .callout.info {
+        background: var(--blue-bg);
+        border: 1px solid var(--blue-border);
+        color: #dbeafe;
+      }
+      .callout.info .callout-title {
+        color: var(--blue-text);
+      }
+
+      .callout.warning {
+        background: var(--amber-bg);
+        border: 1px solid var(--amber-border);
+        color: #fef3c7;
+      }
+      .callout.warning .callout-title {
+        color: var(--amber-text);
+      }
+
+      .callout.success {
+        background: var(--green-bg);
+        border: 1px solid var(--green-border);
+        color: #d1fae5;
+      }
+      .callout.success .callout-title {
+        color: var(--green-text);
+      }
+
+      .callout.distinction {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+        border: 1px solid #475569;
+        border-left: 5px solid var(--blue-border);
+        color: #f1f5f9;
+        box-shadow: var(--shadow-md);
+      }
+      .callout.distinction .callout-title {
+        color: #60a5fa;
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+
+      /* Workflow Diagram */
+      .workflow-container {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 28px 24px;
+        margin: 28px 0;
+      }
+
+      .workflow-flow {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .wf-node {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 18px;
+        background: var(--surface-raised);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        position: relative;
+      }
+
+      .wf-icon-wrap {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .wf-icon-wrap.blue {
+        background: var(--blue-bg);
+        color: var(--blue-text);
+        border: 1px solid var(--blue-border);
+      }
+      .wf-icon-wrap.amber {
+        background: var(--amber-bg);
+        color: var(--amber-text);
+        border: 1px solid var(--amber-border);
+      }
+      .wf-icon-wrap.green {
+        background: var(--green-bg);
+        color: var(--green-text);
+        border: 1px solid var(--green-border);
+      }
+      .wf-icon-wrap.red {
+        background: var(--red-bg);
+        color: var(--red-text);
+        border: 1px solid var(--red-border);
+      }
+
+      .wf-content {
+        flex: 1;
+      }
+
+      .wf-title {
+        font-weight: 700;
+        font-size: 14.5px;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wf-desc {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 2px;
+        margin-bottom: 0;
+      }
+
+      .wf-arrow {
+        display: flex;
+        justify-content: center;
+        color: var(--text-dim);
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .wf-branch-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 4px;
+      }
+
+      @media (max-width: 640px) {
+        .wf-branch-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .wf-branch {
+        border-radius: var(--radius-md);
+        padding: 16px;
+        border: 1px solid;
+      }
+
+      .wf-branch.dry {
+        background: var(--amber-bg);
+        border-color: var(--amber-border);
+      }
+
+      .wf-branch.normal {
+        background: var(--green-bg);
+        border-color: var(--green-border);
+      }
+
+      .wf-branch-title {
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .wf-branch.dry .wf-branch-title {
+        color: var(--amber-text);
+      }
+      .wf-branch.normal .wf-branch-title {
+        color: var(--green-text);
+      }
+
+      .wf-branch p {
+        font-size: 13px;
+        color: var(--text);
+        margin: 0;
+      }
+
+      /* Comparison Table */
+      .table-container {
+        overflow-x: auto;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        margin: 24px 0;
+        box-shadow: var(--shadow-sm);
+      }
+
+      table.comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 14.5px;
+      }
+
+      table.comparison-table th,
+      table.comparison-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      table.comparison-table th {
+        background: var(--surface-raised);
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 13.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      table.comparison-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      table.comparison-table tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 6px;
+        white-space: nowrap;
+      }
+
+      .status-yes {
+        background: var(--green-bg);
+        color: var(--green-text);
+        border: 1px solid var(--green-border);
+      }
+
+      .status-no {
+        background: rgba(148, 163, 184, 0.1);
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+      }
+
+      .status-alert {
+        background: var(--amber-bg);
+        color: var(--amber-text);
+        border: 1px solid var(--amber-border);
+      }
+
+      .status-action {
+        background: var(--blue-bg);
+        color: var(--blue-text);
+        border: 1px solid var(--blue-border);
+      }
+
+      /* Breakdown Grid (Element breakdown & config) */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+        margin: 20px 0;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 18px;
+      }
+
+      .card-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card-list {
+        list-style-type: none;
+        font-size: 13.5px;
+        color: var(--text-muted);
+      }
+
+      .card-list li {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Interactive Explanation Cards */
+      .explanation-item {
+        background: var(--surface-raised);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--blue-border);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        margin-bottom: 10px;
+      }
+
+      .explanation-item.amber {
+        border-left-color: var(--amber-border);
+      }
+
+      .explanation-item.green {
+        border-left-color: var(--green-border);
+      }
+
+      .explanation-item.red {
+        border-left-color: var(--red-border);
+      }
+
+      .explanation-header {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 4px;
+      }
+
+      .explanation-body {
+        font-size: 13.5px;
+        color: var(--text-muted);
+        margin: 0;
+      }
+
+      /* Footer Summary Banner */
+      .summary-banner {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border: 2px solid var(--blue-border);
+        border-radius: var(--radius-lg);
+        padding: 28px 32px;
+        margin-top: 48px;
+        text-align: center;
+        box-shadow: var(--shadow-md);
+      }
+
+      .summary-quote {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+
+      .summary-sub {
+        font-size: 15px;
+        color: var(--blue-text);
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      /* SVGs inline icons */
+      .icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        vertical-align: -2px;
+        fill: currentColor;
+      }
+
+      .icon-lg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 640px) {
+        h1.page-title {
+          font-size: 1.8rem;
+        }
+        .container {
+          padding: 0 16px;
+        }
+        header.site-header {
+          padding: 32px 0 24px;
+        }
+        .legend-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Site Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="badge-bar">
+          <span class="pill-badge playwright">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"
+              />
+            </svg>
+            Playwright Harvester
+          </span>
+          <span class="pill-badge">E2E Architecture &amp; Maintenance</span>
+          <span class="pill-badge">v1.0.0</span>
+        </div>
+        <h1 class="page-title">Page-Map Harvester: Dry Run vs Normal Run</h1>
+        <p class="lead-text">
+          An engineering and QA reference explaining runtime behavior, DOM discovery mechanics, digest comparison, and
+          artifact synchronization in the automated page-map harvester.
+        </p>
+
+        <!-- Visual Legend -->
+        <div class="legend-card">
+          <div class="legend-title">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z" />
+            </svg>
+            Activity &amp; Status Color Legend
+          </div>
+          <div class="legend-grid">
+            <div class="legend-item">
+              <span class="legend-indicator blue"></span>
+              <span><strong>Blue:</strong> Browser &amp; live harvesting activity</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-indicator amber"></span>
+              <span><strong>Amber:</strong> Comparison checks &amp; dry-run notices</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-indicator green"></span>
+              <span><strong>Green:</strong> Deterministic unchanged match</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-indicator red"></span>
+              <span><strong>Red:</strong> Changed output or file update</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Jumps -->
+        <nav class="quick-nav" aria-label="Quick links">
+          <a href="#repository-context">Repository Context</a>
+          <a href="#execution-modes">Dry-Run vs Normal Modes</a>
+          <a href="#workflow-diagram">Visual Workflow Diagram</a>
+          <a href="#comparison-table">Side-by-Side Comparison</a>
+          <a href="#what-it-does-not-do">What It Does Not Do</a>
+          <a href="#important-distinction">Important Distinction</a>
+          <a href="#expected-result">Current Project Result</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- 1. Repository Context & Mechanics -->
+      <section id="repository-context">
+        <h2 class="section-heading">
+          <svg class="icon icon-lg" style="color: var(--blue-text)" viewBox="0 0 24 24">
+            <path
+              d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"
+            />
+          </svg>
+          Repository Context &amp; Architecture
+        </h2>
+        <p>
+          The page-map harvester is an autonomous discovery engine built on <strong>Playwright</strong> and
+          <strong>Chromium</strong>. It inspects live web applications, walks the DOM, identifies accessible interactive
+          elements and assertion landmarks, and compiles them into version-controlled JSON page maps.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title">
+              <svg class="icon" style="color: #93c5fd" viewBox="0 0 24 24">
+                <path
+                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+                />
+              </svg>
+              Command &amp; Target Setup
+            </div>
+            <ul class="card-list">
+              <li>
+                <code>package.json</code> maps <code>harvest</code> to <code>npx tsx .agents/harvester/run.ts</code>
+              </li>
+              <li>Reads target list from <code>.agents/harvester/targets.ts</code></li>
+              <li>Default App URL: <code>https://automationexercise.com</code></li>
+              <li>Override App URL via environment variable: <code>AUT_URL</code></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <svg class="icon" style="color: #93c5fd" viewBox="0 0 24 24">
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+              Target Snapshot Profile
+            </div>
+            <ul class="card-list">
+              <li><strong>pageKey:</strong> <code>SignupLoginPage</code></li>
+              <li><strong>route:</strong> <code>/login</code></li>
+              <li><strong>role:</strong> <code>unauthenticated</code></li>
+              <li><strong>variant:</strong> <code>default</code> (root: <code>body</code>)</li>
+              <li>
+                <strong>Output:</strong> <code>.agents/page-map/SignupLoginPage.unauthenticated.default.json</code>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <svg class="icon" style="color: #93c5fd" viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
+                />
+              </svg>
+              22 Captured Live Elements
+            </div>
+            <ul class="card-list">
+              <li><strong>Headings:</strong> <code>Login to your account</code></li>
+              <li><strong>Links:</strong> <code>Home</code>, <code>Products</code>, <code>Cart</code></li>
+              <li><strong>Textboxes:</strong> <code>Email Address</code>, <code>Password</code></li>
+              <li><strong>Buttons:</strong> <code>Login</code>, <code>Signup</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="subsection-heading">
+          <svg class="icon" style="color: var(--amber-text)" viewBox="0 0 24 24">
+            <path
+              d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
+            />
+          </svg>
+          Schema Validation &amp; The <code>ariaDigest</code>
+        </h3>
+        <p>
+          The harvester computes a deterministic SHA-256 fingerprint (<code>ariaDigest</code>) representing the
+          discovered structure. When evaluating changes against the existing JSON snapshot, the comparison verifies:
+        </p>
+        <ul style="margin-left: 24px; color: var(--text-muted); margin-bottom: 16px">
+          <li>
+            <strong>Interactive &amp; Semantic properties:</strong> <code>role</code>, <code>accessibleName</code>,
+            <code>testId</code>, <code>locator</code>, and <code>fallbackLocators</code>.
+          </li>
+          <li>
+            <strong>State &amp; Context:</strong> element <code>count</code>, <code>visible</code>,
+            <code>enabled</code>, and <code>requiresScoping</code>.
+          </li>
+          <li>
+            <strong>Structural sanitization:</strong> Inaccessible controls (e.g. buttons lacking both an accessible
+            name and a test ID) are recorded in the <code>notes</code> array and excluded from primary locators.
+          </li>
+          <li>
+            <strong>Strict Zod Schema:</strong> Every newly built page-map object is strictly parsed and
+            schema-validated prior to output.
+          </li>
+        </ul>
+
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>CLI Options &amp; Flexibility</span>
+            <button
+              class="copy-btn"
+              onclick="
+                navigator.clipboard.writeText(
+                  'npm run harvest -- --only SignupLoginPage\nnpm run harvest -- --config custom-targets.ts',
+                )
+              "
+            >
+              Copy
+            </button>
+          </div>
+          <pre><code># Harvest only a single targeted page
+npm run harvest -- --only SignupLoginPage
+
+# Harvest using a custom configuration file
+npm run harvest -- --config .agents/harvester/custom-targets.ts
+
+# Override the base application URL
+AUT_URL="https://staging.automationexercise.com" npm run harvest -- --dry-run</code></pre>
+        </div>
+      </section>
+
+      <!-- 2. Dry Run vs Normal Run Mechanics -->
+      <section id="execution-modes">
+        <h2 class="section-heading">
+          <svg class="icon icon-lg" style="color: var(--amber-text)" viewBox="0 0 24 24">
+            <path
+              d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+            />
+          </svg>
+          Execution Modes: Dry Run vs Normal Run
+        </h2>
+
+        <div class="split-grid">
+          <!-- DRY RUN PANEL -->
+          <div class="panel dry-run-panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg class="icon" style="color: var(--amber-text)" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                  />
+                </svg>
+                Dry Run Mode
+              </div>
+              <span class="mode-tag dry">Observation Only</span>
+            </div>
+
+            <p><strong>Command:</strong></p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Terminal</span
+                ><button class="copy-btn" onclick="navigator.clipboard.writeText('npm run harvest -- --dry-run')">
+                  Copy
+                </button>
+              </div>
+              <pre><code>npm run harvest -- --dry-run</code></pre>
+            </div>
+
+            <p><strong>Exact Execution Steps:</strong></p>
+            <ol class="steps-list">
+              <li>Launches headless <strong>Chromium</strong> via Playwright.</li>
+              <li>Navigates to the configured application URL and <code>/login</code> route.</li>
+              <li>Harvests all interactive nodes and semantic landmarks on the live page.</li>
+              <li>Builds and schema-validates a new in-memory <code>PageMap</code> object.</li>
+              <li>Computes the fresh SHA-256 <code>ariaDigest</code>.</li>
+              <li>Loads the existing JSON file and compares the digests and structures.</li>
+              <li>Reports whether the page map is unchanged or changed in stdout.</li>
+              <li class="highlight-no-write"><strong>Does NOT write or modify the JSON file on disk.</strong></li>
+            </ol>
+
+            <p><strong>Sample Terminal Output:</strong></p>
+            <div class="log-box">
+              <span class="log-line"
+                ><span class="log-time">2026-08-19 10:35:03</span> <span class="log-info">[info]</span>
+                <span class="log-time">[harvester/run.ts]:</span></span
+              >
+              <span class="log-line"
+                ><span class="log-target">.agents/page-map/SignupLoginPage.unauthenticated.default.json:</span></span
+              >
+              <span class="log-line"
+                ><span class="log-highlight-green">22 elements</span>,
+                <span class="log-highlight-green">unchanged</span>
+                <span class="log-highlight-amber">(dry-run, not written)</span></span
+              >
+              <span class="log-line" style="margin-top: 8px"
+                ><span class="log-time">2026-08-19 10:35:03</span> <span class="log-info">[info]</span>
+                <span class="log-time">[harvester/run.ts]:</span></span
+              >
+              <span class="log-line"><span class="log-highlight-green">Harvest complete — no changes.</span></span>
+            </div>
+
+            <div style="margin-top: 14px">
+              <div class="explanation-item green">
+                <div class="explanation-header">22 elements</div>
+                <p class="explanation-body">
+                  22 relevant accessibility and interactive elements were successfully identified on the live
+                  <code>/login</code> DOM.
+                </p>
+              </div>
+              <div class="explanation-item green">
+                <div class="explanation-header">unchanged</div>
+                <p class="explanation-body">
+                  The newly calculated <code>ariaDigest</code> exactly matches the stored digest in the committed JSON
+                  snapshot.
+                </p>
+              </div>
+              <div class="explanation-item amber">
+                <div class="explanation-header">(dry-run, not written)</div>
+                <p class="explanation-body">
+                  The comparison was performed and validated, but filesystem disk writes were explicitly bypassed.
+                </p>
+              </div>
+              <div class="explanation-item green">
+                <div class="explanation-header">Harvest complete — no changes.</div>
+                <p class="explanation-body">
+                  All targeted page maps in this run matched their existing snapshots with zero structural drift.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- NORMAL RUN PANEL -->
+          <div class="panel normal-run-panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg class="icon" style="color: var(--green-text)" viewBox="0 0 24 24">
+                  <path
+                    d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                  />
+                </svg>
+                Normal Run Mode
+              </div>
+              <span class="mode-tag normal">Observe &amp; Synchronize</span>
+            </div>
+
+            <p><strong>Command:</strong></p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Terminal</span
+                ><button class="copy-btn" onclick="navigator.clipboard.writeText('npm run harvest')">Copy</button>
+              </div>
+              <pre><code>npm run harvest</code></pre>
+            </div>
+
+            <p><strong>Execution &amp; Output Scenarios:</strong></p>
+            <p style="font-size: 14px; color: var(--text-muted)">
+              Performs the exact same browser navigation, harvesting, schema validation, and digest comparison as
+              dry-run, but <strong>writes the generated JSON to disk</strong>.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px">
+              <div class="explanation-item green">
+                <div class="explanation-header">Case 1: Page is Unchanged</div>
+                <p class="explanation-body">
+                  • Output log reports <code>unchanged</code>.<br />
+                  • The JSON file is re-written deterministically with Prettier formatting.<br />
+                  • Historical metadata (<code>capturedAt</code>, <code>appBuild</code>, <code>firstSeenBuild</code>) is
+                  preserved.<br />
+                  • <strong>Result:</strong> Zero git diff; workspace remains completely clean.
+                </p>
+              </div>
+
+              <div class="explanation-item red">
+                <div class="explanation-header">Case 2: Page Has Changed</div>
+                <p class="explanation-body">
+                  • Output log reports <code>changed</code> or <code>UPDATED</code>.<br />
+                  • The updated JSON file is written containing newly discovered elements, locators, and an updated
+                  <code>ariaDigest</code>.<br />
+                  • Final log reports: <br />
+                  <code>Harvest complete — one or more page maps changed.</code>
+                </p>
+              </div>
+
+              <div class="explanation-item amber">
+                <div class="explanation-header">Case 3: Element Disappears or Attributes Mutate</div>
+                <p class="explanation-body">
+                  • Digest discrepancy triggers change detection.<br />
+                  • <strong>Normal Run:</strong> Automatically synchronizes the page map file to match the new live
+                  state.<br />
+                  • <strong>Dry Run:</strong> Flags and reports the discrepancy in stdout while leaving the repository
+                  snapshot untouched.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Visual Workflow Diagram -->
+      <section id="workflow-diagram">
+        <h2 class="section-heading">
+          <svg class="icon icon-lg" style="color: var(--blue-text)" viewBox="0 0 24 24">
+            <path
+              d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zm-9-9v4H5V4h6m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h8c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1z"
+            />
+          </svg>
+          Visual Workflow Diagram
+        </h2>
+
+        <div class="workflow-container">
+          <div class="workflow-flow">
+            <div class="wf-node">
+              <div class="wf-icon-wrap blue">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
+                  />
+                </svg>
+              </div>
+              <div class="wf-content">
+                <div class="wf-title">1. Live Application Environment</div>
+                <p class="wf-desc">
+                  Base URL: <code>https://automationexercise.com</code> (or overridden via <code>AUT_URL</code>)
+                </p>
+              </div>
+            </div>
+
+            <div class="wf-arrow">↓</div>
+
+            <div class="wf-node">
+              <div class="wf-icon-wrap blue">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"
+                  />
+                </svg>
+              </div>
+              <div class="wf-content">
+                <div class="wf-title">2. Chromium Browser Launch &amp; Navigation</div>
+                <p class="wf-desc">
+                  Playwright launches headless Chromium and navigates to target route (e.g. <code>/login</code>)
+                </p>
+              </div>
+            </div>
+
+            <div class="wf-arrow">↓</div>
+
+            <div class="wf-node">
+              <div class="wf-icon-wrap blue">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                  />
+                </svg>
+              </div>
+              <div class="wf-content">
+                <div class="wf-title">3. Live DOM Discovery &amp; Element Extraction</div>
+                <p class="wf-desc">
+                  Walks interactive nodes, headings, inputs, links, buttons, roles, accessible names, test IDs, and
+                  scopes
+                </p>
+              </div>
+            </div>
+
+            <div class="wf-arrow">↓</div>
+
+            <div class="wf-node">
+              <div class="wf-icon-wrap blue">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                </svg>
+              </div>
+              <div class="wf-content">
+                <div class="wf-title">4. Build Page-Map &amp; Schema Validation</div>
+                <p class="wf-desc">
+                  Constructs locators + fallbacks; strictly validates payload against Zod <code>PageMapSchema</code>
+                </p>
+              </div>
+            </div>
+
+            <div class="wf-arrow">↓</div>
+
+            <div class="wf-node">
+              <div class="wf-icon-wrap amber">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                  />
+                </svg>
+              </div>
+              <div class="wf-content">
+                <div class="wf-title">5. Compute ariaDigest &amp; Compare with Existing JSON</div>
+                <p class="wf-desc">
+                  Calculates SHA-256 fingerprint from snapshot and compares with stored disk artifact
+                </p>
+              </div>
+            </div>
+
+            <div class="wf-arrow">↓</div>
+
+            <!-- Branching Decisions -->
+            <div class="wf-branch-grid">
+              <div class="wf-branch dry">
+                <div class="wf-branch-title">
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                    />
+                  </svg>
+                  Dry-Run Path (<code>--dry-run</code>)
+                </div>
+                <p>
+                  <strong>Report Only:</strong> Logs element count and change status (<code>unchanged</code> or
+                  <code>changed</code>). <strong>Leaves filesystem untouched.</strong>
+                </p>
+              </div>
+
+              <div class="wf-branch normal">
+                <div class="wf-branch-title">
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <path
+                      d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                    />
+                  </svg>
+                  Normal Path (Default)
+                </div>
+                <p>
+                  <strong>Write JSON:</strong> Formats payload with Prettier and writes to
+                  <code>.agents/page-map/*.json</code> (preserves timestamps if unchanged).
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Side-by-Side Comparison Table -->
+      <section id="comparison-table">
+        <h2 class="section-heading">
+          <svg class="icon icon-lg" style="color: var(--blue-text)" viewBox="0 0 24 24">
+            <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h4v4H7V7zm6 0h4v4h-4V7zm-6 6h4v4H7v-4zm6 0h4v4h-4v-4z" />
+          </svg>
+          Side-by-Side Behavior Matrix
+        </h2>
+        <p>
+          The table below provides an exact point-by-point comparison of harvester actions when run with vs without the
+          <code>--dry-run</code> flag.
+        </p>
+
+        <div class="table-container">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th style="width: 38%">Behavior</th>
+                <th style="width: 31%"><code>npm run harvest -- --dry-run</code></th>
+                <th style="width: 31%"><code>npm run harvest</code> (Normal)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Launches browser</strong></td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Chromium)</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Chromium)</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Navigates to application</strong></td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (e.g. <code>/login</code>)</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (e.g. <code>/login</code>)</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Harvests live elements</strong></td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Discovers all nodes)</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Discovers all nodes)</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Validates page-map structure</strong></td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Zod schema)</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Zod schema)</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Computes digest</strong></td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (SHA-256 ariaDigest)</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (SHA-256 ariaDigest)</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Compares with existing page map</strong></td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Checks drift)</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Checks drift)</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Reports changes</strong></td>
+                <td>
+                  <span class="status-badge status-action"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z"
+                      />
+                    </svg>
+                    Logs to stdout</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-action"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z"
+                      />
+                    </svg>
+                    Logs to stdout</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Writes JSON file</strong></td>
+                <td>
+                  <span class="status-badge status-no"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                    No (Bypassed)</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Writes to disk)</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Safe for checking changes</strong></td>
+                <td>
+                  <span class="status-badge status-alert"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                      />
+                    </svg>
+                    100% Safe (Read-only)</span
+                  >
+                </td>
+                <td><span class="status-badge status-no">Modifies filesystem</span></td>
+              </tr>
+              <tr>
+                <td><strong>Updates committed page-map artifact</strong></td>
+                <td>
+                  <span class="status-badge status-no"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                    Never</span
+                  >
+                </td>
+                <td>
+                  <span class="status-badge status-yes"
+                    ><svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Yes (Overwrites JSON)</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5. What the harvester does NOT do -->
+      <section id="what-it-does-not-do">
+        <h2 class="section-heading">
+          <svg class="icon icon-lg" style="color: var(--red-text)" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z" />
+          </svg>
+          What the Harvester Does Not Do
+        </h2>
+        <p>
+          To avoid common misconceptions among QA and test automation engineers, the harvester has clearly bounded
+          responsibilities:
+        </p>
+
+        <div class="callout warning">
+          <div class="callout-icon">
+            <svg class="icon icon-lg" style="color: var(--amber-text)" viewBox="0 0 24 24">
+              <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+            </svg>
+          </div>
+          <div class="callout-content">
+            <div class="callout-title">Non-Goals &amp; Boundary Constraints</div>
+            <ul style="margin-left: 20px; margin-top: 6px; font-size: 14.5px; line-height: 1.6">
+              <li>
+                <strong>It does NOT run business-flow tests:</strong> It maps page elements; it does not execute
+                end-to-end user journeys.
+              </li>
+              <li>
+                <strong>It does NOT submit forms:</strong> It will never fill out or submit login, registration, or
+                checkout forms.
+              </li>
+              <li>
+                <strong>It does NOT verify login success:</strong> It captures the unauthenticated or authenticated
+                initial page state as configured, without validating credential success.
+              </li>
+              <li>
+                <strong>It does NOT test locators through user workflows:</strong> It ensures locators can be formed and
+                resolved on the page, but does not simulate full click/type sequences.
+              </li>
+              <li>
+                <strong>It does NOT treat the existing JSON as assertions:</strong> The JSON file is a versioned
+                snapshot, not a test suite of assertions.
+              </li>
+              <li>
+                <strong>It does NOT use an LLM for element extraction:</strong> All element filtering, role mapping, and
+                locators are computed deterministically using standard DOM/ARIA rules.
+              </li>
+              <li>
+                <strong>It does NOT modify files during a dry run:</strong> Disk writes are completely disabled when
+                <code>--dry-run</code> is active.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Important Distinction -->
+      <section id="important-distinction">
+        <h2 class="section-heading">
+          <svg class="icon icon-lg" style="color: var(--blue-text)" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z" />
+          </svg>
+          Important Distinction
+        </h2>
+
+        <div class="callout distinction">
+          <div class="callout-icon">
+            <svg class="icon icon-lg" style="color: #60a5fa" viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z" />
+            </svg>
+          </div>
+          <div class="callout-content">
+            <div class="callout-title">Core Architectural Principle</div>
+            <p style="font-size: 15.5px; line-height: 1.6; margin-bottom: 0; color: #e2e8f0">
+              The harvester does not simply open the existing JSON file and check every locator one by one. It first
+              inspects the live <code>/login</code> page, creates a new page map, and then compares the new page
+              structure with the stored page map using <code>ariaDigest</code>. The stored JSON is the previous
+              versioned snapshot, not the primary source of discovery.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Expected Result for the Current Project -->
+      <section id="expected-result">
+        <h2 class="section-heading">
+          <svg class="icon icon-lg" style="color: var(--green-text)" viewBox="0 0 24 24">
+            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+          </svg>
+          Expected Result for the Current Project
+        </h2>
+        <p>When executing the dry-run command against the configured test target in this repository:</p>
+
+        <div class="code-wrapper">
+          <div class="code-header"><span>Command</span></div>
+          <pre><code>npm run harvest -- --dry-run</code></pre>
+        </div>
+
+        <p><strong>Verification takeaways for engineering &amp; QA:</strong></p>
+        <div class="card-grid">
+          <div class="card" style="border-left: 4px solid var(--green-border)">
+            <div class="card-title" style="color: var(--green-text)">1. Live Elements Extracted</div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0">
+              The live <code>/login</code> page produced <strong>22 captured elements</strong> across semantic roles,
+              headings, textboxes, and action buttons.
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--green-border)">
+            <div class="card-title" style="color: var(--green-text)">2. Exact Structural Match</div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0">
+              The newly computed SHA-256 <code>ariaDigest</code> matched the stored page-map snapshot with zero
+              discrepancy.
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--amber-border)">
+            <div class="card-title" style="color: var(--amber-text)">3. Zero Disk Modification</div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0">
+              No JSON file on disk was modified or dirtied during the dry-run verification process.
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--blue-border)">
+            <div class="card-title" style="color: var(--blue-text)">4. Verified Up to Date</div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0">
+              The committed page map artifact <code>SignupLoginPage.unauthenticated.default.json</code> is certified
+              100% up to date.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final Summary Banner -->
+      <div class="summary-banner">
+        <div class="summary-quote">
+          "Dry-run observes and reports. A normal run observes, reports, and writes the generated page map."
+        </div>
+        <p class="summary-sub">
+          Use <code>--dry-run</code> in CI verification checks and local inspections; use normal
+          <code>npm run harvest</code> when updating application page-map snapshots.
+        </p>
+      </div>
+    </main>
+  </body>
+</html>
