@@ -1,0 +1,122 @@
+{
+  "$schema": "./schema.json",
+  "route": "/en-US/confirm.html",
+  "pageKey": "HotelConfirmation",
+  "capturedAt": "2026-08-19T06:20:20.574Z",
+  "appBuild": "local-dev",
+  "harvesterVersion": "1.0.0",
+  "auth": {
+    "roleKey": "unauthenticated"
+  },
+  "state": {
+    "variantKey": "default"
+  },
+  "elements": [
+    {
+      "key": "submitReservationButton",
+      "role": "button",
+      "accessibleName": "Submit Reservation",
+      "locator": "getByRole('button', { name: 'Submit Reservation' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "totalBillHeading",
+      "role": "heading",
+      "accessibleNamePattern": "^Total [$¥€£]\\s?\\d+(?:,\\d{3})*(?:\\.\\d{2})? (included taxes)$",
+      "locator": "locator('#total-bill')",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "confirmReservationHeading",
+      "role": "heading",
+      "accessibleName": "Confirm Reservation",
+      "locator": "getByRole('heading', { name: 'Confirm Reservation' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "planWithSpecialOffersHeading",
+      "role": "heading",
+      "accessibleName": "Plan with special offers",
+      "locator": "getByRole('heading', { name: 'Plan with special offers' })",
+      "fallbackLocators": ["locator('#plan-name')"],
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "githubLink",
+      "role": "link",
+      "accessibleName": "GitHub",
+      "locator": "getByRole('link', { name: 'GitHub' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "hotelPlanisphereLink",
+      "role": "link",
+      "accessibleName": "Hotel Planisphere",
+      "locator": "getByRole('link', { name: 'Hotel Planisphere' })",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": true,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "closeButton",
+      "role": "button",
+      "accessibleName": "Close",
+      "locator": "getByRole('button', { name: 'Close' })",
+      "scope": "Modal",
+      "count": 2,
+      "requiresScoping": true,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "successModalDialog",
+      "role": "dialog",
+      "accessibleName": "Thank you for reserving. × We look forward to visiting you. Close",
+      "locator": "getByRole('dialog', { name: 'Thank you for reserving. × We look forward to visiting you. Close' })",
+      "fallbackLocators": ["locator('#success-modal')"],
+      "scope": "Modal",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    },
+    {
+      "key": "thankYouForReservingHeading",
+      "role": "heading",
+      "accessibleName": "Thank you for reserving.",
+      "locator": "getByRole('heading', { name: 'Thank you for reserving.' })",
+      "scope": "Modal",
+      "count": 1,
+      "requiresScoping": false,
+      "visible": false,
+      "enabled": true,
+      "firstSeenBuild": "local-dev"
+    }
+  ],
+  "ariaDigest": "sha256:fb2e83d53525dfa1707070ae4925195eb31c45d536f106a13d75e8861ed21e7c",
+  "notes": []
+}

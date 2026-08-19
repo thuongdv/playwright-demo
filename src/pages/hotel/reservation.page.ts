@@ -69,6 +69,6 @@ export default class HotelReservationPage {
 
   @step("Click Confirm Reservation button")
   async clickConfirmReservation(): Promise<void> {
-    await Promise.all([this.page.waitForURL("**/confirm.html"), this.confirmReservationButton.click()]);
+    await Promise.all([this.page.waitForURL("**/confirm.html*"), this.confirmReservationButton.click()]);
   }
 }

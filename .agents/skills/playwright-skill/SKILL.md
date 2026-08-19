@@ -1,45 +1,94 @@
 ---
 name: playwright-skill
 description: >
-  Generates production-grade Playwright automation scripts and E2E tests in TypeScript.
-  Use when users ask to write Playwright tests, automate browser flows, run cross-browser
-  checks, debug flaky tests, mock APIs, or perform visual regression testing.
+  Generates production-grade Playwright automation scripts, E2E tests, and Page Object Models in TypeScript.
+  Follows a deterministic two-stage pipeline: page-harvester for DOM discovery/codegen and test-author for browser-free test creation.
 ---
 
-# Playwright Test Automation
+# Playwright Test Automation Architecture
 
-This skill provides comprehensive patterns, workflows, and tools for writing production-grade Playwright E2E tests in TypeScript.
+This repository uses a **two-stage, deterministic pipeline** for Playwright test automation:
 
-## Validation Workflow
-
-After generating or modifying any test, follow this workflow:
-
-1. **Verify & Fix**: Resolve any compiler or syntax errors immediately.
-   ```bash
-   npm run tsc && npm run lint:fix && npm run format:fix
-   ```
-2. **Execute Locally**: Validate correctness using the specific test runner command:
-   ```bash
-   npx playwright test --project=chromium
-   ```
-3. **Handle Failures**: If tests fail, refer to [reference/debugging-flaky.md](reference/debugging-flaky.md) for a troubleshooting checklist.
-4. **Stuck Protocol**: If any sub-task (locator, action, assertion, navigation) cannot be resolved after **2–3 attempts**, stop retrying and emit a structured summary. See [reference/stuck-protocol.md](reference/stuck-protocol.md). Record persistent blockers in [.agents/knowledge/blockers.md](../../knowledge/blockers.md).
+```text
+               Stage 1: Harvester (No LLM, Plain Playwright)
+  AUT Deploy ──────────────────────────────────────────────────► .agents/page-map/*.json
+                                                                        │
+                                                                        ▼
+                                                             npm run codegen:pom
+                                                                        │
+                                                                        ▼
+                                                             src/pages/*/generated/*.ts
+                                                                        │
+               Stage 2: Test Authoring (Browser-Free)                   │
+  tests-md/*.md ───────────────────────────────────────────────► src/tests/ui/*.spec.ts
+```
 
 ---
 
-## Skill Guides & Reference Directory
+## 🧭 Core Skills Overview
 
-The instructions for this skill are modularized into highly focused sub-guides. Refer to the specific file that matches your current task:
+| Skill                | Purpose                                                                                                              | Execution Mode                         | Guide                                                 |
+| :------------------- | :------------------------------------------------------------------------------------------------------------------- | :------------------------------------- | :---------------------------------------------------- |
+| **`page-harvester`** | Discovers DOM elements, extracts accessibility trees, handles multi-role auth, and generates POM classes.            | Maintenance (Deterministic Playwright) | [page-harvester/SKILL.md](../page-harvester/SKILL.md) |
+| **`test-author`**    | Reads markdown specs from `tests-md/` and writes `.spec.ts` tests using Page Maps & POMs without launching browsers. | Authoring (**Browser-Free**)           | [test-author/SKILL.md](../test-author/SKILL.md)       |
 
-| Reference Guide                                                     | Description & When to Read                                                                                                                                                                                 |
-| :------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **[Element Locators](reference/locator.md)**                        | Selector priorities, accessibility roles, getByRole/getByLabel, and custom IDs. _Read when locating page elements._                                                                                        |
-| **[DOM Inspection](reference/dom-inspection.md)**                   | Programmatic DOM evaluation, token-efficient element discovery, validation debugging, and widget sync. _Read when discovering locators or debugging forms._                                                |
-| **[Web-First Assertions](reference/assertion.md)**                  | Auto-retry assertions, non-retrying anti-patterns, soft assertions, and assertion tables. _Read when writing checks._                                                                                      |
-| **[Test Organization](reference/test-organization.md)**             | Anti-patterns table, test isolation, setup blocks, and readable test steps. _Read when designing test suites._                                                                                             |
-| **[Page Object Model (POM)](reference/page-object-model.md)**       | POM patterns, base pages, class templates, and maintenance rules. _Read when creating or refactoring POM._                                                                                                 |
-| **[CLI & Commands Reference](reference/cli-commands.md)**           | CLI flags, UI mode, Playwright Inspector, Trace viewer, and video recordings. _Read when running/debugging tests._                                                                                         |
-| **[Auth State Reuse](reference/auth-state.md)**                     | Login state setups, caching, and reusing `storageState`. _Read when handling user sessions._                                                                                                               |
-| **[API Mocking & Visual Testing](reference/api-mocking-visual.md)** | Mocking endpoints, custom responses, blocking resources, GraphQL mocking, and visual regression. _Read when mocking APIs or doing visual testing._                                                         |
-| **[Debugging & Flakiness](reference/debugging-flaky.md)**           | Flaky test checklist, dialog race conditions, navigation races, and network-dependent assertions. _Read when debugging failed/unstable tests._                                                             |
-| **[Stuck Protocol](reference/stuck-protocol.md)**                   | What to do after 2–3 failed attempts: structured summary format, escalation rules, and how to record blockers for git tracking. _Read when blocked on a locator, action, assertion, or compilation error._ |
+---
+
+## 🌾 Stage 1: Page Map Harvesting & POM Codegen
+
+1. **Harvest Application Routes**:
+
+   ```bash
+   npm run harvest
+   ```
+
+   Extracts canonical elements into `.agents/page-map/<PageKey>.<role>.<variant>.json` and `.agents/page-map/<PageKey>.index.json`.
+
+2. **Generate Typed Page Objects**:
+   ```bash
+   npm run codegen:pom
+   ```
+   Emits TypeScript POM classes into `src/pages/<area>/generated/<PageKey>.generated.ts`.
+
+---
+
+## ✍️ Stage 2: Browser-Free Test Authoring
+
+When asked to author or update tests:
+
+1. Read the markdown test spec in `tests-md/` (e.g. `tests-md/RESERVE_010.md`).
+2. Read `.agents/page-map/<PageKey>.index.json` to find element keys and role variants.
+3. Consult the specific `<PageKey>.<role>.<variant>.json` map(s).
+4. Author the `.spec.ts` using the POM classes in `src/pages/`.
+5. **Never launch a browser to explore the DOM.** If an element is missing, fail immediately and instruct to run `npm run harvest`.
+
+---
+
+## 🔍 Validation Workflow
+
+After generating or updating test files:
+
+1. **Typecheck and Lint**:
+   ```bash
+   npm run tsc && npm run lint:check && npm run format:check
+   ```
+2. **Execute Locally**:
+   ```bash
+   npm run test:ui-hotel
+   # or
+   npm run test:ui-ta
+   ```
+
+---
+
+## 📚 Reference Guides
+
+| Reference Guide                                           | Description                                                          |
+| :-------------------------------------------------------- | :------------------------------------------------------------------- |
+| **[Element Locators](reference/locator.md)**              | Selector priorities, accessibility roles, `getByRole`, `getByLabel`. |
+| **[Web-First Assertions](reference/assertion.md)**        | Auto-retry assertions and expectations.                              |
+| **[Test Organization](reference/test-organization.md)**   | Test isolation, setup blocks, and readable steps.                    |
+| **[Page Object Model](reference/page-object-model.md)**   | POM patterns, base pages, and maintenance rules.                     |
+| **[Auth State Reuse](reference/auth-state.md)**           | Login state setups and storage-state sessions.                       |
+| **[Debugging & Flakiness](reference/debugging-flaky.md)** | Troubleshooting checklist for failed/flaky tests.                    |
+| **[Stuck Protocol](reference/stuck-protocol.md)**         | Rules for escalating blocked tasks after 2–3 attempts.               |

@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/en-US/reserve.html?plan-id=0",
   "pageKey": "HotelReservation",
-  "capturedAt": "2026-08-18T10:19:11.909Z",
+  "capturedAt": "2026-08-19T06:18:53.522Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {

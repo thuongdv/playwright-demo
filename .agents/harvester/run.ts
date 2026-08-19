@@ -132,31 +132,30 @@ export async function runHarvester(options?: Partial<HarvesterOptions>): Promise
                 }
               }
 
-              // Apply state fixture if provided
+              // Apply state fixture if provided, or navigate to target route
               if (typeof variant.fixture === "function") {
                 await variant.fixture({ page, browserContext: context, baseURL });
-              }
+              } else {
+                const targetUrl = target.route.startsWith("http")
+                  ? target.route
+                  : new URL(target.route, baseURL.endsWith("/") ? baseURL : `${baseURL}/`).toString();
+                const resp = await page.goto(targetUrl, {
+                  waitUntil: target.settle?.waitFor || "domcontentloaded",
+                  timeout: target.settle?.timeoutMs || 30_000,
+                });
 
-              // Navigate to target route
-              const targetUrl = target.route.startsWith("http")
-                ? target.route
-                : new URL(target.route, baseURL.endsWith("/") ? baseURL : `${baseURL}/`).toString();
-              const resp = await page.goto(targetUrl, {
-                waitUntil: target.settle?.waitFor || "domcontentloaded",
-                timeout: target.settle?.timeoutMs || 30_000,
-              });
-
-              // Mid-run auth expiry detection
-              if (
-                roleKey !== "unauthenticated" &&
-                (resp?.status() === 401 || (page.url().includes("/login") && !target.route.includes("/login")))
-              ) {
-                console.warn(
-                  `[Harvester] Mid-run session expiry detected for role '${roleKey}'. Refreshing auth state and retrying...`,
-                );
-                await context.close();
-                authInfo = await setupAuthState(roleKey, baseURL, harvesterConfig.authStorageDir);
-                continue;
+                // Mid-run auth expiry detection
+                if (
+                  roleKey !== "unauthenticated" &&
+                  (resp?.status() === 401 || (page.url().includes("/login") && !target.route.includes("/login")))
+                ) {
+                  console.warn(
+                    `[Harvester] Mid-run session expiry detected for role '${roleKey}'. Refreshing auth state and retrying...`,
+                  );
+                  await context.close();
+                  authInfo = await setupAuthState(roleKey, baseURL, harvesterConfig.authStorageDir);
+                  continue;
+                }
               }
 
               if (target.settle?.extraSelector) {

@@ -1,0 +1,22 @@
+{
+  "pageKey": "HotelConfirmation",
+  "route": "/en-US/confirm.html",
+  "roles": ["unauthenticated"],
+  "variants": ["default", "modalOpened"],
+  "commonElementKeys": [
+    "closeButton",
+    "confirmReservationHeading",
+    "githubLink",
+    "hotelPlanisphereLink",
+    "planWithSpecialOffersHeading",
+    "submitReservationButton",
+    "successModalDialog",
+    "thankYouForReservingHeading",
+    "totalBillHeading"
+  ],
+  "variantSpecificElementKeys": {
+    "unauthenticated.default": [],
+    "unauthenticated.modalOpened": []
+  },
+  "lastUpdated": "2026-08-19T06:20:22.084Z"
+}

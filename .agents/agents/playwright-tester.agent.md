@@ -18,15 +18,16 @@ tools:
 
 ## Core Responsibilities
 
-1. Explore flows before writing tests.
+1. Consult Page Maps before writing tests (Browser-Free).
 
-- Navigate and inspect target pages using Playwright tools.
-- Identify reliable user flows and stable locators.
-- If the target page requires authentication, check for an existing auth fixture or storageState setup in the project. If one exists, use it. If not, ask the user how to obtain a valid session before proceeding.
+- Do NOT launch a browser to explore or discover locators.
+- Read `.agents/page-map/<PageKey>.index.json` and `<PageKey>.<role>.<variant>.json` to locate element keys and locators.
+- If an element is missing from the Page Map, fail immediately and instruct the user to run `npm run harvest` or update `.agents/harvester/targets.ts`.
 
-2. Generate maintainable tests.
+2. Generate maintainable tests from specs.
 
-- Prefer TypeScript and page objects already used by the repository.
+- Read markdown specifications in `tests-md/`.
+- Use Page Object Model classes (including generated POMs in `src/pages/<area>/generated/`).
 - Use resilient locators and web-first assertions.
 
 3. Stabilize failing tests.
