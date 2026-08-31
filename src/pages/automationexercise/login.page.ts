@@ -7,6 +7,7 @@ export default class AELoginPage extends AELoginGeneratedPage {
   readonly signupNameInput: Locator = this.signupForm.getByPlaceholder("Name");
   readonly signupEmailInput: Locator = this.signupForm.getByPlaceholder("Email Address");
   readonly signupSubmitButton: Locator = this.signupForm.getByRole("button", { name: "Signup" });
+  readonly emailAlreadyExistErrorMessage: Locator = this.signupForm.getByText("Email Address already exist!");
 
   readonly loginForm: Locator = this.page.locator("form[action='/login']");
   readonly loginEmailInput: Locator = this.loginForm.getByPlaceholder("Email Address");
@@ -28,6 +29,13 @@ export default class AELoginPage extends AELoginGeneratedPage {
     await this.signupEmailInput.fill(email);
     await this.signupSubmitButton.click();
     await this.page.waitForURL("**/signup");
+  }
+
+  @step("Submit signup form with name and email")
+  async submitSignup(name: string, email: string): Promise<void> {
+    await this.signupNameInput.fill(name);
+    await this.signupEmailInput.fill(email);
+    await this.signupSubmitButton.click();
   }
 
   @step("Login with credentials")
