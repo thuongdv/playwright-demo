@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "route": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pageKey": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capturedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "appBuild": {
+      "type": "string",
+      "minLength": 1
+    },
+    "harvesterVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auth": {
+      "type": "object",
+      "properties": {
+        "roleKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stateGeneratedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+        }
+      },
+      "required": ["roleKey"],
+      "additionalProperties": false
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "variantKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fixture": {
+          "type": "string"
+        },
+        "openers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["variantKey"],
+      "additionalProperties": false
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "accessibleName": {
+            "type": "string"
+          },
+          "accessibleNamePattern": {
+            "type": "string"
+          },
+          "testId": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fallbackLocators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scope": {
+            "type": "string"
+          },
+          "count": {
+            "default": 1,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "requiresScoping": {
+            "default": false,
+            "type": "boolean"
+          },
+          "visible": {
+            "default": true,
+            "type": "boolean"
+          },
+          "enabled": {
+            "default": true,
+            "type": "boolean"
+          },
+          "firstSeenBuild": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": ["key", "role", "locator", "count", "requiresScoping", "visible", "enabled", "firstSeenBuild"],
+        "additionalProperties": false
+      }
+    },
+    "ariaDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "notes": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "route",
+    "pageKey",
+    "capturedAt",
+    "appBuild",
+    "harvesterVersion",
+    "auth",
+    "state",
+    "elements",
+    "ariaDigest",
+    "notes"
+  ],
+  "additionalProperties": false
+}

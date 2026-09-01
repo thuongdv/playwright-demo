@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { toJSONSchema, z } from "zod";
 
 /**
  * Zod schema for a single element in a Page Map.
@@ -88,4 +88,11 @@ export function validatePageMap(data: unknown): PageMap {
  */
 export function safeValidatePageMap(data: unknown) {
   return PageMapSchema.safeParse(data);
+}
+
+/**
+ * Returns the JSON Schema specification derived from the PageMap Zod schema.
+ */
+export function getPageMapJsonSchema() {
+  return toJSONSchema(PageMapSchema);
 }

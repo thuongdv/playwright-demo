@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import * as prettier from "prettier";
-import { PageMap, PageMapIndex, validatePageMap } from "../page-map/schema";
+import { getPageMapJsonSchema, PageMap, PageMapIndex, validatePageMap } from "../page-map/schema";
 import { ensureAuthState, setupAuthState } from "./auth/auth-manager";
 import { getAllKnownSecrets } from "./auth/env";
 import { extractPageMap } from "./extractor";
@@ -70,6 +70,12 @@ export async function runHarvester(options?: Partial<HarvesterOptions>): Promise
   const outputDir = path.resolve(process.cwd(), harvesterConfig.outputDir || ".agents/page-map");
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
+  }
+
+  if (!dryRun) {
+    const schemaJsonPath = path.join(outputDir, "schema.json");
+    const formattedSchema = await formatJson(getPageMapJsonSchema(), schemaJsonPath);
+    fs.writeFileSync(schemaJsonPath, formattedSchema, "utf8");
   }
 
   const appBuild = harvesterConfig.appBuild || getAppBuild();
