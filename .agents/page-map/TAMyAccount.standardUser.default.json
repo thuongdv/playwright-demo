@@ -2,12 +2,12 @@
   "$schema": "./schema.json",
   "route": "/my-account/",
   "pageKey": "TAMyAccount",
-  "capturedAt": "2026-08-19T09:45:31.850Z",
+  "capturedAt": "2026-09-01T07:22:58.918Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
     "roleKey": "standardUser",
-    "stateGeneratedAt": "2026-08-19T09:45:23.178Z"
+    "stateGeneratedAt": "2026-09-01T07:14:20.076Z"
   },
   "state": {
     "variantKey": "default"
@@ -111,6 +111,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:6ed93d5205384012cd1fdaf14b3751886c6d5d20c72f60b1b904c6433a72f312",
+  "ariaDigest": "sha256:2b2945cb7e9e2082ae202b9dcf3034b9f47c3bfe4585c2ad60c02269d8ef055c",
   "notes": []
 }

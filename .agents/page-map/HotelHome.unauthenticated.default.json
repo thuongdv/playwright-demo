@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/en-US/index.html",
   "pageKey": "HotelHome",
-  "capturedAt": "2026-08-19T09:44:00.535Z",
+  "capturedAt": "2026-09-01T07:22:41.676Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -266,6 +266,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:89df8365723357396dc42e8b53808d10f458b121a38e038e7ad78a43f21481ae",
+  "ariaDigest": "sha256:6cd7ee8123686954e6418fc98d301a6058e2e9d13018dd1d530e9218039c8471",
   "notes": []
 }

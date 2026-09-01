@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/en-US/login.html",
   "pageKey": "HotelLogin",
-  "capturedAt": "2026-08-19T09:44:04.363Z",
+  "capturedAt": "2026-09-01T07:22:45.235Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -148,6 +148,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:592f15d0b021db05c577223c5f4ef1e0966a0578e720cb807863f72cd51e6a14",
+  "ariaDigest": "sha256:a9d9fe14082488aed0f691d4602e4da8fe0008d8fda1f889f2eb0d4ed468fc6c",
   "notes": []
 }

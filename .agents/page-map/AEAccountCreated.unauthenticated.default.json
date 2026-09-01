@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/account_created",
   "pageKey": "AEAccountCreated",
-  "capturedAt": "2026-08-19T09:45:39.739Z",
+  "capturedAt": "2026-09-01T07:23:08.226Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -166,6 +166,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:6877df475a01246df00bbab3e865f7eaa362bb31a766a9b04264cf2928e8cdc2",
+  "ariaDigest": "sha256:c4011461873ff62d09a8a271450e8c2fc0d86c480712ad35fbc86614e5673288",
   "notes": []
 }

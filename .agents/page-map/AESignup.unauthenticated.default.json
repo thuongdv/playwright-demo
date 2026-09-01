@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/signup",
   "pageKey": "AESignup",
-  "capturedAt": "2026-08-19T09:45:36.748Z",
+  "capturedAt": "2026-09-01T07:23:04.433Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -415,6 +415,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:ba239612c2d08715cfc1a5317ecdd79c51e913458bbac26d1171c533e9d1de39",
+  "ariaDigest": "sha256:f80783f6f23c8d6b3e403fec9002d2344860e94f47c216fc44855eafd9aa59c4",
   "notes": []
 }

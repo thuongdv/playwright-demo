@@ -215,6 +215,7 @@ export const config: HarvesterConfig = {
       ],
       settle: {
         waitFor: "domcontentloaded",
+        extraSelector: ".features_items",
       },
     },
     {

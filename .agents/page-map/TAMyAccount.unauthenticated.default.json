@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/my-account/",
   "pageKey": "TAMyAccount",
-  "capturedAt": "2026-08-19T09:45:01.561Z",
+  "capturedAt": "2026-09-01T07:22:52.746Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -158,6 +158,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:ae98b8777f914b817606d33e84ba15f1c5acd42942fb432921ca1aeff2a6bbf3",
+  "ariaDigest": "sha256:61abd955e86f06b1d6c66fcf4b99db9832eeb0c5fb9c64ba6aab3bb048bcf50e",
   "notes": []
 }

@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/en-US/reserve.html?plan-id=0",
   "pageKey": "HotelReservation",
-  "capturedAt": "2026-08-19T09:44:52.531Z",
+  "capturedAt": "2026-09-01T07:22:48.453Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -242,6 +242,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:bf1ef0e8f544c97070df2e6698ba8d057186748f816bd92b9ba1b9944ea12c95",
+  "ariaDigest": "sha256:9eb8433d7cd09de3a892ff86a5873091e2020379c314de6b132ed1343e521737",
   "notes": []
 }

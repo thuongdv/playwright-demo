@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/en-US/confirm.html",
   "pageKey": "HotelConfirmation",
-  "capturedAt": "2026-08-19T09:47:34.019Z",
+  "capturedAt": "2026-09-01T07:22:49.216Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -118,6 +118,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:5ab1901ab4680b1f459193c04a09a60e390bd4de63e818d7b1faaf2665e2cee5",
+  "ariaDigest": "sha256:596ee962f5cf2a8308b0fdb38650123644549363c883218dce9a433353193dd3",
   "notes": []
 }

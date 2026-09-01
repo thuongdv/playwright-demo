@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/en-US/signup.html",
   "pageKey": "HotelSignup",
-  "capturedAt": "2026-08-19T09:44:05.469Z",
+  "capturedAt": "2026-09-01T07:22:45.779Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -255,6 +255,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:50ae886cfe8ef2addca7370bd751fb8be6abf2e923cdcb6059957d212c5581b2",
+  "ariaDigest": "sha256:6f8f6d190b7482ca5297a477d16563a04854ebfc1e1ed1bd38ae4765f7e40628",
   "notes": []
 }

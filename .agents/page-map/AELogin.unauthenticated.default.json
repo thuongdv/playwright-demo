@@ -2,7 +2,7 @@
   "$schema": "./schema.json",
   "route": "/login",
   "pageKey": "AELogin",
-  "capturedAt": "2026-08-19T09:45:35.130Z",
+  "capturedAt": "2026-09-01T07:23:02.989Z",
   "appBuild": "local-dev",
   "harvesterVersion": "1.0.0",
   "auth": {
@@ -243,6 +243,6 @@
       "firstSeenBuild": "local-dev"
     }
   ],
-  "ariaDigest": "sha256:c4dcf97562dfabbcc7d0bb4a44a414a24fb974600b3ff880fdf7ab36ead52ac9",
+  "ariaDigest": "sha256:23eac2ce419c3d034fc1c9b369775dff900ea38502ee12c346cd130b5b7fb012",
   "notes": []
 }

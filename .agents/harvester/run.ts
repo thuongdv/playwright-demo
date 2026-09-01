@@ -189,8 +189,11 @@ export async function runHarvester(options?: Partial<HarvesterOptions>): Promise
               if (existingPageMap) {
                 isNew = false;
                 if (existingPageMap.ariaDigest === newPageMap.ariaDigest) {
-                  // Digest is identical: preserve capturedAt to ensure byte-level zero git diff
+                  // Digest is identical: preserve capturedAt and auth state timestamp to ensure byte-level zero git diff
                   newPageMap.capturedAt = existingPageMap.capturedAt;
+                  if (existingPageMap.auth?.stateGeneratedAt) {
+                    newPageMap.auth.stateGeneratedAt = existingPageMap.auth.stateGeneratedAt;
+                  }
                   hasChanged = false;
                 }
               }
