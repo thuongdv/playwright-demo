@@ -1,8 +1,8 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 
+import ExcelJS from "exceljs";
 import sanitizeFilename from "sanitize-filename";
-import * as XLSX from "xlsx";
 
 type RowData = Record<string, string>;
 
@@ -38,7 +38,7 @@ async function main(): Promise<void> {
   const outputDirectory = path.resolve(process.cwd(), args.outputPath);
 
   const template = await fs.readFile(templatePath, "utf8");
-  const rows = readTestCases(workbookPath);
+  const rows = await readTestCases(workbookPath);
   const selectedRows = args.id ? rows.filter((row) => row.id === args.id) : rows;
 
   if (args.id && selectedRows.length === 0) {
@@ -60,18 +60,35 @@ async function main(): Promise<void> {
   console.log(`Generated ${selectedRows.length} markdown file(s) in ${outputDirectory}`);
 }
 
-function readTestCases(workbookPath: string): TestCaseRow[] {
-  const workbook = XLSX.readFile(workbookPath, { cellDates: false });
-  const sheetName = workbook.SheetNames[0];
+async function readTestCases(workbookPath: string): Promise<TestCaseRow[]> {
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.readFile(workbookPath);
 
-  if (!sheetName) {
+  const worksheet = workbook.worksheets[0];
+
+  if (!worksheet) {
     throw new Error(`Workbook ${workbookPath} does not contain any sheets`);
   }
 
-  const worksheet = workbook.Sheets[sheetName];
-  const rawRows = XLSX.utils.sheet_to_json<RowData>(worksheet, {
-    defval: "",
-    raw: false,
+  const sheetValues = worksheet.getSheetValues();
+  const headerRowIndex = sheetValues.findIndex(
+    (row) => Array.isArray(row) && row.some((cell) => cell !== undefined && cell !== null && String(cell).trim() !== ""),
+  );
+
+  if (headerRowIndex === -1) {
+    return [];
+  }
+
+  const headers = (sheetValues[headerRowIndex] ?? []).slice(1).map((header) => String(header ?? "").trim());
+  const rawRows: RowData[] = sheetValues.slice(headerRowIndex + 1).map((row) => {
+    const values = Array.isArray(row) ? row.slice(1) : [];
+    const item: RowData = {};
+
+    headers.forEach((header, index) => {
+      item[header] = normalizeCellValue(values[index]);
+    });
+
+    return item;
   });
 
   return rawRows
