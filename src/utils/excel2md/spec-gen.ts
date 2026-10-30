@@ -72,14 +72,16 @@ async function readTestCases(workbookPath: string): Promise<TestCaseRow[]> {
 
   const sheetValues = worksheet.getSheetValues();
   const headerRowIndex = sheetValues.findIndex(
-    (row) => Array.isArray(row) && row.some((cell) => cell !== undefined && cell !== null && String(cell).trim() !== ""),
+    (row) =>
+      Array.isArray(row) && row.some((cell) => cell !== undefined && cell !== null && String(cell).trim() !== ""),
   );
 
   if (headerRowIndex === -1) {
     return [];
   }
 
-  const headers = (sheetValues[headerRowIndex] ?? []).slice(1).map((header) => String(header ?? "").trim());
+  const headerRow = sheetValues[headerRowIndex];
+  const headers = (Array.isArray(headerRow) ? headerRow.slice(1) : []).map((header) => String(header ?? "").trim());
   const rawRows: RowData[] = sheetValues.slice(headerRowIndex + 1).map((row) => {
     const values = Array.isArray(row) ? row.slice(1) : [];
     const item: RowData = {};

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "tsc": "npx tsc --noEmit",
+    "typecheck": "npx tsc --noEmit",
     "lint:check": "npx eslint .",
     "lint": "npx eslint --fix .",
     "format": "npx prettier --write .",
@@ -15,7 +15,8 @@
     "test:qa": "dotenv -e .env.qa -- npx playwright test --config=playwright.config.ts",
     "test:ui-ta": "npx playwright test --config=playwright.config.ts --project=ui-ta",
     "test:ui-ae": "npx playwright test --config=playwright.config.ts --project=ui-ae",
-    "report": "npx playwright show-report"
+    "report": "npx playwright show-report",
+    "fix": "npm run lint && npm run format"
   },
   "repository": {
     "type": "git",
