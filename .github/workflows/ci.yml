@@ -17,4 +17,4 @@ jobs:
         run: npm ci
 
       - name: Run type, lint, and format checks
-        run: npm run tsc && npm run lint:check && npm run format:check
+        run: npm run typecheck && npm run lint:check && npm run format:check
